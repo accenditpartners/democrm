@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Company X — Command Center</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0D1B3E;
+  --navy-mid: #1A2E5A;
+  --navy-light: #243b6a;
+  --gold: #B8922E;
+  --gold-light: #C9A84C;
+  --gold-dim: rgba(184,146,46,0.10);
+  --off-white: #F7F5F0;
+  --white: #ffffff;
+  --green: #16a34a;
+  --red: #dc2626;
+  --yellow: #d97706;
+  --purple: #7c3aed;
+  --blue: #2563eb;
+  --muted: #6B7280;
+  --border: #E2E6EA;
+  --surface: #ffffff;
+  --bg: #F7F5F0;
+  --text: #0D1B3E;
+}
+
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* ── NAV TABS ── */
+.nav {
+  background: var(--navy);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+.nav-brand {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 16px 0;
+  margin-right: 36px;
+  white-space: nowrap;
+}
+.nav-tabs { display: flex; gap: 2px; }
+.nav-tab {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  padding: 18px 20px 16px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  letter-spacing: 0.5px;
+}
+.nav-tab:hover { color: var(--off-white); }
+.nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+.nav-right { margin-left: auto; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); }
+
+/* ── PAGES ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ══════════════════════════════════
+   V2R DASHBOARD
+══════════════════════════════════ */
+.v2r-wrap { max-width: 1080px; margin: 0 auto; padding: 36px 28px 60px; }
+
+.v2r-header { margin-bottom: 32px; }
+.v2r-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; color: var(--navy); margin-bottom: 4px; }
+.v2r-title span { color: var(--gold); }
+.v2r-sub { font-size: 12px; color: var(--muted); letter-spacing: 0.5px; }
+
+/* Vision */
+.vision-card {
+  border-left: 3px solid var(--gold);
+  background: rgba(184,146,46,0.07);
+  border-radius: 0 6px 6px 0;
+  padding: 18px 22px;
+  margin-bottom: 32px;
+}
+.vision-eyebrow { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+.vision-text { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--navy); line-height: 1.6; }
+
+/* Section label */
+.section-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--gold);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-lbl::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* 5 KPI Cards */
+.kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 36px; }
+
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 14px 14px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.15s;
+  display: flex;
+  flex-direction: column;
+}
+.kpi-card:hover { border-color: var(--gold); transform: translateY(-1px); }
+.kpi-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.kpi-card.green::after { background: var(--green); }
+.kpi-card.yellow::after { background: var(--yellow); }
+.kpi-card.red::after { background: var(--red); }
+.kpi-card.gray::after { background: #D1D5DB; }
+
+.kpi-n { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 2px; margin-bottom: 10px; }
+.kpi-lbl { font-size: 10px; color: var(--muted); line-height: 1.5; margin-bottom: 12px; min-height: 44px; }
+.kpi-val { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 900; line-height: 1; margin-bottom: 4px; margin-top: auto; }
+.kpi-tgt { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); margin-bottom: 10px; margin-top: 4px; }
+.kpi-track { background: #E5E7EB; border-radius: 2px; height: 3px; overflow: hidden; margin-bottom: 8px; }
+.kpi-prog { height: 100%; border-radius: 2px; transition: width 0.8s ease; }
+.kpi-status { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; }
+
+.c-green { color: var(--green); } .bg-green { background: var(--green); }
+.c-yellow { color: var(--yellow); } .bg-yellow { background: var(--yellow); }
+.c-red { color: var(--red); } .bg-red { background: var(--red); }
+.c-gray { color: var(--muted); } .bg-gray { background: #D1D5DB; }
+.c-gold { color: var(--gold); }
+
+/* Objectives */
+.obj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 32px; }
+.obj-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.obj-n { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900; color: var(--gold); opacity: 0.4; line-height: 1; flex-shrink: 0; }
+.obj-body {}
+.obj-title { font-size: 12px; font-weight: 600; color: var(--navy); line-height: 1.5; margin-bottom: 6px; }
+.obj-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; }
+.badge-active { background: rgba(22,163,74,0.1); color: var(--green); border: 1px solid rgba(22,163,74,0.25); }
+.badge-building { background: rgba(217,119,6,0.1); color: var(--yellow); border: 1px solid rgba(217,119,6,0.25); }
+.badge-target { background: rgba(184,146,46,0.1); color: var(--gold); border: 1px solid rgba(184,146,46,0.25); }
+
+/* Pipeline mini panel */
+.bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.panel { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; }
+.panel-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px; }
+
+/* ── MOBILE RESPONSIVE ── */
+@media (max-width: 768px) {
+  .nav { padding: 0 14px; flex-wrap: wrap; }
+  .nav-brand { font-size: 9px; letter-spacing: 2px; padding: 12px 0; margin-right: 0; width: 100%; border-bottom: 1px solid rgba(201,168,76,0.1); }
+  .nav-tabs { gap: 0; overflow-x: auto; width: 100%; }
+  .nav-tab { font-size: 11px; padding: 12px 14px 10px; white-space: nowrap; }
+  .nav-right { display: none !important; }
+
+  .v2r-wrap { padding: 20px 14px 40px; }
+  .v2r-title { font-size: 22px; }
+  .vision-text { font-size: 13px; }
+
+  .kpi-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kpi-card:last-child { grid-column: 1 / -1; max-width: 50%; margin: 0 auto; width: 100%; }
+  .kpi-val { font-size: 28px; }
+  .kpi-lbl { min-height: auto; }
+
+  .obj-grid { grid-template-columns: 1fr; }
+  .obj-card:last-child { grid-column: 1; }
+  .bottom-grid { grid-template-columns: 1fr; }
+
+  .crm-wrap { padding: 12px; }
+  .stats-bar { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .stats-bar .stat:nth-child(4),
+  .stats-bar .stat:nth-child(5) { grid-column: span 1; }
+
+  .controls { gap: 6px; }
+  .filter-btn { font-size: 11px; padding: 5px 10px; }
+  .search-input { width: auto; flex: 1; min-width: 0; }
+
+  .table-wrap { border-radius: 6px; }
+  table { font-size: 11px; }
+  thead th { padding: 8px 8px; font-size: 9px; }
+  tbody td { padding: 8px 8px; }
+
+  /* Hide lower priority columns on mobile */
+  thead th:nth-child(4),
+  thead th:nth-child(7),
+  tbody td:nth-child(4),
+  tbody td:nth-child(7) { display: none; }
+
+  .modal { padding: 20px 16px; margin: 10px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-group.full { grid-column: 1; }
+}
+
+.funnel-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+.f-lbl { font-size: 11px; color: var(--muted); width: 100px; flex-shrink: 0; }
+.f-track { flex: 1; background: #E5E7EB; border-radius: 2px; height: 18px; overflow: hidden; position: relative; }
+.f-fill { height: 100%; border-radius: 2px; display: flex; align-items: center; padding-left: 7px; min-width: 24px; }
+.f-fill span { font-family: 'DM Mono', monospace; font-size: 9px; color: #fff; font-weight: 600; }
+.f-count { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--navy); width: 22px; text-align: right; flex-shrink: 0; }
+
+.overdue-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.overdue-item:last-child { border-bottom: none; }
+.od-name { font-size: 12px; font-weight: 600; color: var(--navy); }
+.od-co { font-size: 10px; color: var(--muted); margin-top: 1px; }
+.od-days { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--red); flex-shrink: 0; margin-left: 8px; }
+
+/* Edit KPIs modal */
+.edit-btn { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 2px; background: transparent; border: 1px solid var(--border); border-radius: 4px; padding: 5px 10px; cursor: pointer; float: right; margin-top: -2px; transition: all 0.15s; }
+.edit-btn:hover { color: var(--gold); border-color: var(--gold); }
+
+/* ══════════════════════════════════
+   CRM TRACKER
+══════════════════════════════════ */
+.crm-wrap { padding: 20px; }
+
+.stats-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
+.stat { background: var(--white); border: 1px solid var(--border); padding: 14px 16px; border-radius: 8px; }
+.stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; font-family: 'DM Mono', monospace; }
+.stat-value { font-family: 'DM Mono', monospace; font-size: 24px; font-weight: 500; color: var(--gold); }
+
+.controls { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+.filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+.filter-btn.active, .filter-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(184,146,46,0.08); }
+.add-btn { margin-left: auto; padding: 8px 18px; background: var(--navy); color: #fff; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.add-btn:hover { background: var(--navy-mid); }
+.search-input { padding: 7px 14px; background: var(--white); border: 1px solid var(--border); border-radius: 6px; color: var(--navy); font-size: 13px; font-family: 'DM Sans', sans-serif; width: 200px; outline: none; }
+.search-input::placeholder { color: var(--muted); }
+.search-input:focus { border-color: var(--navy); }
+
+.table-wrap { background: var(--white); border: 1px solid var(--border); border-radius: 10px; overflow: auto; max-height: calc(100vh - 240px); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th { text-align: left; padding: 10px 14px; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; white-space: nowrap; position: sticky; top: 0; background: #F9FAFB; z-index: 10; font-family: 'DM Mono', monospace; }
+thead th:hover { color: var(--navy); }
+tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; cursor: pointer; }
+tbody tr:hover { background: #F9FAFB; }
+tbody td { padding: 11px 14px; vertical-align: middle; color: var(--navy); }
+.contact-name { font-weight: 500; }
+.contact-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.badge { display: inline-block; padding: 3px 9px; border-radius: 12px; font-size: 11px; font-weight: 500; white-space: nowrap; }
+.badge-sent { background: rgba(37,99,235,0.08); color: #2563eb; border: 1px solid rgba(37,99,235,0.2); }
+.badge-responded { background: rgba(22,163,74,0.08); color: #16a34a; border: 1px solid rgba(22,163,74,0.2); }
+.badge-meeting { background: rgba(124,58,237,0.08); color: #7c3aed; border: 1px solid rgba(124,58,237,0.2); }
+.badge-followup { background: rgba(217,119,6,0.08); color: #d97706; border: 1px solid rgba(217,119,6,0.2); }
+.badge-proposal { background: rgba(184,146,46,0.1); color: #B8922E; border: 1px solid rgba(184,146,46,0.25); }
+.badge-noresponse { background: rgba(107,114,128,0.08); color: #6B7280; border: 1px solid rgba(107,114,128,0.2); }
+.badge-nurture { background: rgba(219,39,119,0.08); color: #db2777; border: 1px solid rgba(219,39,119,0.2); }
+.badge-proposalcreated { background: rgba(5,150,105,0.08); color: #059669; border: 1px solid rgba(5,150,105,0.2); }
+.badge-landed { background: rgba(13,27,62,0.08); color: #0D1B3E; border: 1px solid rgba(13,27,62,0.25); }
+.badge-inprogress { background: rgba(37,99,235,0.08); color: #1d4ed8; border: 1px solid rgba(37,99,235,0.25); }
+.badge-complete { background: rgba(22,163,74,0.12); color: #15803d; border: 1px solid rgba(22,163,74,0.3); }
+.type-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'DM Mono', monospace; }
+.type-pe { background: rgba(124,58,237,0.08); color: #7c3aed; }
+.type-prospect { background: rgba(22,163,74,0.08); color: #16a34a; }
+.type-network { background: rgba(37,99,235,0.08); color: #2563eb; }
+.type-chamber { background: rgba(184,146,46,0.08); color: #B8922E; }
+.type-platform { background: rgba(219,39,119,0.08); color: #db2777; }
+.date-text { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+.overdue-date { color: var(--red) !important; }
+.due-soon-date { color: var(--yellow) !important; }
+.notes-text { font-size: 12px; color: var(--muted); max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+.empty-row td { text-align: center; padding: 60px; color: var(--muted); font-size: 13px; }
+
+/* Modal */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+.modal { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 28px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+.modal h2 { font-size: 17px; font-weight: 600; margin-bottom: 20px; font-family: 'Playfair Display', serif; color: var(--navy); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1 / -1; }
+label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); font-family: 'DM Mono', monospace; }
+input, select, textarea { background: #F9FAFB; border: 1px solid var(--border); border-radius: 6px; padding: 9px 12px; color: var(--navy); font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.15s; }
+input:focus, select:focus, textarea:focus { border-color: var(--navy); }
+select option { background: var(--white); color: var(--navy); }
+textarea { resize: vertical; min-height: 70px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+.btn-cancel { padding: 9px 20px; background: transparent; border: 1px solid var(--border); border-radius: 6px; color: var(--muted); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; }
+.btn-cancel:hover { border-color: var(--navy); color: var(--navy); }
+.btn-save { padding: 9px 20px; background: var(--navy); border: none; border-radius: 6px; color: #fff; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; }
+.btn-delete { padding: 9px 20px; background: transparent; border: 1px solid rgba(220,38,38,0.3); border-radius: 6px; color: var(--red); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; margin-right: auto; }
+
+/* KPI Edit Modal */
+.kpi-edit-modal { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 28px; width: 100%; max-width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+.kpi-edit-modal h2 { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--navy); margin-bottom: 20px; }
+.kpi-edit-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.kpi-edit-row label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 1px; width: 180px; flex-shrink: 0; }
+.kpi-edit-row input { flex: 1; background: #F9FAFB; border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; color: var(--navy); font-family: 'DM Mono', monospace; font-size: 13px; outline: none; }
+.kpi-edit-row input:focus { border-color: var(--navy); }
+
+.scan-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.scan-btn:hover { background: var(--navy-mid); }
+
+.coming-soon-modal {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  text-align: center;
+}
+.coming-soon-icon { font-size: 40px; margin-bottom: 16px; }
+.coming-soon-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+.coming-soon-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+.coming-soon-link { display: inline-block; padding: 10px 24px; background: var(--navy); color: #fff; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; font-family: 'DM Sans', sans-serif; margin-bottom: 10px; }
+.coming-soon-link:hover { background: var(--navy-mid); }
+.coming-soon-close { display: block; margin-top: 12px; font-size: 12px; color: var(--muted); cursor: pointer; background: none; border: none; font-family: 'DM Sans', sans-serif; }
+.coming-soon-close:hover { color: var(--navy); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">Company X</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('v2r',this)">V2R Dashboard</button>
+    <button class="nav-tab" onclick="switchTab('crm',this)">Outreach Tracker</button>
+    <button class="nav-tab" onclick="switchTab('groups',this)">Networking Groups</button>
+  </div>
+  <div class="nav-right" style="display:flex;align-items:center;gap:14px">
+    <a href="https://www.accenditpartners.com" target="_blank" style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:2px;text-decoration:none;line-height:1.5;text-align:right;opacity:0.85;transition:opacity 0.15s" onmouseover="this.style.opacity='1';this.style.textDecoration='underline'" onmouseout="this.style.opacity='0.85';this.style.textDecoration='none'"><span style="font-size:11px;font-weight:700;letter-spacing:3px">A</span>CCENDIT<br><span style="font-size:11px;font-weight:700;letter-spacing:3px">P</span>ARTNERS</a>
+    <span style="background:rgba(201,168,76,0.2);color:#C9A84C;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;padding:4px 10px;border-radius:4px;text-transform:uppercase;border:1px solid rgba(201,168,76,0.3)">Demo</span>
+    <span id="nav-date"></span>
+  </div>
+</nav>
+
+<!-- ══ V2R PAGE ══ -->
+<div id="page-v2r" class="page active">
+<div class="v2r-wrap">
+
+  <div class="v2r-header">
+    <div class="v2r-title">Vision to <span>Results</span></div>
+    <div class="v2r-sub">How Company X runs its business — from vision to measurable outcomes</div>
+  </div>
+
+  <!-- Vision -->
+  <div class="vision-card">
+    <div class="vision-eyebrow">Vision</div>
+    <div class="vision-text">To be the execution partner that growing companies call when the gap between strategy and results is costing them time, money, and momentum.</div>
+  </div>
+
+  <!-- 5 KPIs -->
+  <div class="section-lbl">The 5 Metrics That Run the Business</div>
+  <div class="kpi-row" id="kpi-row"></div>
+
+  <!-- Objectives -->
+  <div class="section-lbl">Future State Objectives</div>
+  <div class="obj-grid">
+    <div class="obj-card">
+      <div class="obj-n">1</div>
+      <div class="obj-body">
+        <div class="obj-title">Partnering with 4 to 5 active clients at any given time, 12+ delivered per year</div>
+        <span class="obj-badge badge-building">Building</span>
+      </div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-n">2</div>
+      <div class="obj-body">
+        <div class="obj-title">Recognized as the go-to execution partner — regardless of industry or engagement type</div>
+        <span class="obj-badge badge-building">Building</span>
+      </div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-n">3</div>
+      <div class="obj-body">
+        <div class="obj-title">Every engagement produces a documented, measurable result and case study</div>
+        <span class="obj-badge badge-target">Target</span>
+      </div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-n">4</div>
+      <div class="obj-body">
+        <div class="obj-title">With minimal effort, the pipeline stays full — always a qualified prospect in the funnel</div>
+        <span class="obj-badge badge-building">Building</span>
+      </div>
+    </div>
+    <div class="obj-card" style="grid-column:1/-1">
+      <div class="obj-n">5</div>
+      <div class="obj-body">
+        <div class="obj-title">Company X operates as a true partner in every engagement, with repeatable systems that deliver results independent of role or title</div>
+        <span class="obj-badge badge-target">Target</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pipeline + Overdue -->
+  <div class="section-lbl">Pipeline Snapshot — Live from CRM</div>
+  <div class="bottom-grid">
+    <div class="panel">
+      <div class="panel-lbl">Outreach Funnel</div>
+      <div id="funnel-panel"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-lbl">Overdue Follow-ups <span id="overdue-count" style="color:var(--red);margin-left:6px"></span></div>
+      <div id="overdue-panel"></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══ CRM PAGE ══ -->
+<div id="page-crm" class="page">
+<div class="crm-wrap">
+  <div class="stats-bar" id="stats-bar"></div>
+  <div class="controls">
+    <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setFilter('PE',this)">PE Firms</button>
+    <button class="filter-btn" onclick="setFilter('Prospect',this)">Prospects</button>
+    <button class="filter-btn" onclick="setFilter('Network',this)">Network</button>
+    <button class="filter-btn" onclick="setFilter('Chamber',this)">Chambers</button>
+    <button class="filter-btn" onclick="setFilter('followup',this)">Needs Follow-up</button>
+  </div>
+  <div class="controls" style="margin-bottom:12px;flex-wrap:nowrap">
+    <input class="search-input" style="flex:1;width:auto;min-width:0" type="text" placeholder="Search contacts..." oninput="renderCRM()" id="search">
+    <button class="scan-btn" onclick="openScanModal('qr')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM17 17h3v3h-3zM14 20h3"/></svg>
+      Scan QR
+    </button>
+    <button class="scan-btn" onclick="openScanModal('card')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h4M6 14h8"/><circle cx="17" cy="12" r="2"/></svg>
+      Scan Card
+    </button>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortBy('name')">Contact</th>
+          <th onclick="sortBy('type')">Type</th>
+          <th onclick="sortBy('status')">Status</th>
+          <th onclick="sortBy('forBusiness')">For</th>
+          <th onclick="sortBy('channel')">Channel</th>
+          <th onclick="sortBy('sentDate')">Sent</th>
+          <th onclick="sortBy('followUpDate')">Follow-up</th>
+          <th>Notes</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- CRM Modal -->
+<div id="overlay" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <h2 id="modal-title">Add Contact</h2>
+    <div class="form-grid">
+      <div class="form-group"><label>Name</label><input id="f-name" placeholder="First Last"></div>
+      <div class="form-group"><label>Company</label><input id="f-company" placeholder="Company"></div>
+      <div class="form-group"><label>Title</label><input id="f-title" placeholder="Role / Title"></div>
+      <div class="form-group"><label>Type</label>
+        <select id="f-type"><option>PE</option><option>Prospect</option><option>Network</option><option>Chamber</option><option>Platform</option></select>
+      </div>
+      <div class="form-group"><label>Status</label>
+        <select id="f-status">
+          <option value="sent">Sent</option>
+          <option value="followup">Needs Follow-up</option>
+          <option value="responded">Responded</option>
+          <option value="meeting">Meeting Booked</option>
+          <option value="proposalcreated">Proposal Created</option>
+          <option value="proposal">Proposal Sent</option>
+          <option value="noresponse">No Response</option>
+          <option value="nurture">Long-term Nurture</option>
+          <option value="landed">Landed</option>
+          <option value="inprogress">In Progress</option>
+          <option value="complete">Complete</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Channel</label>
+        <select id="f-channel">
+          <option>LinkedIn InMail</option><option>LinkedIn Connection</option>
+          <option>Email</option><option>In Person</option>
+          <option>Phone</option><option>Referral</option>
+        </select>
+      </div>
+      <div class="form-group"><label>For</label>
+        <select id="f-forbusiness">
+          <option value="Company X">Company X</option>
+          <option value="Cascade">Cascade</option>
+          <option value="Both">Both</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Date Sent</label><input type="date" id="f-sent"></div>
+      <div class="form-group"><label>Follow-up Date</label><input id="f-followup" type="date"></div>
+      <div class="form-group"><label>LinkedIn URL</label><input id="f-linkedin" placeholder="https://linkedin.com/in/..."></div>
+      <div class="form-group"><label>Website</label><input id="f-website" placeholder="https://..."></div>
+      <div class="form-group"><label>Phone</label><input id="f-phone" placeholder="206-555-1234"></div>
+      <div class="form-group full"><label>Notes</label><textarea id="f-notes" placeholder="Context, referral source, next steps..."></textarea></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-delete" id="del-btn" style="display:none" onclick="deleteContact()">Delete</button>
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveContact()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- KPI Edit Modal -->
+<div id="kpi-overlay" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeKpiEdit()">
+  <div class="kpi-edit-modal" onclick="event.stopPropagation()">
+    <h2>Update KPI Actuals</h2>
+    <div class="kpi-edit-row"><label>Active Engagements</label><input id="ke-engagements" type="text" placeholder="e.g. 0"></div>
+    <div class="kpi-edit-row"><label>Qualified Prospects in Pipeline</label><input id="ke-prospects" type="text" placeholder="e.g. 2"></div>
+    <div class="kpi-edit-row"><label>Clients Delivered (YTD)</label><input id="ke-delivered" type="text" placeholder="e.g. 0"></div>
+    <div class="kpi-edit-row"><label>Proposal to Close Rate (%)</label><input id="ke-closerate" type="text" placeholder="e.g. 0"></div>
+    <div class="kpi-edit-row"><label>Client Satisfaction Score</label><input id="ke-csat" type="text" placeholder="e.g. —"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeKpiEdit()">Cancel</button>
+      <button class="btn-save" onclick="saveKpiActuals()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NETWORKING GROUPS PAGE ══ -->
+<div id="page-groups" class="page">
+<div class="crm-wrap">
+  <div class="stats-bar" id="groups-stats-bar"></div>
+  <div class="controls">
+    <button class="filter-btn active" onclick="setGroupFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setGroupFilter('Attended',this)">Attended</button>
+    <button class="filter-btn" onclick="setGroupFilter('Contacted',this)">Contacted</button>
+    <button class="filter-btn" onclick="setGroupFilter('Evaluating',this)">Evaluating</button>
+    <button class="filter-btn" onclick="setGroupFilter('Not Started',this)">Not Started</button>
+    <input class="search-input" type="text" placeholder="Search groups..." oninput="renderGroups()" id="group-search">
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortGroups('name')">Group</th>
+          <th onclick="sortGroups('status')">Status</th>
+          <th onclick="sortGroups('audienceFit')">Audience Fit</th>
+          <th onclick="sortGroups('value')">Value</th>
+          <th onclick="sortGroups('frequency')">Frequency</th>
+          <th onclick="sortGroups('cost')">Cost</th>
+          <th onclick="sortGroups('nextMeeting')">Next Meeting</th>
+          <th onclick="sortGroups('location')">Location</th>
+          <th>Link</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="groups-tbody"></tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- Groups Modal -->
+<div id="group-overlay" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeGroupModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <h2 id="group-modal-title">Add Networking Group</h2>
+    <div class="form-grid">
+      <div class="form-group full"><label>Group Name</label><input id="g-name" placeholder="e.g. Bellingham Manufacturing Roundtable"></div>
+      <div class="form-group"><label>Status</label>
+        <select id="g-status">
+          <option value="Not Started">Not Started</option>
+          <option value="Evaluating">Evaluating</option>
+          <option value="Contacted">Contacted</option>
+          <option value="Attended">Attended</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Audience Fit</label>
+        <select id="g-audience">
+          <option value="MFG">MFG</option>
+          <option value="SC">SC</option>
+          <option value="Tech">Tech</option>
+          <option value="Biz Owners">Biz Owners</option>
+          <option value="Entrepreneurs">Entrepreneurs</option>
+          <option value="PE">PE</option>
+          <option value="Mix">Mix</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Value</label>
+        <select id="g-value">
+          <option value="Visibility">Visibility</option>
+          <option value="Referrals">Referrals</option>
+          <option value="Clients">Clients</option>
+          <option value="Referrals + Clients">Referrals + Clients</option>
+          <option value="Visibility + Referrals">Visibility + Referrals</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Frequency</label>
+        <select id="g-frequency">
+          <option value="Weekly">Weekly</option>
+          <option value="Bi-weekly">Bi-weekly</option>
+          <option value="Monthly">Monthly</option>
+          <option value="Quarterly">Quarterly</option>
+          <option value="Annual">Annual</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Cost</label><input id="g-cost" placeholder="e.g. Free or $500/yr"></div>
+      <div class="form-group"><label>Next Meeting Date</label><input type="date" id="g-next"></div>
+      <div class="form-group"><label>Location</label><input id="g-location" placeholder="e.g. Bellingham, WA"></div>
+      <div class="form-group full"><label>Link</label><input id="g-link" placeholder="https://..."></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-delete" id="g-del-btn" style="display:none" onclick="deleteGroup()">Delete</button>
+      <button class="btn-cancel" onclick="closeGroupModal()">Cancel</button>
+      <button class="btn-save" onclick="saveGroup()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Coming Soon Modal -->
+<div id="scan-overlay" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeScanModal()">
+  <div class="coming-soon-modal" onclick="event.stopPropagation()">
+    <div class="coming-soon-icon" id="scan-icon"></div>
+    <div class="coming-soon-title" id="scan-title"></div>
+    <div class="coming-soon-desc" id="scan-desc"></div>
+    <a href="https://www.accenditpartners.com" target="_blank" class="coming-soon-link">Learn More at Accendit Partners</a>
+    <button class="coming-soon-close" onclick="closeScanModal()">Close</button>
+  </div>
+</div>
+
+<script>
+// ── SHARED DATA ──
+const CRM_KEY = 'companyx_crm_demo_v2';
+const KPI_KEY = 'companyx_kpi_demo_v2';
+const GROUPS_KEY = 'companyx_groups_demo_v2';
+
+let contacts = [], editId = null, filterMode = 'all', sKey = 'sentDate', sDir = -1;
+let groups = [], editGroupId = null, groupFilter = 'all', gSortKey = 'name', gSortDir = 1;
+
+const GROUPS_SEED = [
+  {id:1,name:'Downtown Business Roundtable',status:'Attended',audienceFit:'Biz Owners',value:'Referrals',frequency:'Monthly',cost:'Free',nextMeeting:'2026-06-10',location:'Portland, OR',link:'https://example.com'},
+  {id:2,name:'Pacific Manufacturing Alliance',status:'Attended',audienceFit:'MFG',value:'Clients',frequency:'Monthly',cost:'$300/yr',nextMeeting:'2026-06-15',location:'Seattle, WA',link:'https://example.com'},
+  {id:3,name:'Regional Supply Chain Network',status:'Attended',audienceFit:'SC',value:'Referrals',frequency:'Bi-weekly',cost:'Free',nextMeeting:'2026-05-28',location:'Tacoma, WA',link:'https://example.com'},
+  {id:4,name:'Entrepreneurs Organization NW',status:'Contacted',audienceFit:'Entrepreneurs',value:'Clients',frequency:'Monthly',cost:'$1,200/yr',nextMeeting:'',location:'Seattle, WA',link:'https://example.com'},
+  {id:5,name:'ACG Pacific Northwest',status:'Evaluating',audienceFit:'PE',value:'Referrals',frequency:'Monthly',cost:'$500/yr',nextMeeting:'',location:'Seattle, WA',link:'https://example.com'},
+  {id:6,name:'Local Chamber of Commerce',status:'Attended',audienceFit:'Mix',value:'Visibility',frequency:'Monthly',cost:'$250/yr',nextMeeting:'2026-06-03',location:'Bellevue, WA',link:'https://example.com'},
+  {id:7,name:'Industrial Operations Forum',status:'Not Started',audienceFit:'MFG',value:'Clients',frequency:'Quarterly',cost:'Free',nextMeeting:'',location:'Statewide WA',link:'https://example.com'},
+  {id:8,name:'Supply Chain Leaders Council',status:'Not Started',audienceFit:'SC',value:'Clients',frequency:'Monthly',cost:'$400/yr',nextMeeting:'',location:'Seattle, WA',link:'https://example.com'},
+  {id:9,name:'CEO Peer Group',status:'Evaluating',audienceFit:'Biz Owners',value:'Clients',frequency:'Monthly',cost:'$2,400/yr',nextMeeting:'',location:'Portland, OR',link:'https://example.com'},
+  {id:10,name:'Aerospace & Defense Network',status:'Not Started',audienceFit:'MFG',value:'Referrals',frequency:'Quarterly',cost:'Free',nextMeeting:'',location:'Everett, WA',link:'https://example.com'},
+  {id:11,name:'Tech Operators Roundtable',status:'Not Started',audienceFit:'Tech',value:'Referrals',frequency:'Monthly',cost:'Free',nextMeeting:'',location:'Seattle, WA',link:'https://example.com'},
+  {id:12,name:'Private Equity Connect',status:'Contacted',audienceFit:'PE',value:'Clients',frequency:'Quarterly',cost:'$750/yr',nextMeeting:'',location:'San Francisco, CA',link:'https://example.com'},
+];
+
+const SEED = [
+  {id:1,name:'Helen Anderson',company:'Pacific Northwest Plastics',title:'VP Supply Chain',type:'Prospect',status:'meeting',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-22',followUpDate:'2026-02-28',notes:'Interested in diagnostic as entry point.',linkedin:'',website:'',phone:''},
+  {id:2,name:'Lynn Murphy',company:'Northpoint PE',title:'Managing Partner',type:'PE',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-17',followUpDate:'2026-03-24',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:3,name:'Derek Reed',company:'Cascade Distribution Co.',title:'Owner',type:'Prospect',status:'meeting',channel:'Referral',forBusiness:'Both',sentDate:'2026-04-26',followUpDate:'2026-04-28',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:4,name:'Michael Wood',company:'Northpoint PE',title:'Operating Partner',type:'PE',status:'proposal',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-04-04',followUpDate:'2026-04-11',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:5,name:'Donna Gonzalez',company:'Apex Industrial Group',title:'Director of Operations',type:'Prospect',status:'proposal',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-02-13',followUpDate:'2026-02-20',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:6,name:'Raymond Nguyen',company:'Greater Spokane Chamber',title:'CEO',type:'Chamber',status:'meeting',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-25',followUpDate:'2026-03-28',notes:'Chamber connection. Potential referral source for member companies.',linkedin:'',website:'',phone:''},
+  {id:7,name:'David Robinson',company:'Harborview Packaging',title:'Owner',type:'Prospect',status:'proposal',channel:'Referral',forBusiness:'Company X',sentDate:'2026-03-12',followUpDate:'2026-03-19',notes:'Long-term nurture. Revisit in Q3 when budget cycle resets.',linkedin:'',website:'',phone:''},
+  {id:8,name:'Richard Kelly',company:'Harborview Freight',title:'COO',type:'Prospect',status:'responded',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-13',followUpDate:'2026-05-20',notes:'Background in operations and turnaround. Strong fit.',linkedin:'',website:'',phone:''},
+  {id:9,name:'Helen Bennett',company:'Northwest Capital',title:'Partner',type:'PE',status:'followup',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-02-26',followUpDate:'2026-02-28',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:10,name:'George Wright',company:'Cascade Metal Works',title:'VP Operations',type:'Prospect',status:'followup',channel:'Email',forBusiness:'Cascade',sentDate:'2026-05-21',followUpDate:'2026-05-28',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:11,name:'Paul King',company:'Evergreen Composites',title:'VP Operations',type:'Prospect',status:'proposal',channel:'Phone',forBusiness:'Both',sentDate:'2026-05-12',followUpDate:'2026-05-19',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:12,name:'Susan Deleon',company:'Pacific Crest Capital',title:'Managing Partner',type:'PE',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-26',followUpDate:'2026-03-28',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:13,name:'Anna Rodriguez',company:'Meridian Manufacturing',title:'Owner',type:'Prospect',status:'inprogress',channel:'Email',forBusiness:'Both',sentDate:'2026-02-22',followUpDate:'2026-02-28',notes:'Follow-up call scheduled. Alignment on supply chain challenges.',linkedin:'',website:'',phone:''},
+  {id:14,name:'Rachel Walsh',company:'Harborview Freight',title:'Director of Operations',type:'Prospect',status:'sent',channel:'Email',forBusiness:'Cascade',sentDate:'2026-03-15',followUpDate:'2026-03-22',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:15,name:'Christopher Olsen',company:'Columbia Basin Manufacturing',title:'COO',type:'Prospect',status:'proposalcreated',channel:'Email',forBusiness:'Company X',sentDate:'2026-04-25',followUpDate:'2026-04-28',notes:'Active discussion on fractional COO engagement scope.',linkedin:'',website:'',phone:''},
+  {id:16,name:'Samuel Ingram',company:'Ironridge Manufacturing',title:'Director of Operations',type:'Prospect',status:'complete',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-04-27',followUpDate:'2026-04-28',notes:'Chamber connection. Potential referral source for member companies.',linkedin:'',website:'',phone:''},
+  {id:17,name:'Sarah Davis',company:'Clearwater Distribution',title:'COO',type:'Prospect',status:'sent',channel:'Referral',forBusiness:'Company X',sentDate:'2026-03-05',followUpDate:'2026-03-12',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:18,name:'Raymond Perez',company:'Northwest Logistics Group',title:'Owner',type:'Prospect',status:'meeting',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-22',followUpDate:'2026-05-28',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:19,name:'Joshua Kim',company:'Olympic Capital Group',title:'Principal',type:'PE',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-11',followUpDate:'2026-02-18',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:20,name:'Shirley Brooks',company:'Pacific Rim Exports',title:'VP Operations',type:'Prospect',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-03',followUpDate:'2026-03-10',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:21,name:'Donald Martinez',company:'Ridgeline Private Equity',title:'Partner',type:'PE',status:'proposal',channel:'Referral',forBusiness:'Company X',sentDate:'2026-03-24',followUpDate:'2026-03-28',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:22,name:'Amy Moretti',company:'Clearwater Distribution',title:'Managing Director',type:'Prospect',status:'landed',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-22',followUpDate:'2026-02-28',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:23,name:'Andrew Nambiar',company:'Summit Growth Capital',title:'Principal',type:'PE',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-24',followUpDate:'2026-05-28',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:24,name:'Stephanie Young',company:'Cascade Distribution Co.',title:'VP Operations',type:'Prospect',status:'inprogress',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-03-09',followUpDate:'2026-03-16',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:25,name:'Charles Martinez',company:'Lakeview Capital Partners',title:'Vice President',type:'PE',status:'sent',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-02-03',followUpDate:'2026-02-10',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:26,name:'Patricia Chen',company:'Pacific Crest Capital',title:'Principal',type:'PE',status:'meeting',channel:'Phone',forBusiness:'Company X',sentDate:'2026-03-13',followUpDate:'2026-03-20',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:27,name:'Kenneth King',company:'Highline Venture Partners',title:'Operating Partner',type:'PE',status:'landed',channel:'Referral',forBusiness:'Company X',sentDate:'2026-03-10',followUpDate:'2026-03-17',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:28,name:'Angela Bell',company:'Rainier Partners',title:'Managing Partner',type:'PE',status:'followup',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-17',followUpDate:'2026-05-24',notes:'Warm referral from existing network contact.',linkedin:'',website:'',phone:''},
+  {id:29,name:'Michael Davis',company:'Ridgeline Private Equity',title:'Managing Partner',type:'PE',status:'responded',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-02-22',followUpDate:'2026-02-28',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:30,name:'George Thomas',company:'Bellingham Chamber',title:'President',type:'Chamber',status:'sent',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-04-09',followUpDate:'2026-04-16',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:31,name:'Tanya Ross',company:'Pinnacle Tech Solutions',title:'VP Operations',type:'Prospect',status:'proposal',channel:'Phone',forBusiness:'Company X',sentDate:'2026-04-15',followUpDate:'2026-04-22',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:32,name:'Carla Johnson',company:'Highline Venture Partners',title:'Vice President',type:'PE',status:'sent',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-03-17',followUpDate:'2026-03-24',notes:'Background in operations and turnaround. Strong fit.',linkedin:'',website:'',phone:''},
+  {id:33,name:'Chris Hall',company:'Cascade Metal Works',title:'VP Operations',type:'Prospect',status:'noresponse',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-27',followUpDate:'2026-05-28',notes:'Interested in diagnostic as entry point.',linkedin:'',website:'',phone:''},
+  {id:34,name:'Betty Richardson',company:'Aligned Operations Group',title:'Director',type:'Network',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-09',followUpDate:'2026-03-16',notes:'Follow-up call scheduled. Alignment on supply chain challenges.',linkedin:'',website:'',phone:''},
+  {id:35,name:'Stephanie Perry',company:'Northwest Capital',title:'Partner',type:'PE',status:'proposal',channel:'Email',forBusiness:'Both',sentDate:'2026-03-23',followUpDate:'2026-03-28',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:36,name:'Richard Price',company:'Greater Spokane Chamber',title:'CEO',type:'Chamber',status:'complete',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-21',followUpDate:'2026-02-28',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:37,name:'Daniel Garcia',company:'Ironridge Manufacturing',title:'Director of Operations',type:'Prospect',status:'responded',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-18',followUpDate:'2026-05-25',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:38,name:'Cynthia Johnson',company:'Ridgeline Precision Parts',title:'COO',type:'Prospect',status:'responded',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-14',followUpDate:'2026-03-21',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:39,name:'Tom Flores',company:'Summit Growth Technologies',title:'CEO',type:'Prospect',status:'noresponse',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-12',followUpDate:'2026-02-19',notes:'Interested in diagnostic as entry point.',linkedin:'',website:'',phone:''},
+  {id:40,name:'Edward Cox',company:'Puget Sound Tooling',title:'VP Operations',type:'Prospect',status:'responded',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-02-06',followUpDate:'2026-02-13',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:41,name:'Edward Kelly',company:'Clearwater Distribution',title:'VP Supply Chain',type:'Prospect',status:'responded',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-02-28',followUpDate:'2026-02-28',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:42,name:'Jessica Sanchez',company:'Highline Venture Partners',title:'Operating Partner',type:'PE',status:'proposalcreated',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-22',followUpDate:'2026-02-28',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:43,name:'George Nelson',company:'Harborview Freight',title:'COO',type:'Prospect',status:'proposal',channel:'In Person',forBusiness:'Both',sentDate:'2026-05-22',followUpDate:'2026-05-28',notes:'Interested in diagnostic as entry point.',linkedin:'',website:'',phone:''},
+  {id:44,name:'Donald Brown',company:'Ridgeline Precision Parts',title:'VP Supply Chain',type:'Prospect',status:'responded',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-20',followUpDate:'2026-02-27',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:45,name:'Dorothy Coleman',company:'Pinnacle Tech Solutions',title:'Owner',type:'Prospect',status:'sent',channel:'Phone',forBusiness:'Both',sentDate:'2026-03-09',followUpDate:'2026-03-16',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:46,name:'Jason Smith',company:'Olympic Capital Group',title:'Vice President',type:'PE',status:'meeting',channel:'In Person',forBusiness:'Cascade',sentDate:'2026-02-22',followUpDate:'2026-02-28',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:47,name:'Emma Green',company:'Blue Ridge Consulting',title:'Consultant',type:'Network',status:'sent',channel:'Email',forBusiness:'Both',sentDate:'2026-04-22',followUpDate:'2026-04-28',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:48,name:'Mark Rutherford',company:'Summit Executive Advisors',title:'Managing Partner',type:'Network',status:'responded',channel:'Email',forBusiness:'Cascade',sentDate:'2026-05-22',followUpDate:'2026-05-28',notes:'Active discussion on fractional COO engagement scope.',linkedin:'',website:'',phone:''},
+  {id:49,name:'Pamela Cook',company:'Olympic Distribution',title:'Owner',type:'Prospect',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-14',followUpDate:'2026-03-21',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:50,name:'Brenda Gray',company:'Pinnacle Tech Solutions',title:'Managing Director',type:'Prospect',status:'inprogress',channel:'Referral',forBusiness:'Company X',sentDate:'2026-05-26',followUpDate:'2026-05-28',notes:'Active discussion on fractional COO engagement scope.',linkedin:'',website:'',phone:''},
+  {id:51,name:'Christine Hernandez',company:'Summit Supply Chain',title:'Director of Operations',type:'Prospect',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-26',followUpDate:'2026-03-28',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:52,name:'Paul Brown',company:'Mount Baker Fabrication',title:'VP Operations',type:'Prospect',status:'complete',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-05-21',followUpDate:'2026-05-28',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:53,name:'William Ross',company:'Summit Executive Advisors',title:'President',type:'Network',status:'complete',channel:'Phone',forBusiness:'Company X',sentDate:'2026-03-21',followUpDate:'2026-03-28',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:54,name:'Stephanie Nambiar',company:'Pacific Rim Exports',title:'President',type:'Prospect',status:'inprogress',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-03-28',followUpDate:'2026-03-28',notes:'Follow-up call scheduled. Alignment on supply chain challenges.',linkedin:'',website:'',phone:''},
+  {id:55,name:'Jacob Moore',company:'Highline Venture Partners',title:'Vice President',type:'PE',status:'followup',channel:'Referral',forBusiness:'Both',sentDate:'2026-05-27',followUpDate:'2026-05-28',notes:'Interested in diagnostic as entry point.',linkedin:'',website:'',phone:''},
+  {id:56,name:'Ryan Lee',company:'Cascadia PE Group',title:'Principal',type:'PE',status:'proposal',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-21',followUpDate:'2026-05-28',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:57,name:'Daniel Kim',company:'Cascade Metal Works',title:'VP Supply Chain',type:'Prospect',status:'meeting',channel:'Email',forBusiness:'Company X',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:58,name:'Susan Martin',company:'Pacific Rim Exports',title:'Owner',type:'Prospect',status:'responded',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-14',followUpDate:'2026-05-21',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:59,name:'Samuel Park',company:'Summit Growth Capital',title:'Managing Partner',type:'PE',status:'meeting',channel:'Phone',forBusiness:'Cascade',sentDate:'2026-02-28',followUpDate:'2026-02-28',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:60,name:'Donna Bauer',company:'Ironridge Manufacturing',title:'Director of Operations',type:'Prospect',status:'proposalcreated',channel:'Phone',forBusiness:'Cascade',sentDate:'2026-03-16',followUpDate:'2026-03-23',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:61,name:'Lisa Ellsworth',company:'Pacific Crest Capital',title:'Managing Partner',type:'PE',status:'nurture',channel:'In Person',forBusiness:'Cascade',sentDate:'2026-03-27',followUpDate:'2026-03-28',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:62,name:'Chris Cox',company:'Rainier Partners',title:'Managing Partner',type:'PE',status:'nurture',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-05',followUpDate:'2026-05-12',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:63,name:'Jennifer Miller',company:'Northwest Logistics Group',title:'Owner',type:'Prospect',status:'followup',channel:'Email',forBusiness:'Cascade',sentDate:'2026-04-11',followUpDate:'2026-04-18',notes:'Strong fit. Delivery reliability and scheduling challenges.',linkedin:'',website:'',phone:''},
+  {id:64,name:'Daniel Powell',company:'Summit Growth Capital',title:'Operating Partner',type:'PE',status:'sent',channel:'Referral',forBusiness:'Company X',sentDate:'2026-02-12',followUpDate:'2026-02-19',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:65,name:'Katherine Rodriguez',company:'Aligned Operations Group',title:'CEO',type:'Network',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-20',followUpDate:'2026-02-27',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:66,name:'Sarah Taylor',company:'Cascadia PE Group',title:'Managing Partner',type:'PE',status:'meeting',channel:'Referral',forBusiness:'Company X',sentDate:'2026-04-06',followUpDate:'2026-04-13',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:67,name:'Brenda Perry',company:'Pacific Operations Partners',title:'CEO',type:'Network',status:'responded',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-10',followUpDate:'2026-02-17',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:68,name:'Carla Carter',company:'Pacific Tech Ventures',title:'VP Operations',type:'Prospect',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-04-28',followUpDate:'2026-04-28',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:69,name:'Tanya Cook',company:'Mount Baker Fabrication',title:'Director of Operations',type:'Prospect',status:'landed',channel:'In Person',forBusiness:'Company X',sentDate:'2026-04-01',followUpDate:'2026-04-08',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:70,name:'Jonathan Wilson',company:'Northpoint PE',title:'Operating Partner',type:'PE',status:'inprogress',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-03-24',followUpDate:'2026-03-28',notes:'Warm referral from existing network contact.',linkedin:'',website:'',phone:''},
+  {id:71,name:'Katherine Wright',company:'Snohomish County Chamber',title:'Board Chair',type:'Chamber',status:'inprogress',channel:'Phone',forBusiness:'Both',sentDate:'2026-04-11',followUpDate:'2026-04-18',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:72,name:'Lynn Scott',company:'Lakeview Capital Partners',title:'Partner',type:'PE',status:'inprogress',channel:'Phone',forBusiness:'Company X',sentDate:'2026-02-16',followUpDate:'2026-02-23',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:73,name:'Jennifer Marsh',company:'West Coast Fulfillment',title:'Director of Operations',type:'Prospect',status:'proposal',channel:'In Person',forBusiness:'Company X',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:74,name:'Scott Harris',company:'Summit Industrial Components',title:'VP Operations',type:'Prospect',status:'landed',channel:'Referral',forBusiness:'Both',sentDate:'2026-03-23',followUpDate:'2026-03-28',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:75,name:'Samantha Ross',company:'Pacific Crest Capital',title:'Principal',type:'PE',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-13',followUpDate:'2026-03-20',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:76,name:'Anthony Watson',company:'Skagit Valley Chamber',title:'CEO',type:'Chamber',status:'complete',channel:'In Person',forBusiness:'Cascade',sentDate:'2026-04-12',followUpDate:'2026-04-19',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:77,name:'Lisa Flores',company:'Northwest Logistics Group',title:'VP Operations',type:'Prospect',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-24',followUpDate:'2026-02-28',notes:'Interested in diagnostic as entry point.',linkedin:'',website:'',phone:''},
+  {id:78,name:'Lynn White',company:'Cascade Distribution Co.',title:'VP Operations',type:'Prospect',status:'complete',channel:'Email',forBusiness:'Both',sentDate:'2026-04-04',followUpDate:'2026-04-11',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:79,name:'Matthew Robinson',company:'Summit Growth Technologies',title:'President',type:'Prospect',status:'proposalcreated',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-03-09',followUpDate:'2026-03-16',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:80,name:'Rachel Brooks',company:'Summit Supply Chain',title:'President',type:'Prospect',status:'complete',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-04-16',followUpDate:'2026-04-23',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:81,name:'Jeffrey Baker',company:'Columbia Basin Manufacturing',title:'CEO',type:'Prospect',status:'proposal',channel:'Referral',forBusiness:'Company X',sentDate:'2026-02-13',followUpDate:'2026-02-20',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:82,name:'Carla Morgan',company:'Greater Spokane Chamber',title:'Executive Director',type:'Chamber',status:'responded',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-04-03',followUpDate:'2026-04-10',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:83,name:'Tanya Reed',company:'Summit Growth Capital',title:'Vice President',type:'PE',status:'meeting',channel:'Phone',forBusiness:'Cascade',sentDate:'2026-05-10',followUpDate:'2026-05-17',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:84,name:'Timothy Flores',company:'Bellingham Chamber',title:'Executive Director',type:'Chamber',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-04-22',followUpDate:'2026-04-28',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:85,name:'Michael Walker',company:'Columbia Basin Manufacturing',title:'COO',type:'Prospect',status:'responded',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-05-23',followUpDate:'2026-05-28',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:86,name:'Nicholas Nguyen',company:'Mount Baker Fabrication',title:'VP Operations',type:'Prospect',status:'proposalcreated',channel:'Email',forBusiness:'Cascade',sentDate:'2026-02-22',followUpDate:'2026-02-28',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:87,name:'Christopher Howard',company:'Skagit Valley Chamber',title:'President',type:'Chamber',status:'landed',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-03-21',followUpDate:'2026-03-28',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:88,name:'Lisa Jackson',company:'Cascade Metal Works',title:'CEO',type:'Prospect',status:'responded',channel:'Email',forBusiness:'Both',sentDate:'2026-04-15',followUpDate:'2026-04-22',notes:'Follow-up call scheduled. Alignment on supply chain challenges.',linkedin:'',website:'',phone:''},
+  {id:89,name:'Gary Bennett',company:'Olympic Distribution',title:'Owner',type:'Prospect',status:'proposal',channel:'Referral',forBusiness:'Cascade',sentDate:'2026-02-20',followUpDate:'2026-02-27',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:90,name:'Jason Jenkins',company:'Pinnacle Tech Solutions',title:'VP Supply Chain',type:'Prospect',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-02-25',followUpDate:'2026-02-28',notes:'Background in operations and turnaround. Strong fit.',linkedin:'',website:'',phone:''},
+  {id:91,name:'Amy Garcia',company:'Columbia Basin Manufacturing',title:'Managing Director',type:'Prospect',status:'inprogress',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-21',followUpDate:'2026-05-28',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:92,name:'Lynn Moretti',company:'Apex Industrial Group',title:'Owner',type:'Prospect',status:'followup',channel:'In Person',forBusiness:'Company X',sentDate:'2026-03-11',followUpDate:'2026-03-18',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:93,name:'Lynn Fitzgerald',company:'Summit Supply Chain',title:'Owner',type:'Prospect',status:'sent',channel:'Referral',forBusiness:'Company X',sentDate:'2026-04-09',followUpDate:'2026-04-16',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:94,name:'Noah Patterson',company:'Pacific Tech Ventures',title:'CEO',type:'Prospect',status:'inprogress',channel:'Phone',forBusiness:'Company X',sentDate:'2026-03-17',followUpDate:'2026-03-24',notes:'Long-term nurture. Revisit in Q3 when budget cycle resets.',linkedin:'',website:'',phone:''},
+  {id:95,name:'Emma Powell',company:'Pacific Crest Capital',title:'Principal',type:'PE',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-10',followUpDate:'2026-03-17',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:96,name:'Jonathan Thomas',company:'Pacific Northwest Plastics',title:'VP Operations',type:'Prospect',status:'responded',channel:'Email',forBusiness:'Both',sentDate:'2026-02-18',followUpDate:'2026-02-25',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:97,name:'Lynn Lewis',company:'Ridgeline Precision Parts',title:'Managing Director',type:'Prospect',status:'sent',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-04-17',followUpDate:'2026-04-24',notes:'Background in operations and turnaround. Strong fit.',linkedin:'',website:'',phone:''},
+  {id:98,name:'Ronald Bauer',company:'Cascadia PE Group',title:'Partner',type:'PE',status:'inprogress',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-03-20',followUpDate:'2026-03-27',notes:'Warm referral from existing network contact.',linkedin:'',website:'',phone:''},
+  {id:99,name:'Susan Rodriguez',company:'Harborview Freight',title:'Owner',type:'Prospect',status:'followup',channel:'Email',forBusiness:'Company X',sentDate:'2026-04-24',followUpDate:'2026-04-28',notes:'Chamber connection. Potential referral source for member companies.',linkedin:'',website:'',phone:''},
+  {id:100,name:'Shirley Bell',company:'Blue Ridge Consulting',title:'President',type:'Network',status:'responded',channel:'Referral',forBusiness:'Both',sentDate:'2026-05-12',followUpDate:'2026-05-19',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:101,name:'Raymond Long',company:'Rainier Partners',title:'Principal',type:'PE',status:'inprogress',channel:'In Person',forBusiness:'Company X',sentDate:'2026-03-19',followUpDate:'2026-03-26',notes:'Strong fit. Delivery reliability and scheduling challenges.',linkedin:'',website:'',phone:''},
+  {id:102,name:'Thomas Chen',company:'Mount Baker Fabrication',title:'Director of Operations',type:'Prospect',status:'complete',channel:'Phone',forBusiness:'Cascade',sentDate:'2026-03-16',followUpDate:'2026-03-23',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:103,name:'Chris Olsen',company:'Skagit Valley Chamber',title:'CEO',type:'Chamber',status:'sent',channel:'Referral',forBusiness:'Company X',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:104,name:'Edward Gray',company:'Puget Sound Tooling',title:'COO',type:'Prospect',status:'complete',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-21',followUpDate:'2026-05-28',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:105,name:'Donald Sanders',company:'Rainier Partners',title:'Principal',type:'PE',status:'followup',channel:'Referral',forBusiness:'Both',sentDate:'2026-02-20',followUpDate:'2026-02-27',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:106,name:'Sarah Howard',company:'Cascade Advisory',title:'Managing Partner',type:'Network',status:'meeting',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-02-25',followUpDate:'2026-02-28',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:107,name:'Kevin Kim',company:'Northwest Forge',title:'VP Supply Chain',type:'Prospect',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-02-10',followUpDate:'2026-02-17',notes:'Long-term nurture. Revisit in Q3 when budget cycle resets.',linkedin:'',website:'',phone:''},
+  {id:108,name:'Joshua Ellsworth',company:'Puget Sound Tooling',title:'VP Operations',type:'Prospect',status:'landed',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-03',followUpDate:'2026-03-10',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:109,name:'Donna Cox',company:'Cascade Advisory',title:'Founder',type:'Network',status:'complete',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-21',followUpDate:'2026-05-28',notes:'Background in operations and turnaround. Strong fit.',linkedin:'',website:'',phone:''},
+  {id:110,name:'Jacob Allen',company:'Blue Ridge Consulting',title:'CEO',type:'Network',status:'inprogress',channel:'Email',forBusiness:'Both',sentDate:'2026-03-03',followUpDate:'2026-03-10',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:111,name:'Dorothy Murphy',company:'Olympic Distribution',title:'Owner',type:'Prospect',status:'proposal',channel:'Referral',forBusiness:'Company X',sentDate:'2026-03-13',followUpDate:'2026-03-20',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:112,name:'Stephanie Walker',company:'Meridian Manufacturing',title:'Director of Operations',type:'Prospect',status:'proposalcreated',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-09',followUpDate:'2026-05-16',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:113,name:'Kathleen Price',company:'Olympic Fasteners',title:'Managing Director',type:'Prospect',status:'proposalcreated',channel:'Email',forBusiness:'Both',sentDate:'2026-04-08',followUpDate:'2026-04-15',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:114,name:'William Cox',company:'Northwest Logistics Group',title:'President',type:'Prospect',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-02',followUpDate:'2026-05-09',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:115,name:'Emily Coleman',company:'Evergreen Composites',title:'COO',type:'Prospect',status:'proposalcreated',channel:'In Person',forBusiness:'Cascade',sentDate:'2026-03-07',followUpDate:'2026-03-14',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:116,name:'Samuel Campbell',company:'Olympic Capital Group',title:'Vice President',type:'PE',status:'proposal',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-26',followUpDate:'2026-05-28',notes:'Chamber connection. Potential referral source for member companies.',linkedin:'',website:'',phone:''},
+  {id:117,name:'Steven Anderson',company:'Highline Venture Partners',title:'Managing Partner',type:'PE',status:'responded',channel:'Email',forBusiness:'Cascade',sentDate:'2026-04-03',followUpDate:'2026-04-10',notes:'Strong fit. Delivery reliability and scheduling challenges.',linkedin:'',website:'',phone:''},
+  {id:118,name:'Sandra King',company:'Rainier Partners',title:'Managing Partner',type:'PE',status:'inprogress',channel:'In Person',forBusiness:'Company X',sentDate:'2026-05-27',followUpDate:'2026-05-28',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:119,name:'Joshua Wilson',company:'Cascade Advisory',title:'Founder',type:'Network',status:'complete',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:120,name:'Samantha Rodriguez',company:'Greater Spokane Chamber',title:'Board Chair',type:'Chamber',status:'proposalcreated',channel:'Phone',forBusiness:'Company X',sentDate:'2026-03-02',followUpDate:'2026-03-09',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:121,name:'Betty Fitzgerald',company:'Ridgeline Precision Parts',title:'COO',type:'Prospect',status:'meeting',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-05-12',followUpDate:'2026-05-19',notes:'Interested in diagnostic as entry point.',linkedin:'',website:'',phone:''},
+  {id:122,name:'Ronald Murphy',company:'Puget Sound Tooling',title:'Owner',type:'Prospect',status:'sent',channel:'Referral',forBusiness:'Both',sentDate:'2026-05-09',followUpDate:'2026-05-16',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:123,name:'Lynn Mitchell',company:'West Coast Fulfillment',title:'Managing Director',type:'Prospect',status:'inprogress',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-22',followUpDate:'2026-02-28',notes:'Long-term nurture. Revisit in Q3 when budget cycle resets.',linkedin:'',website:'',phone:''},
+  {id:124,name:'Samuel Peterson',company:'Apex Industrial Group',title:'CEO',type:'Prospect',status:'nurture',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-28',followUpDate:'2026-02-28',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:125,name:'Lynn Watson',company:'West Coast Fulfillment',title:'CEO',type:'Prospect',status:'sent',channel:'In Person',forBusiness:'Company X',sentDate:'2026-03-26',followUpDate:'2026-03-28',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:126,name:'Richard Rodriguez',company:'Northwest Capital',title:'Partner',type:'PE',status:'meeting',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-26',followUpDate:'2026-03-28',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:127,name:'James Scott',company:'Puget Sound Tooling',title:'President',type:'Prospect',status:'proposal',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-02-05',followUpDate:'2026-02-12',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:128,name:'Andrew Walker',company:'Skagit Valley Chamber',title:'CEO',type:'Chamber',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-02-05',followUpDate:'2026-02-12',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:129,name:'Brandon Anderson',company:'Cascade Metal Works',title:'Managing Director',type:'Prospect',status:'inprogress',channel:'In Person',forBusiness:'Both',sentDate:'2026-02-15',followUpDate:'2026-02-22',notes:'Warm referral from existing network contact.',linkedin:'',website:'',phone:''},
+  {id:130,name:'Jessica Richardson',company:'Mount Baker Fabrication',title:'VP Supply Chain',type:'Prospect',status:'inprogress',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-28',followUpDate:'2026-05-28',notes:'Strong fit. Delivery reliability and scheduling challenges.',linkedin:'',website:'',phone:''},
+  {id:131,name:'Timothy Price',company:'Harborview Packaging',title:'Managing Director',type:'Prospect',status:'inprogress',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:132,name:'Brian Taylor',company:'Harborview Freight',title:'Director of Operations',type:'Prospect',status:'nurture',channel:'Email',forBusiness:'Cascade',sentDate:'2026-05-04',followUpDate:'2026-05-11',notes:'Follow-up call scheduled. Alignment on supply chain challenges.',linkedin:'',website:'',phone:''},
+  {id:133,name:'Katherine Gray',company:'Northwest Capital',title:'Partner',type:'PE',status:'landed',channel:'Referral',forBusiness:'Company X',sentDate:'2026-05-11',followUpDate:'2026-05-18',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:134,name:'George Holloway',company:'Harborview Packaging',title:'Director of Operations',type:'Prospect',status:'landed',channel:'In Person',forBusiness:'Company X',sentDate:'2026-04-05',followUpDate:'2026-04-12',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:135,name:'Brian Lopez',company:'Summit Industrial Components',title:'COO',type:'Prospect',status:'landed',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-18',followUpDate:'2026-03-25',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:136,name:'Shirley Reed',company:'Northwest Capital',title:'Operating Partner',type:'PE',status:'sent',channel:'Phone',forBusiness:'Company X',sentDate:'2026-05-28',followUpDate:'2026-05-28',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:137,name:'Nancy Bailey',company:'Olympic Distribution',title:'Director of Operations',type:'Prospect',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-08',followUpDate:'2026-05-15',notes:'Follow-up call scheduled. Alignment on supply chain challenges.',linkedin:'',website:'',phone:''},
+  {id:138,name:'Dorothy Reed',company:'Summit Growth Technologies',title:'COO',type:'Prospect',status:'proposal',channel:'Email',forBusiness:'Cascade',sentDate:'2026-02-20',followUpDate:'2026-02-27',notes:'Background in operations and turnaround. Strong fit.',linkedin:'',website:'',phone:''},
+  {id:139,name:'Derek White',company:'Harborview Freight',title:'VP Supply Chain',type:'Prospect',status:'followup',channel:'In Person',forBusiness:'Company X',sentDate:'2026-03-28',followUpDate:'2026-03-28',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:140,name:'Kathleen Watson',company:'Pacific Tech Ventures',title:'COO',type:'Prospect',status:'responded',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-13',followUpDate:'2026-03-20',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:141,name:'Jacob Baker',company:'Northwest Forge',title:'Director of Operations',type:'Prospect',status:'proposalcreated',channel:'In Person',forBusiness:'Both',sentDate:'2026-02-02',followUpDate:'2026-02-09',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:142,name:'Michael Powell',company:'Snohomish County Chamber',title:'Executive Director',type:'Chamber',status:'sent',channel:'Email',forBusiness:'Cascade',sentDate:'2026-05-16',followUpDate:'2026-05-23',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:143,name:'Jeffrey Holloway',company:'Harborview Freight',title:'VP Operations',type:'Prospect',status:'sent',channel:'In Person',forBusiness:'Cascade',sentDate:'2026-02-10',followUpDate:'2026-02-17',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:144,name:'Jonathan Ingram',company:'Blue Ridge Consulting',title:'Managing Partner',type:'Network',status:'sent',channel:'Email',forBusiness:'Cascade',sentDate:'2026-02-01',followUpDate:'2026-02-08',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:145,name:'Betty Ramirez',company:'Evergreen Composites',title:'VP Supply Chain',type:'Prospect',status:'proposalcreated',channel:'In Person',forBusiness:'Company X',sentDate:'2026-02-16',followUpDate:'2026-02-23',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:146,name:'Robert Taylor',company:'Meridian Manufacturing',title:'VP Operations',type:'Prospect',status:'noresponse',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-02-14',followUpDate:'2026-02-21',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:147,name:'Jacob Martinez',company:'Pinnacle Tech Solutions',title:'Owner',type:'Prospect',status:'nurture',channel:'Phone',forBusiness:'Company X',sentDate:'2026-02-13',followUpDate:'2026-02-20',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:148,name:'Mark Perez',company:'Snohomish County Chamber',title:'Board Chair',type:'Chamber',status:'noresponse',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-02-08',followUpDate:'2026-02-15',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:149,name:'Shirley Rutherford',company:'Olympic Capital Group',title:'Managing Partner',type:'PE',status:'nurture',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-11',followUpDate:'2026-03-18',notes:'Active discussion on fractional COO engagement scope.',linkedin:'',website:'',phone:''},
+  {id:150,name:'Carla Deleon',company:'Greater Spokane Chamber',title:'Executive Director',type:'Chamber',status:'meeting',channel:'In Person',forBusiness:'Company X',sentDate:'2026-03-08',followUpDate:'2026-03-15',notes:'Follow-up call scheduled. Alignment on supply chain challenges.',linkedin:'',website:'',phone:''},
+  {id:151,name:'Paul Allen',company:'Cascade Distribution Co.',title:'President',type:'Prospect',status:'responded',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-15',followUpDate:'2026-05-22',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:152,name:'Angela Stafford',company:'Cascade Advisory',title:'Director',type:'Network',status:'followup',channel:'In Person',forBusiness:'Company X',sentDate:'2026-05-03',followUpDate:'2026-05-10',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:153,name:'Jeffrey Howard',company:'Olympic Distribution',title:'VP Supply Chain',type:'Prospect',status:'sent',channel:'In Person',forBusiness:'Both',sentDate:'2026-02-10',followUpDate:'2026-02-17',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:154,name:'Ryan Jones',company:'Olympic Fasteners',title:'Director of Operations',type:'Prospect',status:'proposalcreated',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-15',followUpDate:'2026-05-22',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:155,name:'Raymond Jenkins',company:'Mount Baker Fabrication',title:'Managing Director',type:'Prospect',status:'meeting',channel:'In Person',forBusiness:'Both',sentDate:'2026-05-17',followUpDate:'2026-05-24',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:156,name:'Angela Stafford',company:'Harborview Packaging',title:'Director of Operations',type:'Prospect',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-23',followUpDate:'2026-03-28',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:157,name:'Jeffrey Ingram',company:'Olympic Capital Group',title:'Vice President',type:'PE',status:'responded',channel:'In Person',forBusiness:'Company X',sentDate:'2026-04-13',followUpDate:'2026-04-20',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:158,name:'Steven Sanders',company:'Whatcom Business Alliance',title:'Executive Director',type:'Chamber',status:'followup',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-02-18',followUpDate:'2026-02-25',notes:'Strong fit. Delivery reliability and scheduling challenges.',linkedin:'',website:'',phone:''},
+  {id:159,name:'Nancy Allen',company:'Blue Ridge Consulting',title:'Director',type:'Network',status:'responded',channel:'In Person',forBusiness:'Company X',sentDate:'2026-03-12',followUpDate:'2026-03-19',notes:'Chamber connection. Potential referral source for member companies.',linkedin:'',website:'',phone:''},
+  {id:160,name:'Katherine Wood',company:'Blue Ridge Consulting',title:'President',type:'Network',status:'responded',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-21',followUpDate:'2026-05-28',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:161,name:'Chris Kelly',company:'Summit Executive Advisors',title:'Consultant',type:'Network',status:'sent',channel:'Phone',forBusiness:'Both',sentDate:'2026-04-01',followUpDate:'2026-04-08',notes:'Long-term nurture. Revisit in Q3 when budget cycle resets.',linkedin:'',website:'',phone:''},
+  {id:162,name:'Anthony White',company:'West Coast Fulfillment',title:'Director of Operations',type:'Prospect',status:'complete',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-05',followUpDate:'2026-03-12',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:163,name:'Matthew Gonzalez',company:'Ridgeline Private Equity',title:'Vice President',type:'PE',status:'sent',channel:'In Person',forBusiness:'Both',sentDate:'2026-03-20',followUpDate:'2026-03-27',notes:'Strong fit. Delivery reliability and scheduling challenges.',linkedin:'',website:'',phone:''},
+  {id:164,name:'Linda Lee',company:'Columbia Basin Manufacturing',title:'President',type:'Prospect',status:'inprogress',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-04-22',followUpDate:'2026-04-28',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:165,name:'Jeffrey Richardson',company:'Summit Supply Chain',title:'Managing Director',type:'Prospect',status:'meeting',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-27',followUpDate:'2026-05-28',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:166,name:'Joshua Sanders',company:'Bellingham Chamber',title:'Board Chair',type:'Chamber',status:'inprogress',channel:'Email',forBusiness:'Cascade',sentDate:'2026-05-06',followUpDate:'2026-05-13',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:167,name:'Brenda Moore',company:'Northwest Logistics Group',title:'CEO',type:'Prospect',status:'complete',channel:'In Person',forBusiness:'Both',sentDate:'2026-02-23',followUpDate:'2026-02-28',notes:'Warm referral from existing network contact.',linkedin:'',website:'',phone:''},
+  {id:168,name:'Tanya Torres',company:'Summit Industrial Components',title:'President',type:'Prospect',status:'proposal',channel:'Referral',forBusiness:'Both',sentDate:'2026-03-27',followUpDate:'2026-03-28',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:169,name:'Lynn Lewis',company:'Lakeview Capital Partners',title:'Operating Partner',type:'PE',status:'sent',channel:'Phone',forBusiness:'Company X',sentDate:'2026-05-17',followUpDate:'2026-05-24',notes:'Long-term nurture. Revisit in Q3 when budget cycle resets.',linkedin:'',website:'',phone:''},
+  {id:170,name:'Sarah Roberts',company:'Summit Industrial Components',title:'Director of Operations',type:'Prospect',status:'meeting',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-02-27',followUpDate:'2026-02-28',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:171,name:'Donald Jackson',company:'Evergreen Composites',title:'CEO',type:'Prospect',status:'proposalcreated',channel:'Referral',forBusiness:'Company X',sentDate:'2026-05-15',followUpDate:'2026-05-22',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:172,name:'James Hernandez',company:'Pacific Northwest Plastics',title:'VP Supply Chain',type:'Prospect',status:'meeting',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-05-04',followUpDate:'2026-05-11',notes:'Chamber connection. Potential referral source for member companies.',linkedin:'',website:'',phone:''},
+  {id:173,name:'Sarah Hill',company:'Ridgeline Precision Parts',title:'CEO',type:'Prospect',status:'meeting',channel:'Phone',forBusiness:'Both',sentDate:'2026-05-03',followUpDate:'2026-05-10',notes:'Follow-up call scheduled. Alignment on supply chain challenges.',linkedin:'',website:'',phone:''},
+  {id:174,name:'Stephen Bailey',company:'Rainier Partners',title:'Managing Partner',type:'PE',status:'meeting',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:175,name:'Andrew Walker',company:'Bellingham Chamber',title:'Board Chair',type:'Chamber',status:'responded',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-04-03',followUpDate:'2026-04-10',notes:'Warm referral from existing network contact.',linkedin:'',website:'',phone:''},
+  {id:176,name:'Samuel Olsen',company:'Ridgeline Private Equity',title:'Vice President',type:'PE',status:'sent',channel:'Phone',forBusiness:'Cascade',sentDate:'2026-02-21',followUpDate:'2026-02-28',notes:'Strong fit. Delivery reliability and scheduling challenges.',linkedin:'',website:'',phone:''},
+  {id:177,name:'Joshua Allen',company:'Pacific Northwest Plastics',title:'Director of Operations',type:'Prospect',status:'sent',channel:'In Person',forBusiness:'Company X',sentDate:'2026-02-25',followUpDate:'2026-02-28',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:178,name:'Donald Moore',company:'Mount Baker Fabrication',title:'Director of Operations',type:'Prospect',status:'followup',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-05-21',followUpDate:'2026-05-28',notes:'Active discussion on fractional COO engagement scope.',linkedin:'',website:'',phone:''},
+  {id:179,name:'Susan Rodriguez',company:'Pacific Operations Partners',title:'Consultant',type:'Network',status:'inprogress',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-02',followUpDate:'2026-03-09',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:180,name:'Tom Green',company:'Olympic Distribution',title:'Owner',type:'Prospect',status:'complete',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-10',followUpDate:'2026-03-17',notes:'Long-term nurture. Revisit in Q3 when budget cycle resets.',linkedin:'',website:'',phone:''},
+  {id:181,name:'Rachel Gray',company:'Redwood Systems',title:'VP Supply Chain',type:'Prospect',status:'sent',channel:'In Person',forBusiness:'Cascade',sentDate:'2026-05-24',followUpDate:'2026-05-28',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:182,name:'Kenneth Baker',company:'Columbia Basin Manufacturing',title:'Managing Director',type:'Prospect',status:'complete',channel:'In Person',forBusiness:'Both',sentDate:'2026-04-26',followUpDate:'2026-04-28',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:183,name:'Timothy Hernandez',company:'Northpoint PE',title:'Vice President',type:'PE',status:'responded',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-03',followUpDate:'2026-02-10',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:184,name:'Christine Nguyen',company:'Olympic Distribution',title:'Managing Director',type:'Prospect',status:'landed',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-04-15',followUpDate:'2026-04-22',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:185,name:'Andrew Richardson',company:'Northpoint PE',title:'Operating Partner',type:'PE',status:'sent',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-04-17',followUpDate:'2026-04-24',notes:'Active discussion on fractional COO engagement scope.',linkedin:'',website:'',phone:''},
+  {id:186,name:'Derek Jackson',company:'Whatcom Business Alliance',title:'Board Chair',type:'Chamber',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-25',followUpDate:'2026-03-28',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:187,name:'Emily Campbell',company:'Meridian Manufacturing',title:'CEO',type:'Prospect',status:'responded',channel:'Referral',forBusiness:'Company X',sentDate:'2026-04-15',followUpDate:'2026-04-22',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:188,name:'Amy Moore',company:'Olympic Capital Group',title:'Operating Partner',type:'PE',status:'nurture',channel:'In Person',forBusiness:'Company X',sentDate:'2026-03-04',followUpDate:'2026-03-11',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:189,name:'Jennifer Fitzgerald',company:'Olympic Capital Group',title:'Principal',type:'PE',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-07',followUpDate:'2026-05-14',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:190,name:'Nancy Bennett',company:'Pacific Crest Capital',title:'Partner',type:'PE',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-06',followUpDate:'2026-05-13',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:191,name:'Lynn Price',company:'Pinnacle Tech Solutions',title:'Director of Operations',type:'Prospect',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-23',followUpDate:'2026-03-28',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:192,name:'Robert Campbell',company:'Ridgeline Private Equity',title:'Partner',type:'PE',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-26',followUpDate:'2026-03-28',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:193,name:'Derek Campbell',company:'Northwest Capital',title:'Vice President',type:'PE',status:'noresponse',channel:'Referral',forBusiness:'Both',sentDate:'2026-03-20',followUpDate:'2026-03-27',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:194,name:'Brian Flores',company:'Pacific Tech Ventures',title:'Managing Director',type:'Prospect',status:'landed',channel:'Phone',forBusiness:'Both',sentDate:'2026-02-05',followUpDate:'2026-02-12',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:195,name:'Samantha Martinez',company:'Lakeview Capital Partners',title:'Principal',type:'PE',status:'noresponse',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-03-25',followUpDate:'2026-03-28',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:196,name:'Jason Olsen',company:'Olympic Fasteners',title:'COO',type:'Prospect',status:'responded',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-11',followUpDate:'2026-03-18',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:197,name:'Dorothy Hartley',company:'Summit Supply Chain',title:'COO',type:'Prospect',status:'proposal',channel:'Email',forBusiness:'Both',sentDate:'2026-04-05',followUpDate:'2026-04-12',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:198,name:'Betty Richardson',company:'Rainier Partners',title:'Managing Partner',type:'PE',status:'responded',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-04-27',followUpDate:'2026-04-28',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:199,name:'Tom Brown',company:'Summit Industrial Components',title:'CEO',type:'Prospect',status:'proposal',channel:'Email',forBusiness:'Both',sentDate:'2026-05-20',followUpDate:'2026-05-27',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:200,name:'Derek Fitzgerald',company:'Greater Spokane Chamber',title:'CEO',type:'Chamber',status:'proposalcreated',channel:'Referral',forBusiness:'Company X',sentDate:'2026-05-10',followUpDate:'2026-05-17',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+];
+// ── TAB SWITCHING ──
+function switchTab(tab, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── LOAD / SAVE ──
+function load() {
+  try { const r = localStorage.getItem(CRM_KEY); contacts = r ? JSON.parse(r) : SEED.map(c=>({...c})); }
+  catch(e) { contacts = SEED.map(c=>({...c})); }
+  try { const r = localStorage.getItem(GROUPS_KEY); groups = r ? JSON.parse(r) : GROUPS_SEED.map(g=>({...g})); }
+  catch(e) { groups = GROUPS_SEED.map(g=>({...g})); }
+  renderAll();
+}
+
+function save() {
+  try { localStorage.setItem(CRM_KEY, JSON.stringify(contacts)); } catch(e) {}
+}
+function saveGroups() {
+  try { localStorage.setItem(GROUPS_KEY, JSON.stringify(groups)); } catch(e) {}
+}
+
+function loadKpiActuals() {
+  try { return JSON.parse(localStorage.getItem(KPI_KEY)) || {}; } catch(e) { return {}; }
+}
+function saveKpiActuals_store(data) {
+  try { localStorage.setItem(KPI_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+// ── DATE UTILS ──
+function today() { const d = new Date(); d.setHours(0,0,0,0); return d; }
+function parseDate(s) { if(!s) return null; return new Date(s + 'T12:00:00'); }
+function fmtDate(s) { if(!s) return ''; return parseDate(s).toLocaleDateString('en-US',{month:'short',day:'numeric'}); }
+function isOverdue(c) {
+  if(['responded','meeting','proposal','proposalcreated','nurture','landed','inprogress','complete'].includes(c.status)) return false;
+  if(c.status === 'followup' || c.status === 'noresponse') return true;
+  if(c.followUpDate) { const d = parseDate(c.followUpDate); return d && d <= today(); }
+  return false;
+}
+function daysSince(s) {
+  if(!s) return 0;
+  return Math.floor((today() - parseDate(s)) / 86400000);
+}
+
+// ── RENDER ALL ──
+function renderAll() {
+  document.getElementById('nav-date').textContent = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  renderV2R();
+  renderCRM();
+  renderGroups();
+}
+
+// ── V2R DASHBOARD ──
+function renderV2R() {
+  const actuals = { engagements: '4', delivered: '9', closerate: '58', csat: '9.2' };
+  const meetings = contacts.filter(c => c.status === 'meeting').length;
+  const proposals = contacts.filter(c => ['proposal','proposalcreated'].includes(c.status)).length;
+  const prospects = contacts.filter(c => c.type === 'Prospect' && ['sent','followup','meeting','responded','proposal','proposalcreated'].includes(c.status)).length;
+  const overdue = contacts.filter(c => isOverdue(c));
+
+  const kpis = [
+    {
+      n:'01', label:'Active Engagements', target:'4 to 5',
+      actual: actuals.engagements ?? '0',
+      targetNum: 5, actualNum: parseFloat(actuals.engagements) || 0,
+      suffix: '', format: v => v
+    },
+    {
+      n:'02', label:'Qualified Prospects in Pipeline', target:'5+',
+      actual: String(prospects),
+      targetNum: 5, actualNum: prospects,
+      suffix: '', format: v => v
+    },
+    {
+      n:'03', label:'Clients Delivered (YTD)', target:'12 per year',
+      actual: actuals.delivered ?? '0',
+      targetNum: 12, actualNum: parseFloat(actuals.delivered) || 0,
+      suffix: '', format: v => v
+    },
+    {
+      n:'04', label:'Proposal to Close Rate', target:'50%+',
+      actual: actuals.closerate ? actuals.closerate + '%' : '0%',
+      targetNum: 50, actualNum: parseFloat(actuals.closerate) || 0,
+      suffix: '%', format: v => v + '%'
+    },
+    {
+      n:'05', label:'Client Satisfaction Score', target:'9+ / 10',
+      actual: actuals.csat ?? '—',
+      targetNum: 10, actualNum: parseFloat(actuals.csat) || 0,
+      suffix: '/10', format: v => v
+    },
+  ];
+
+  const row = document.getElementById('kpi-row');
+  row.innerHTML = kpis.map(k => {
+    const pct = k.targetNum > 0 ? Math.min(100, (k.actualNum / k.targetNum) * 100) : 0;
+    const colorClass = pct >= 80 ? 'green' : pct >= 40 ? 'yellow' : 'red';
+    const statusText = pct >= 80 ? 'On Track' : pct >= 40 ? 'Building' : k.actualNum === 0 ? 'Pre-Revenue' : 'Behind';
+    const noData = k.actual === '0' || k.actual === '0%' || k.actual === '—';
+    const dispColor = noData ? 'gray' : colorClass;
+    return `
+    <div class="kpi-card ${dispColor}">
+      <div class="kpi-n">${k.n}</div>
+      <div class="kpi-lbl">${k.label}</div>
+      <div class="kpi-val c-${dispColor}">${k.actual}</div>
+      <div class="kpi-tgt">Target: ${k.target}</div>
+      <div class="kpi-track"><div class="kpi-prog bg-${dispColor}" style="width:${pct}%"></div></div>
+      <div class="kpi-status c-${dispColor}">${noData ? 'No data yet' : statusText}</div>
+    </div>`;
+  }).join('');
+
+  // Funnel
+  const sent = contacts.filter(c => c.sentDate).length;
+  const responded = contacts.filter(c => ['responded','meeting','proposal','proposalcreated'].includes(c.status)).length;
+  const mts = contacts.filter(c => ['meeting'].includes(c.status)).length;
+  const props = contacts.filter(c => ['proposal','proposalcreated'].includes(c.status)).length;
+  const noResp = contacts.filter(c => c.status === 'noresponse').length;
+
+  const funnelData = [
+    {label:'Outreached', count: sent, pct: 100, color:'#C9A84C'},
+    {label:'Responded', count: responded, pct: Math.round(responded/sent*100)||0, color:'#60a5fa'},
+    {label:'Meeting Booked', count: mts, pct: Math.round(mts/sent*100)||0, color:'#a78bfa'},
+    {label:'Proposal Out', count: props, pct: Math.round(props/sent*100)||0, color:'#22c55e'},
+    {label:'No Response', count: noResp, pct: Math.round(noResp/sent*100)||0, color:'#ef4444'},
+  ];
+
+  document.getElementById('funnel-panel').innerHTML = funnelData.map(f => `
+    <div class="funnel-row">
+      <div class="f-lbl">${f.label}</div>
+      <div class="f-track">
+        <div class="f-fill" style="width:${f.pct}%;background:${f.color}">
+          <span>${f.count}</span>
+        </div>
+      </div>
+      <div class="f-count">${f.count}</div>
+    </div>`).join('');
+
+  // Overdue
+  const od = overdue.sort((a,b) => (a.followUpDate||'') < (b.followUpDate||'') ? -1 : 1).slice(0, 6);
+  document.getElementById('overdue-count').textContent = overdue.length > 0 ? `${overdue.length} overdue` : '';
+  document.getElementById('overdue-panel').innerHTML = od.length === 0
+    ? '<div style="font-size:12px;color:var(--muted);padding:12px 0">No overdue follow-ups. Good.</div>'
+    : od.map(c => {
+        const days = c.followUpDate ? daysSince(c.followUpDate) : '?';
+        return `<div class="overdue-item">
+          <div>
+            <div class="od-name">${c.name}</div>
+            <div class="od-co">${c.company || c.type}</div>
+          </div>
+          <div class="od-days">${days}d overdue</div>
+        </div>`;
+      }).join('');
+}
+
+// ── KPI EDIT ──
+function openKpiEdit() {
+  const a = loadKpiActuals();
+  document.getElementById('ke-engagements').value = a.engagements || '';
+  document.getElementById('ke-prospects').value = a.prospects || '';
+  document.getElementById('ke-delivered').value = a.delivered || '';
+  document.getElementById('ke-closerate').value = a.closerate || '';
+  document.getElementById('ke-csat').value = a.csat || '';
+  document.getElementById('kpi-overlay').style.display = 'flex';
+}
+function closeKpiEdit() { document.getElementById('kpi-overlay').style.display = 'none'; }
+function saveKpiActuals() {
+  saveKpiActuals_store({
+    engagements: document.getElementById('ke-engagements').value.trim(),
+    prospects: document.getElementById('ke-prospects').value.trim(),
+    delivered: document.getElementById('ke-delivered').value.trim(),
+    closerate: document.getElementById('ke-closerate').value.trim(),
+    csat: document.getElementById('ke-csat').value.trim(),
+  });
+  closeKpiEdit();
+  renderV2R();
+}
+
+// ── CRM RENDER ──
+function renderCRM() {
+  const total = contacts.length;
+  const active = contacts.filter(c => ['sent','followup','meeting','proposal','proposalcreated'].includes(c.status)).length;
+  const fu = contacts.filter(c => isOverdue(c)).length;
+  const meet = contacts.filter(c => c.status === 'meeting').length;
+  const prop = contacts.filter(c => ['proposal','proposalcreated'].includes(c.status)).length;
+
+  document.getElementById('stats-bar').innerHTML = `
+    <div class="stat"><div class="stat-label">Total Contacts</div><div class="stat-value">${total}</div></div>
+    <div class="stat"><div class="stat-label">Active Pipeline</div><div class="stat-value">${active}</div></div>
+    <div class="stat"><div class="stat-label">Needs Follow-up</div><div class="stat-value" style="color:var(--yellow)">${fu}</div></div>
+    <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value" style="color:var(--purple)">${meet}</div></div>
+    <div class="stat"><div class="stat-label">Proposals</div><div class="stat-value" style="color:var(--gold)">${prop}</div></div>`;
+
+  const rows = getFiltered();
+  document.getElementById('tbody').innerHTML = rows.length === 0
+    ? `<tr class="empty-row"><td colspan="9">No contacts match this filter.</td></tr>`
+    : rows.map(c => `<tr onclick="openModal(${c.id})">
+        <td><div class="contact-name">${c.name}${c.linkedin ? ` <a href="${c.linkedin}" target="_blank" onclick="event.stopPropagation()" style="font-size:10px;color:var(--blue);text-decoration:none;margin-left:6px">LI</a>` : ''}</div><div class="contact-sub">${c.company}${c.title ? ' · ' + c.title : ''}${c.phone ? ' · ' + c.phone : ''}</div></td>
+        <td>${typeBadge(c.type)}</td>
+        <td>${statusBadge(c.status)}</td>
+        <td>${forBadge(c.forBusiness)}</td>
+        <td><span style="font-size:12px;color:var(--muted)">${c.channel}</span></td>
+        <td><span class="date-text">${fmtDate(c.sentDate)}</span></td>
+        <td><span class="date-text ${fuClass(c.followUpDate)}">${fmtDate(c.followUpDate) || '—'}</span></td>
+        <td><span class="notes-text" title="${(c.notes||'').replace(/"/g,'&quot;')}">${c.notes || '—'}</span></td>
+        <td style="text-align:right;color:var(--border);font-size:18px">›</td>
+      </tr>`).join('');
+}
+
+function getFiltered() {
+  const q = (document.getElementById('search')?.value || '').toLowerCase();
+  return contacts.filter(c => {
+    if (filterMode === 'followup') return isOverdue(c);
+    if (filterMode !== 'all' && c.type !== filterMode) return false;
+    if (q && !`${c.name} ${c.company} ${c.notes}`.toLowerCase().includes(q)) return false;
+    return true;
+  }).sort((a,b) => {
+    const av = a[sKey]||'', bv = b[sKey]||'';
+    return av < bv ? sDir : av > bv ? -sDir : 0;
+  });
+}
+
+function setFilter(f, btn) {
+  filterMode = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCRM();
+}
+
+function sortBy(k) {
+  if (sKey === k) sDir *= -1; else { sKey = k; sDir = 1; }
+  renderCRM();
+}
+
+function fuClass(d) {
+  if (!d) return '';
+  const diff = (parseDate(d) - today()) / 86400000;
+  if (diff < 0) return 'overdue-date';
+  if (diff <= 2) return 'due-soon-date';
+  return '';
+}
+
+function statusBadge(s) {
+  const m = {landed:['Landed','badge-landed'],inprogress:['In Progress','badge-inprogress'],complete:['Complete','badge-complete'],proposalcreated:['Proposal Created','badge-proposalcreated'],sent:['Sent','badge-sent'],responded:['Responded','badge-responded'],meeting:['Meeting Booked','badge-meeting'],followup:['Needs Follow-up','badge-followup'],proposal:['Proposal Sent','badge-proposal'],noresponse:['No Response','badge-noresponse'],nurture:['Long-term Nurture','badge-nurture']};
+  const [l,c] = m[s] || [s,'badge-sent'];
+  return `<span class="badge ${c}">${l}</span>`;
+}
+
+function typeBadge(t) {
+  const m = {PE:'type-pe',Prospect:'type-prospect',Network:'type-network',Chamber:'type-chamber',Platform:'type-platform'};
+  return `<span class="type-badge ${m[t]||''}">${t}</span>`;
+}
+
+function forBadge(f) {
+  if (!f || f === 'Company X') return `<span class="type-badge" style="background:rgba(13,27,62,0.08);color:#0D1B3E">Company X</span>`;
+  if (f === 'Cascade') return `<span class="type-badge" style="background:rgba(5,150,105,0.08);color:#059669">Cascade</span>`;
+  return `<span class="type-badge" style="background:rgba(124,58,237,0.08);color:#7c3aed">Both</span>`;
+}
+
+// ── MODAL ──
+function openModal(id) {
+  editId = id;
+  const td = new Date().toISOString().split('T')[0];
+  const fu = new Date(Date.now()+7*86400000).toISOString().split('T')[0];
+  if (id) {
+    const c = contacts.find(x => x.id === id); if (!c) return;
+    document.getElementById('modal-title').textContent = 'Edit Contact';
+    document.getElementById('f-name').value = c.name||'';
+    document.getElementById('f-company').value = c.company||'';
+    document.getElementById('f-title').value = c.title||'';
+    document.getElementById('f-type').value = c.type||'PE';
+    document.getElementById('f-status').value = c.status||'sent';
+    document.getElementById('f-channel').value = c.channel||'LinkedIn InMail';
+    document.getElementById('f-forbusiness').value = c.forBusiness||'Company X';
+    document.getElementById('f-sent').value = c.sentDate||td;
+    document.getElementById('f-followup').value = c.followUpDate||fu;
+    document.getElementById('f-notes').value = c.notes||'';
+    document.getElementById('f-linkedin').value = c.linkedin||'';
+    document.getElementById('f-website').value = c.website||'';
+    document.getElementById('f-phone').value = c.phone||'';
+    document.getElementById('del-btn').style.display = 'block';
+  } else {
+    document.getElementById('modal-title').textContent = 'Add Contact';
+    ['f-name','f-company','f-title','f-notes','f-linkedin','f-website','f-phone'].forEach(i => document.getElementById(i).value = '');
+    document.getElementById('f-type').value = 'PE';
+    document.getElementById('f-status').value = 'sent';
+    document.getElementById('f-channel').value = 'LinkedIn InMail';
+    document.getElementById('f-forbusiness').value = 'Company X';
+    document.getElementById('f-sent').value = td;
+    document.getElementById('f-followup').value = fu;
+    document.getElementById('del-btn').style.display = 'none';
+  }
+  document.getElementById('overlay').style.display = 'flex';
+}
+
+function closeModal() { document.getElementById('overlay').style.display = 'none'; editId = null; }
+
+function saveContact() {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { alert('Name required.'); return; }
+  const c = {name, company:document.getElementById('f-company').value.trim(), title:document.getElementById('f-title').value.trim(), type:document.getElementById('f-type').value, status:document.getElementById('f-status').value, channel:document.getElementById('f-channel').value, forBusiness:document.getElementById('f-forbusiness').value, sentDate:document.getElementById('f-sent').value, followUpDate:document.getElementById('f-followup').value, notes:document.getElementById('f-notes').value.trim(), linkedin:document.getElementById('f-linkedin').value.trim(), website:document.getElementById('f-website').value.trim(), phone:document.getElementById('f-phone').value.trim()};
+  if (editId) { const i = contacts.findIndex(x => x.id === editId); if (i !== -1) contacts[i] = {...contacts[i],...c}; }
+  else { const maxId = contacts.reduce((m,x) => Math.max(m,x.id||0),0); contacts.push({id:maxId+1,...c}); }
+  save(); closeModal(); renderAll();
+}
+
+function deleteContact() {
+  if (!editId || !confirm('Remove this contact?')) return;
+  contacts = contacts.filter(c => c.id !== editId);
+  save(); closeModal(); renderAll();
+}
+
+function exportCSV() {
+  const headers = ['Name','Company','Title','Type','Status','Channel','Date Sent','Follow-up Date','LinkedIn','Website','Phone','Notes'];
+  const rows = contacts.map(c => [c.name,c.company,c.title,c.type,c.status,c.channel,c.sentDate,c.followUpDate,c.linkedin,c.website,c.phone,(c.notes||'').replace(/"/g,'""')].map(v=>`"${v||''}"`).join(','));
+  const csv = [headers.join(','),...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download = 'companyx_crm_' + new Date().toISOString().split('T')[0] + '.csv';
+  a.click();
+}
+
+// ── GROUPS ──
+function renderGroups() {
+  const total = groups.length;
+  const attended = groups.filter(g => g.status === 'Attended').length;
+  const evaluating = groups.filter(g => g.status === 'Evaluating').length;
+  const contacted = groups.filter(g => g.status === 'Contacted').length;
+  const notStarted = groups.filter(g => g.status === 'Not Started').length;
+
+  document.getElementById('groups-stats-bar').innerHTML = `
+    <div class="stat"><div class="stat-label">Total Groups</div><div class="stat-value">${total}</div></div>
+    <div class="stat"><div class="stat-label">Attended</div><div class="stat-value" style="color:var(--green)">${attended}</div></div>
+    <div class="stat"><div class="stat-label">Evaluating</div><div class="stat-value" style="color:var(--yellow)">${evaluating}</div></div>
+    <div class="stat"><div class="stat-label">Contacted</div><div class="stat-value" style="color:var(--blue)">${contacted}</div></div>
+    <div class="stat"><div class="stat-label">Not Started</div><div class="stat-value" style="color:var(--muted)">${notStarted}</div></div>`;
+
+  const q = (document.getElementById('group-search')?.value || '').toLowerCase();
+  const rows = groups.filter(g => {
+    if (groupFilter !== 'all' && g.status !== groupFilter) return false;
+    if (q && !`${g.name} ${g.location} ${g.audienceFit}`.toLowerCase().includes(q)) return false;
+    return true;
+  }).sort((a,b) => {
+    const av = a[gSortKey]||'', bv = b[gSortKey]||'';
+    return av < bv ? -gSortDir : av > bv ? gSortDir : 0;
+  });
+
+  const statusColors = {'Attended':'var(--green)','Evaluating':'var(--yellow)','Contacted':'var(--blue)','Not Started':'var(--muted)'};
+  const statusBg = {'Attended':'rgba(22,163,74,0.08)','Evaluating':'rgba(217,119,6,0.08)','Contacted':'rgba(37,99,235,0.08)','Not Started':'rgba(107,114,128,0.08)'};
+
+  document.getElementById('groups-tbody').innerHTML = rows.length === 0
+    ? `<tr class="empty-row"><td colspan="10">No groups match this filter.</td></tr>`
+    : rows.map(g => `<tr onclick="openGroupModal(${g.id})">
+        <td><div class="contact-name">${g.name}</div></td>
+        <td><span class="badge" style="background:${statusBg[g.status]||'rgba(107,114,128,0.08)'};color:${statusColors[g.status]||'var(--muted)'};border:1px solid ${statusColors[g.status]||'var(--muted)'}33">${g.status}</span></td>
+        <td><span class="type-badge type-network">${g.audienceFit}</span></td>
+        <td><span style="font-size:12px;color:var(--navy)">${g.value}</span></td>
+        <td><span style="font-size:12px;color:var(--muted)">${g.frequency}</span></td>
+        <td><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--navy)">${g.cost||'—'}</span></td>
+        <td><span class="date-text ${g.nextMeeting && fuClass(g.nextMeeting)}">${fmtDate(g.nextMeeting)||'—'}</span></td>
+        <td><span style="font-size:12px;color:var(--muted)">${g.location||'—'}</span></td>
+        <td>${g.link ? `<a href="${g.link}" target="_blank" onclick="event.stopPropagation()" style="font-size:11px;color:var(--blue);text-decoration:none">Visit</a>` : '—'}</td>
+        <td style="text-align:right;color:var(--border);font-size:18px">›</td>
+      </tr>`).join('');
+}
+
+function setGroupFilter(f, btn) {
+  groupFilter = f;
+  document.querySelectorAll('#page-groups .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGroups();
+}
+
+function sortGroups(k) {
+  if (gSortKey === k) gSortDir *= -1; else { gSortKey = k; gSortDir = 1; }
+  renderGroups();
+}
+
+function openGroupModal(id) {
+  editGroupId = id;
+  if (id) {
+    const g = groups.find(x => x.id === id); if (!g) return;
+    document.getElementById('group-modal-title').textContent = 'Edit Group';
+    document.getElementById('g-name').value = g.name||'';
+    document.getElementById('g-status').value = g.status||'Not Started';
+    document.getElementById('g-audience').value = g.audienceFit||'Mix';
+    document.getElementById('g-value').value = g.value||'Visibility';
+    document.getElementById('g-frequency').value = g.frequency||'Monthly';
+    document.getElementById('g-cost').value = g.cost||'';
+    document.getElementById('g-next').value = g.nextMeeting||'';
+    document.getElementById('g-location').value = g.location||'';
+    document.getElementById('g-link').value = g.link||'';
+    document.getElementById('g-del-btn').style.display = 'block';
+  } else {
+    document.getElementById('group-modal-title').textContent = 'Add Networking Group';
+    ['g-name','g-cost','g-next','g-location','g-link'].forEach(i => document.getElementById(i).value = '');
+    document.getElementById('g-status').value = 'Not Started';
+    document.getElementById('g-audience').value = 'Mix';
+    document.getElementById('g-value').value = 'Visibility';
+    document.getElementById('g-frequency').value = 'Monthly';
+    document.getElementById('g-del-btn').style.display = 'none';
+  }
+  document.getElementById('group-overlay').style.display = 'flex';
+}
+
+function closeGroupModal() { document.getElementById('group-overlay').style.display = 'none'; editGroupId = null; }
+
+function saveGroup() {
+  const name = document.getElementById('g-name').value.trim();
+  if (!name) { alert('Group name required.'); return; }
+  const g = {
+    name,
+    status: document.getElementById('g-status').value,
+    audienceFit: document.getElementById('g-audience').value,
+    value: document.getElementById('g-value').value,
+    frequency: document.getElementById('g-frequency').value,
+    cost: document.getElementById('g-cost').value.trim(),
+    nextMeeting: document.getElementById('g-next').value,
+    location: document.getElementById('g-location').value.trim(),
+    link: document.getElementById('g-link').value.trim(),
+  };
+  if (editGroupId) {
+    const i = groups.findIndex(x => x.id === editGroupId);
+    if (i !== -1) groups[i] = {...groups[i], ...g};
+  } else {
+    const maxId = groups.reduce((m,x) => Math.max(m,x.id||0), 0);
+    groups.push({id: maxId + 1, ...g});
+  }
+  saveGroups(); closeGroupModal(); renderGroups();
+}
+
+function deleteGroup() {
+  if (!editGroupId || !confirm('Remove this group?')) return;
+  groups = groups.filter(g => g.id !== editGroupId);
+  saveGroups(); closeGroupModal(); renderGroups();
+}
+
+function exportGroupsCSV() {
+  const headers = ['Group','Status','Audience Fit','Value','Frequency','Cost','Next Meeting','Location','Link'];
+  const rows = groups.map(g => [g.name,g.status,g.audienceFit,g.value,g.frequency,g.cost,g.nextMeeting,g.location,g.link].map(v=>`"${v||''}"`).join(','));
+  const csv = [headers.join(','),...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download = 'companyx_groups_' + new Date().toISOString().split('T')[0] + '.csv';
+  a.click();
+}
+
+// ── SCAN MODALS (demo stubs) ──
+function openScanModal(type) {
+  if (type === 'qr') {
+    document.getElementById('scan-icon').textContent = '📷';
+    document.getElementById('scan-title').textContent = 'Scan QR Code';
+    document.getElementById('scan-desc').textContent = 'Point your camera at any contact\'s QR code and their details — name, company, title, phone, and email — auto-fill directly into the CRM. Available in the full version.';
+  } else {
+    document.getElementById('scan-icon').textContent = '🪪';
+    document.getElementById('scan-title').textContent = 'Scan Business Card';
+    document.getElementById('scan-desc').textContent = 'Take a photo of any business card. AI reads the card and auto-fills name, company, title, phone, and email into the contact form. Review and save in seconds. Available in the full version.';
+  }
+  document.getElementById('scan-overlay').style.display = 'flex';
+}
+function closeScanModal() { document.getElementById('scan-overlay').style.display = 'none'; }
+
+load();
+</script>
+<div style="text-align:center;padding:24px;font-family:'DM Mono',monospace;font-size:10px;color:rgba(13,27,62,0.35);letter-spacing:2px;border-top:1px solid #E2E6EA;margin-top:20px">
+  Built by <a href="https://www.accenditpartners.com" target="_blank" style="color:#B8922E;text-decoration:none;letter-spacing:2px">ACCENDIT PARTNERS</a> &nbsp;|&nbsp; accenditpartners.com
+</div>
+</body>
+</html>
