@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accendit Partners — Command Center</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0D1B3E;
+  --navy-mid: #1A2E5A;
+  --navy-light: #243b6a;
+  --gold: #B8922E;
+  --gold-light: #C9A84C;
+  --gold-dim: rgba(184,146,46,0.10);
+  --off-white: #F7F5F0;
+  --white: #ffffff;
+  --green: #16a34a;
+  --red: #dc2626;
+  --yellow: #d97706;
+  --purple: #7c3aed;
+  --blue: #2563eb;
+  --muted: #6B7280;
+  --border: #E2E6EA;
+  --surface: #ffffff;
+  --bg: #F7F5F0;
+  --text: #0D1B3E;
+}
+
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* ── NAV TABS ── */
+.nav {
+  background: var(--navy);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+.nav-brand {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 16px 0;
+  margin-right: 36px;
+  white-space: nowrap;
+}
+.nav-tabs { display: flex; gap: 2px; }
+.nav-tab {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  padding: 18px 20px 16px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  letter-spacing: 0.5px;
+}
+.nav-tab:hover { color: var(--off-white); }
+.nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+.nav-right { margin-left: auto; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); }
+
+/* ── PAGES ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ══════════════════════════════════
+   V2R DASHBOARD
+══════════════════════════════════ */
+.v2r-wrap { max-width: 1080px; margin: 0 auto; padding: 36px 28px 60px; }
+
+.v2r-header { margin-bottom: 32px; }
+.v2r-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; color: var(--navy); margin-bottom: 4px; }
+.v2r-title span { color: var(--gold); }
+.v2r-sub { font-size: 12px; color: var(--muted); letter-spacing: 0.5px; }
+
+/* Vision */
+.vision-card {
+  border-left: 3px solid var(--gold);
+  background: rgba(184,146,46,0.07);
+  border-radius: 0 6px 6px 0;
+  padding: 18px 22px;
+  margin-bottom: 32px;
+}
+.vision-eyebrow { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+.vision-text { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--navy); line-height: 1.6; }
+
+/* Section label */
+.section-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--gold);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-lbl::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* 5 KPI Cards */
+.kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 36px; }
+
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 14px 14px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.15s;
+  display: flex;
+  flex-direction: column;
+}
+.kpi-card:hover { border-color: var(--gold); transform: translateY(-1px); }
+.kpi-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.kpi-card.green::after { background: var(--green); }
+.kpi-card.yellow::after { background: var(--yellow); }
+.kpi-card.red::after { background: var(--red); }
+.kpi-card.gray::after { background: #D1D5DB; }
+
+.kpi-n { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 2px; margin-bottom: 8px; flex-shrink: 0; }
+.kpi-lbl { font-size: 10px; color: var(--muted); line-height: 1.5; min-height: 44px; flex-shrink: 0; }
+.kpi-val { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 900; line-height: 1; margin-top: auto; padding-top: 10px; margin-bottom: 4px; flex-shrink: 0; }
+.kpi-tgt { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); margin-bottom: 8px; flex-shrink: 0; }
+.kpi-track { background: #E5E7EB; border-radius: 2px; height: 3px; overflow: hidden; margin-bottom: 8px; flex-shrink: 0; }
+.kpi-prog { height: 100%; border-radius: 2px; transition: width 0.8s ease; }
+.kpi-status { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; flex-shrink: 0; }
+
+.c-green { color: var(--green); } .bg-green { background: var(--green); }
+.c-yellow { color: var(--yellow); } .bg-yellow { background: var(--yellow); }
+.c-red { color: var(--red); } .bg-red { background: var(--red); }
+.c-gray { color: var(--muted); } .bg-gray { background: #D1D5DB; }
+.c-gold { color: var(--gold); }
+
+/* Objectives */
+.obj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 32px; }
+.obj-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.obj-n { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900; color: var(--gold); opacity: 0.4; line-height: 1; flex-shrink: 0; }
+.obj-body {}
+.obj-title { font-size: 12px; font-weight: 600; color: var(--navy); line-height: 1.5; margin-bottom: 6px; }
+.obj-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; }
+.badge-active { background: rgba(22,163,74,0.1); color: var(--green); border: 1px solid rgba(22,163,74,0.25); }
+.badge-building { background: rgba(217,119,6,0.1); color: var(--yellow); border: 1px solid rgba(217,119,6,0.25); }
+.badge-target { background: rgba(184,146,46,0.1); color: var(--gold); border: 1px solid rgba(184,146,46,0.25); }
+
+/* Pipeline mini panel */
+.bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.panel { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; }
+.panel-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px; }
+
+.funnel-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+.f-lbl { font-size: 11px; color: var(--muted); width: 100px; flex-shrink: 0; }
+.f-track { flex: 1; background: #E5E7EB; border-radius: 2px; height: 18px; overflow: hidden; position: relative; }
+.f-fill { height: 100%; border-radius: 2px; display: flex; align-items: center; padding-left: 7px; min-width: 24px; }
+.f-fill span { font-family: 'DM Mono', monospace; font-size: 9px; color: #fff; font-weight: 600; }
+.f-count { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--navy); width: 22px; text-align: right; flex-shrink: 0; }
+
+.overdue-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.overdue-item:last-child { border-bottom: none; }
+.od-name { font-size: 12px; font-weight: 600; color: var(--navy); }
+.od-co { font-size: 10px; color: var(--muted); margin-top: 1px; }
+.od-days { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--red); flex-shrink: 0; margin-left: 8px; }
+
+/* Edit KPIs modal */
+.edit-btn { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 2px; background: transparent; border: 1px solid var(--border); border-radius: 4px; padding: 5px 10px; cursor: pointer; float: right; margin-top: -2px; transition: all 0.15s; }
+.edit-btn:hover { color: var(--gold); border-color: var(--gold); }
+
+/* ══════════════════════════════════
+   CRM TRACKER
+══════════════════════════════════ */
+.crm-wrap { padding: 20px; }
+
+.stats-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
+.stat { background: var(--white); border: 1px solid var(--border); padding: 14px 16px; border-radius: 8px; }
+.stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; font-family: 'DM Mono', monospace; }
+.stat-value { font-family: 'DM Mono', monospace; font-size: 24px; font-weight: 500; color: var(--gold); }
+
+.controls { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+.filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+.filter-btn.active, .filter-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(184,146,46,0.08); }
+.add-btn { margin-left: auto; padding: 8px 18px; background: var(--navy); color: #fff; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.add-btn:hover { background: var(--navy-mid); }
+.search-input { padding: 7px 14px; background: var(--white); border: 1px solid var(--border); border-radius: 6px; color: var(--navy); font-size: 13px; font-family: 'DM Sans', sans-serif; width: 200px; outline: none; }
+.search-input::placeholder { color: var(--muted); }
+.search-input:focus { border-color: var(--navy); }
+
+.table-wrap { background: var(--white); border: 1px solid var(--border); border-radius: 10px; overflow: auto; max-height: calc(100vh - 240px); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th { text-align: left; padding: 10px 14px; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; white-space: nowrap; position: sticky; top: 0; background: #F9FAFB; z-index: 10; font-family: 'DM Mono', monospace; }
+thead th:hover { color: var(--navy); }
+tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; cursor: pointer; }
+tbody tr:hover { background: #F9FAFB; }
+tbody td { padding: 11px 14px; vertical-align: middle; color: var(--navy); }
+.contact-name { font-weight: 500; }
+.contact-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.badge { display: inline-block; padding: 3px 9px; border-radius: 12px; font-size: 11px; font-weight: 500; white-space: nowrap; }
+.badge-sent { background: rgba(37,99,235,0.08); color: #2563eb; border: 1px solid rgba(37,99,235,0.2); }
+.badge-responded { background: rgba(22,163,74,0.08); color: #16a34a; border: 1px solid rgba(22,163,74,0.2); }
+.badge-meeting { background: rgba(124,58,237,0.08); color: #7c3aed; border: 1px solid rgba(124,58,237,0.2); }
+.badge-followup { background: rgba(217,119,6,0.08); color: #d97706; border: 1px solid rgba(217,119,6,0.2); }
+.badge-proposal { background: rgba(184,146,46,0.1); color: #B8922E; border: 1px solid rgba(184,146,46,0.25); }
+.badge-noresponse { background: rgba(107,114,128,0.08); color: #6B7280; border: 1px solid rgba(107,114,128,0.2); }
+.badge-nurture { background: rgba(219,39,119,0.08); color: #db2777; border: 1px solid rgba(219,39,119,0.2); }
+.badge-proposalcreated { background: rgba(5,150,105,0.08); color: #059669; border: 1px solid rgba(5,150,105,0.2); }
+.badge-landed { background: rgba(13,27,62,0.08); color: #0D1B3E; border: 1px solid rgba(13,27,62,0.25); }
+.badge-inprogress { background: rgba(37,99,235,0.08); color: #1d4ed8; border: 1px solid rgba(37,99,235,0.25); }
+.badge-complete { background: rgba(22,163,74,0.12); color: #15803d; border: 1px solid rgba(22,163,74,0.3); }
+.type-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'DM Mono', monospace; }
+.type-pe { background: rgba(124,58,237,0.08); color: #7c3aed; }
+.type-prospect { background: rgba(22,163,74,0.08); color: #16a34a; }
+.type-network { background: rgba(37,99,235,0.08); color: #2563eb; }
+.type-chamber { background: rgba(184,146,46,0.08); color: #B8922E; }
+.type-platform { background: rgba(219,39,119,0.08); color: #db2777; }
+.date-text { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+.overdue-date { color: var(--red) !important; }
+.due-soon-date { color: var(--yellow) !important; }
+.notes-text { font-size: 12px; color: var(--muted); max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+.empty-row td { text-align: center; padding: 60px; color: var(--muted); font-size: 13px; }
+
+/* Modal */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+.modal { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 28px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+.modal h2 { font-size: 17px; font-weight: 600; margin-bottom: 20px; font-family: 'Playfair Display', serif; color: var(--navy); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1 / -1; }
+label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); font-family: 'DM Mono', monospace; }
+input, select, textarea { background: #F9FAFB; border: 1px solid var(--border); border-radius: 6px; padding: 9px 12px; color: var(--navy); font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.15s; }
+input:focus, select:focus, textarea:focus { border-color: var(--navy); }
+select option { background: var(--white); color: var(--navy); }
+textarea { resize: vertical; min-height: 70px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+.btn-cancel { padding: 9px 20px; background: transparent; border: 1px solid var(--border); border-radius: 6px; color: var(--muted); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; }
+.btn-cancel:hover { border-color: var(--navy); color: var(--navy); }
+.btn-save { padding: 9px 20px; background: var(--navy); border: none; border-radius: 6px; color: #fff; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; }
+.btn-delete { padding: 9px 20px; background: transparent; border: 1px solid rgba(220,38,38,0.3); border-radius: 6px; color: var(--red); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; margin-right: auto; }
+
+/* KPI Edit Modal */
+.kpi-edit-modal { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 28px; width: 100%; max-width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+.kpi-edit-modal h2 { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--navy); margin-bottom: 20px; }
+.kpi-edit-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.kpi-edit-row label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 1px; width: 180px; flex-shrink: 0; }
+.kpi-edit-row input { flex: 1; background: #F9FAFB; border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; color: var(--navy); font-family: 'DM Mono', monospace; font-size: 13px; outline: none; }
+.kpi-edit-row input:focus { border-color: var(--navy); }
+
+.scan-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.scan-btn:hover { background: var(--navy-mid); }
+.scan-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.scan-modal {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+.scan-modal h2 { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--navy); margin-bottom: 16px; }
+.scan-modal p { font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.6; }
+.scan-video-wrap { position: relative; width: 100%; border-radius: 8px; overflow: hidden; background: #000; margin-bottom: 16px; }
+#qr-video { width: 100%; display: block; max-height: 260px; object-fit: cover; }
+.scan-overlay-line { position: absolute; top: 50%; left: 10%; right: 10%; height: 2px; background: var(--gold); box-shadow: 0 0 8px rgba(201,168,76,0.8); transform: translateY(-50%); }
+#card-preview { width: 100%; border-radius: 8px; margin-bottom: 12px; display: none; }
+.scan-status { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); letter-spacing: 1px; margin-bottom: 12px; min-height: 18px; }
+.scan-result-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.scan-result-fields input { background: #F9FAFB; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; color: var(--navy); font-size: 12px; font-family: 'DM Sans', sans-serif; outline: none; }
+.scan-result-fields input:focus { border-color: var(--navy); }
+.scan-result-fields input.full { grid-column: 1 / -1; }
+.scan-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+@media (max-width: 768px) {
+  .scan-result-fields { grid-template-columns: 1fr; }
+  .scan-result-fields input.full { grid-column: 1; }
+
+  /* Nav */
+  .nav { padding: 0 12px; flex-wrap: wrap; }
+  .nav-brand { font-size: 9px; letter-spacing: 2px; padding: 10px 0; width: 100%; border-bottom: 1px solid rgba(201,168,76,0.15); }
+  .nav-tabs { width: 100%; overflow-x: auto; gap: 0; -webkit-overflow-scrolling: touch; }
+  .nav-tab { font-size: 11px; padding: 10px 12px 9px; white-space: nowrap; }
+  .nav-right { display: none !important; }
+
+  /* V2R */
+  .v2r-wrap { padding: 16px 12px 40px; }
+  .v2r-title { font-size: 22px; }
+  .vision-text { font-size: 13px; }
+
+  /* KPI cards — 2 col on mobile, labels fixed height so numbers align */
+  .kpi-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .kpi-card { padding: 12px 10px 12px; }
+  .kpi-card:last-child { grid-column: 1 / -1; max-width: calc(50% - 4px); }
+  .kpi-n { font-size: 8px; margin-bottom: 6px; }
+  .kpi-lbl { font-size: 9px; min-height: 36px; margin-bottom: 8px; line-height: 1.4; }
+  .kpi-val { font-size: 26px; margin-bottom: 2px; }
+  .kpi-tgt { font-size: 8px; margin-bottom: 6px; }
+  .kpi-status { font-size: 8px; letter-spacing: 1px; }
+
+  /* Objectives */
+  .obj-grid { grid-template-columns: 1fr; }
+  .obj-card:last-child { grid-column: 1; }
+  .bottom-grid { grid-template-columns: 1fr; }
+
+  /* Stats bar — smaller text so labels don't wrap */
+  .stats-bar { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .stat { padding: 10px 8px; }
+  .stat-label { font-size: 8px; letter-spacing: 0.5px; line-height: 1.3; }
+  .stat-value { font-size: 20px; }
+
+  /* CRM controls */
+  .controls { gap: 6px; flex-wrap: wrap; }
+  .filter-btn { font-size: 10px; padding: 5px 9px; }
+
+  /* Table */
+  .table-wrap { border-radius: 6px; }
+  table { font-size: 11px; }
+  thead th { padding: 7px 6px; font-size: 8px; }
+  tbody td { padding: 8px 6px; }
+  thead th:nth-child(5),
+  thead th:nth-child(7),
+  tbody td:nth-child(5),
+  tbody td:nth-child(7) { display: none; }
+
+  /* Modal */
+  .modal { padding: 18px 14px; margin: 10px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-group.full { grid-column: 1; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">Accendit Partners</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('v2r',this)">V2R Dashboard</button>
+    <button class="nav-tab" onclick="switchTab('crm',this)">Outreach Tracker</button>
+    <button class="nav-tab" onclick="switchTab('groups',this)">Networking Groups</button>
+  </div>
+  <div class="nav-right" id="nav-date"></div>
+</nav>
+
+<!-- ══ V2R PAGE ══ -->
+<div id="page-v2r" class="page active">
+<div class="v2r-wrap">
+
+  <div class="v2r-header">
+    <div class="v2r-title">Vision to <span>Results</span></div>
+    <div class="v2r-sub">Internal scorecard — auto-calculated from CRM data</div>
+  </div>
+
+  <!-- Vision -->
+  <div class="vision-card">
+    <div class="vision-eyebrow">Vision</div>
+    <div class="vision-text">To be the execution partner that growing companies call when the gap between strategy and results is costing them time, money, and momentum.</div>
+  </div>
+
+  <!-- 5 KPIs -->
+  <div class="section-lbl">The 5 Metrics That Run the Business <button class="edit-btn" onclick="openKpiEdit()">Edit Actuals</button></div>
+  <div class="kpi-row" id="kpi-row"></div>
+
+  <!-- Objectives -->
+  <div class="section-lbl">Future State Objectives</div>
+  <div class="obj-grid">
+    <div class="obj-card">
+      <div class="obj-n">1</div>
+      <div class="obj-body">
+        <div class="obj-title">Partnering with 4 to 5 active clients at any given time, 12+ delivered per year</div>
+        <span class="obj-badge badge-building">Building</span>
+      </div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-n">2</div>
+      <div class="obj-body">
+        <div class="obj-title">Recognized as the go-to execution partner — regardless of industry or engagement type</div>
+        <span class="obj-badge badge-building">Building</span>
+      </div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-n">3</div>
+      <div class="obj-body">
+        <div class="obj-title">Every engagement produces a documented, measurable result and case study</div>
+        <span class="obj-badge badge-target">Target</span>
+      </div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-n">4</div>
+      <div class="obj-body">
+        <div class="obj-title">With minimal effort, the pipeline stays full — always a qualified prospect in the funnel</div>
+        <span class="obj-badge badge-building">Building</span>
+      </div>
+    </div>
+    <div class="obj-card" style="grid-column:1/-1">
+      <div class="obj-n">5</div>
+      <div class="obj-body">
+        <div class="obj-title">Accendit operates as a true partner in every engagement, with repeatable systems that deliver results independent of role or title</div>
+        <span class="obj-badge badge-target">Target</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pipeline + Overdue -->
+  <div class="section-lbl">Pipeline Snapshot — Live from CRM</div>
+  <div class="bottom-grid">
+    <div class="panel">
+      <div class="panel-lbl">Outreach Funnel</div>
+      <div id="funnel-panel"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-lbl">Overdue Follow-ups <span id="overdue-count" style="color:var(--red);margin-left:6px"></span></div>
+      <div id="overdue-panel"></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══ CRM PAGE ══ -->
+<div id="page-crm" class="page">
+<div class="crm-wrap">
+  <div class="stats-bar" id="stats-bar"></div>
+  <div class="controls">
+    <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setFilter('PE',this)">PE Firms</button>
+    <button class="filter-btn" onclick="setFilter('Prospect',this)">Prospects</button>
+    <button class="filter-btn" onclick="setFilter('Network',this)">Network</button>
+    <button class="filter-btn" onclick="setFilter('Chamber',this)">Chambers</button>
+    <button class="filter-btn" onclick="setFilter('followup',this)">Needs Follow-up</button>
+  </div>
+  <div class="controls" style="margin-bottom:12px;flex-wrap:nowrap">
+    <input class="search-input" style="flex:1;width:auto;min-width:0" type="text" placeholder="Search contacts..." oninput="renderCRM()" id="search">
+    <button class="scan-btn" onclick="openQRScan()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM17 17h3v3h-3zM14 20h3"/></svg>
+      Scan QR
+    </button>
+    <button class="scan-btn" onclick="openCardScan()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h4M6 14h8"/><circle cx="17" cy="12" r="2"/></svg>
+      Scan Card
+    </button>
+    <button class="add-btn" style="background:transparent;color:var(--muted);border:1px solid var(--border)" onclick="exportCSV()">Export</button>
+    <button class="add-btn" onclick="openModal(null)">+ Add</button>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortBy('name')">Contact</th>
+          <th onclick="sortBy('type')">Type</th>
+          <th onclick="sortBy('status')">Status</th>
+          <th onclick="sortBy('forBusiness')">For</th>
+          <th onclick="sortBy('channel')">Channel</th>
+          <th onclick="sortBy('sentDate')">Sent</th>
+          <th onclick="sortBy('followUpDate')">Follow-up</th>
+          <th>Notes</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- CRM Modal -->
+<div id="overlay" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <h2 id="modal-title">Add Contact</h2>
+    <div class="form-grid">
+      <div class="form-group"><label>Name</label><input id="f-name" placeholder="First Last"></div>
+      <div class="form-group"><label>Company</label><input id="f-company" placeholder="Company"></div>
+      <div class="form-group"><label>Title</label><input id="f-title" placeholder="Role / Title"></div>
+      <div class="form-group"><label>Type</label>
+        <select id="f-type"><option>PE</option><option>Prospect</option><option>Network</option><option>Chamber</option><option>Platform</option></select>
+      </div>
+      <div class="form-group"><label>Status</label>
+        <select id="f-status">
+          <option value="sent">Sent</option>
+          <option value="followup">Needs Follow-up</option>
+          <option value="responded">Responded</option>
+          <option value="meeting">Meeting Booked</option>
+          <option value="proposalcreated">Proposal Created</option>
+          <option value="proposal">Proposal Sent</option>
+          <option value="noresponse">No Response</option>
+          <option value="nurture">Long-term Nurture</option>
+          <option value="landed">Landed</option>
+          <option value="inprogress">In Progress</option>
+          <option value="complete">Complete</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Channel</label>
+        <select id="f-channel">
+          <option>LinkedIn InMail</option><option>LinkedIn Connection</option>
+          <option>Email</option><option>In Person</option>
+          <option>Phone</option><option>Referral</option>
+        </select>
+      </div>
+      <div class="form-group"><label>For</label>
+        <select id="f-forbusiness">
+          <option value="Accendit">Accendit</option>
+          <option value="Cascade">Cascade</option>
+          <option value="Both">Both</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Date Sent</label><input type="date" id="f-sent"></div>
+      <div class="form-group"><label>Follow-up Date</label><input id="f-followup" type="date"></div>
+      <div class="form-group"><label>LinkedIn URL</label><input id="f-linkedin" placeholder="https://linkedin.com/in/..."></div>
+      <div class="form-group"><label>Website</label><input id="f-website" placeholder="https://..."></div>
+      <div class="form-group"><label>Phone</label><input id="f-phone" placeholder="206-555-1234"></div>
+      <div class="form-group full"><label>Notes</label><textarea id="f-notes" placeholder="Context, referral source, next steps..."></textarea></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-delete" id="del-btn" style="display:none" onclick="deleteContact()">Delete</button>
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveContact()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- KPI Edit Modal -->
+<div id="kpi-overlay" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeKpiEdit()">
+  <div class="kpi-edit-modal" onclick="event.stopPropagation()">
+    <h2>Update KPI Actuals</h2>
+    <div class="kpi-edit-row"><label>Active Engagements</label><input id="ke-engagements" type="text" placeholder="e.g. 0"></div>
+    <div class="kpi-edit-row"><label>Qualified Prospects in Pipeline</label><input id="ke-prospects" type="text" placeholder="e.g. 2"></div>
+    <div class="kpi-edit-row"><label>Clients Delivered (YTD)</label><input id="ke-delivered" type="text" placeholder="e.g. 0"></div>
+    <div class="kpi-edit-row"><label>Proposal to Close Rate (%)</label><input id="ke-closerate" type="text" placeholder="e.g. 0"></div>
+    <div class="kpi-edit-row"><label>Client Satisfaction Score</label><input id="ke-csat" type="text" placeholder="e.g. —"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeKpiEdit()">Cancel</button>
+      <button class="btn-save" onclick="saveKpiActuals()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NETWORKING GROUPS PAGE ══ -->
+<div id="page-groups" class="page">
+<div class="crm-wrap">
+  <div class="stats-bar" id="groups-stats-bar"></div>
+  <div class="controls">
+    <button class="filter-btn active" onclick="setGroupFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setGroupFilter('Attended',this)">Attended</button>
+    <button class="filter-btn" onclick="setGroupFilter('Contacted',this)">Contacted</button>
+    <button class="filter-btn" onclick="setGroupFilter('Evaluating',this)">Evaluating</button>
+    <button class="filter-btn" onclick="setGroupFilter('Not Started',this)">Not Started</button>
+    <input class="search-input" type="text" placeholder="Search groups..." oninput="renderGroups()" id="group-search">
+    <button class="add-btn" style="background:transparent;color:var(--muted);border:1px solid var(--border);margin-left:0" onclick="exportGroupsCSV()">Export CSV</button>
+    <button class="add-btn" onclick="openGroupModal(null)">+ Add Group</button>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortGroups('name')">Group</th>
+          <th onclick="sortGroups('status')">Status</th>
+          <th onclick="sortGroups('audienceFit')">Audience Fit</th>
+          <th onclick="sortGroups('value')">Value</th>
+          <th onclick="sortGroups('frequency')">Frequency</th>
+          <th onclick="sortGroups('cost')">Cost</th>
+          <th onclick="sortGroups('nextMeeting')">Next Meeting</th>
+          <th onclick="sortGroups('location')">Location</th>
+          <th>Link</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="groups-tbody"></tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- Groups Modal -->
+<div id="group-overlay" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeGroupModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <h2 id="group-modal-title">Add Networking Group</h2>
+    <div class="form-grid">
+      <div class="form-group full"><label>Group Name</label><input id="g-name" placeholder="e.g. Bellingham Manufacturing Roundtable"></div>
+      <div class="form-group"><label>Status</label>
+        <select id="g-status">
+          <option value="Not Started">Not Started</option>
+          <option value="Evaluating">Evaluating</option>
+          <option value="Contacted">Contacted</option>
+          <option value="Attended">Attended</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Audience Fit</label>
+        <select id="g-audience">
+          <option value="MFG">MFG</option>
+          <option value="SC">SC</option>
+          <option value="Tech">Tech</option>
+          <option value="Biz Owners">Biz Owners</option>
+          <option value="Entrepreneurs">Entrepreneurs</option>
+          <option value="PE">PE</option>
+          <option value="Mix">Mix</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Value</label>
+        <select id="g-value">
+          <option value="Visibility">Visibility</option>
+          <option value="Referrals">Referrals</option>
+          <option value="Clients">Clients</option>
+          <option value="Referrals + Clients">Referrals + Clients</option>
+          <option value="Visibility + Referrals">Visibility + Referrals</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Frequency</label>
+        <select id="g-frequency">
+          <option value="Weekly">Weekly</option>
+          <option value="Bi-weekly">Bi-weekly</option>
+          <option value="Monthly">Monthly</option>
+          <option value="Quarterly">Quarterly</option>
+          <option value="Annual">Annual</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Cost</label><input id="g-cost" placeholder="e.g. Free or $500/yr"></div>
+      <div class="form-group"><label>Next Meeting Date</label><input type="date" id="g-next"></div>
+      <div class="form-group"><label>Location</label><input id="g-location" placeholder="e.g. Bellingham, WA"></div>
+      <div class="form-group full"><label>Link</label><input id="g-link" placeholder="https://..."></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-delete" id="g-del-btn" style="display:none" onclick="deleteGroup()">Delete</button>
+      <button class="btn-cancel" onclick="closeGroupModal()">Cancel</button>
+      <button class="btn-save" onclick="saveGroup()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- QR Scan Modal -->
+<div id="qr-overlay" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeQRScan()">
+  <div class="scan-modal" onclick="event.stopPropagation()">
+    <h2>Scan QR Code</h2>
+    <p>Point the camera at a contact's QR code. Fields will auto-fill when detected.</p>
+    <div class="scan-video-wrap">
+      <video id="qr-video" autoplay playsinline muted></video>
+      <div class="scan-overlay-line"></div>
+    </div>
+    <div class="scan-status" id="qr-status">Starting camera...</div>
+    <div class="scan-result-fields" id="qr-fields" style="display:none">
+      <input id="qr-name" placeholder="Name" class="full">
+      <input id="qr-company" placeholder="Company">
+      <input id="qr-title" placeholder="Title">
+      <input id="qr-email" placeholder="Email">
+      <input id="qr-phone" placeholder="Phone">
+      <input id="qr-linkedin" placeholder="LinkedIn URL" class="full">
+    </div>
+    <div class="scan-actions">
+      <button class="btn-cancel" onclick="closeQRScan()">Cancel</button>
+      <button class="btn-save" id="qr-save-btn" style="display:none" onclick="saveQRContact()">Add to CRM</button>
+    </div>
+  </div>
+</div>
+
+<!-- Card Scan Modal -->
+<div id="card-overlay" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeCardScan()">
+  <div class="scan-modal" onclick="event.stopPropagation()">
+    <h2>Scan Business Card</h2>
+    <p>Take a photo of a business card. AI will read and auto-fill the contact fields.</p>
+    <div id="card-camera-wrap">
+      <div class="scan-video-wrap">
+        <video id="card-video" autoplay playsinline muted></video>
+      </div>
+      <div class="scan-actions" style="margin-bottom:12px">
+        <button class="btn-cancel" onclick="closeCardScan()">Cancel</button>
+        <button class="btn-save" onclick="captureCard()">Capture</button>
+      </div>
+    </div>
+    <canvas id="card-canvas" style="display:none"></canvas>
+    <img id="card-preview" alt="Card preview">
+    <div class="scan-status" id="card-status"></div>
+    <div class="scan-result-fields" id="card-fields" style="display:none">
+      <input id="card-name" placeholder="Name" class="full">
+      <input id="card-company" placeholder="Company">
+      <input id="card-title" placeholder="Title">
+      <input id="card-email" placeholder="Email">
+      <input id="card-phone" placeholder="Phone">
+      <input id="card-website" placeholder="Website" class="full">
+      <input id="card-linkedin" placeholder="LinkedIn URL" class="full">
+    </div>
+    <div class="scan-actions" id="card-save-actions" style="display:none">
+      <button class="btn-cancel" onclick="closeCardScan()">Cancel</button>
+      <button class="btn-save" onclick="saveCardContact()">Add to CRM</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── API KEY — PASTE YOUR ANTHROPIC KEY ON THE NEXT LINE ───
+const API_PROXY = 'https://accendit-api-proxy.jbens.workers.dev';
+// ───────────────────────────────────────────────────────────
+// ── SHARED DATA ──
+const CRM_KEY = 'accendit_crm_v6';
+const KPI_KEY = 'accendit_kpi_actuals';
+const GROUPS_KEY = 'accendit_groups_v1';
+
+let contacts = [], editId = null, filterMode = 'all', sKey = 'sentDate', sDir = -1;
+let groups = [], editGroupId = null, groupFilter = 'all', gSortKey = 'name', gSortDir = 1;
+
+const GROUPS_SEED = [
+  {id:1,name:'One Million Cups Grants Pass',status:'Attended',audienceFit:'Entrepreneurs',value:'Visibility',frequency:'Weekly',cost:'Free',nextMeeting:'',location:'Grants Pass, OR',link:'https://southernoregoninnovationhub.org/event/1-million-cups-every-wednesday-930-1030am-23/'},
+  {id:2,name:'Chamber of Medford & Jackson County',status:'Attended',audienceFit:'Mix',value:'Referrals',frequency:'Monthly',cost:'',nextMeeting:'',location:'Medford, OR',link:'https://www.medfordchamber.com'},
+  {id:3,name:'Ashland Chamber of Commerce',status:'Attended',audienceFit:'Mix',value:'Referrals',frequency:'Monthly',cost:'',nextMeeting:'',location:'Ashland, OR',link:'https://www.ashlandchamber.com'},
+  {id:4,name:'Network In Action (NIA)',status:'Contacted',audienceFit:'Biz Owners',value:'Referrals',frequency:'Monthly',cost:'',nextMeeting:'',location:'Oregon',link:'https://www.networkinaction.com'},
+  {id:5,name:'ACG Seattle',status:'Evaluating',audienceFit:'PE',value:'Referrals',frequency:'Monthly',cost:'',nextMeeting:'',location:'Seattle, WA',link:'https://www.acg.org/seattle'},
+  {id:6,name:'Washington Manufacturing Services',status:'Not Started',audienceFit:'MFG',value:'Clients',frequency:'Quarterly',cost:'',nextMeeting:'',location:'Statewide WA',link:'https://www.wamfg.org'},
+  {id:7,name:'ASCM Seattle Chapter',status:'Not Started',audienceFit:'SC',value:'Clients',frequency:'Monthly',cost:'',nextMeeting:'',location:'Seattle, WA',link:'https://www.ascm.org'},
+  {id:8,name:'Vistage Seattle',status:'Not Started',audienceFit:'Biz Owners',value:'Clients',frequency:'Monthly',cost:'',nextMeeting:'',location:'Seattle, WA',link:'https://www.vistage.com'},
+  {id:9,name:'PNAA',status:'Not Started',audienceFit:'MFG',value:'Clients',frequency:'Monthly',cost:'',nextMeeting:'',location:'Seattle/Everett, WA',link:'https://www.pnaa.net'},
+  {id:10,name:'EO Seattle',status:'Not Started',audienceFit:'Biz Owners',value:'Clients',frequency:'Monthly',cost:'',nextMeeting:'',location:'Seattle, WA',link:'https://www.eoseattle.org'},
+];
+
+const SEED = [
+  {id:1,name:'Paul Caragher',company:'Pike Street Capital',title:'Partner',type:'PE',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:'Industrial/mfg focus. InMail sent Apr 18. No response confirmed yet.'},
+  {id:2,name:'Erik Tolzmann',company:'Westward Partners',title:'Partner',type:'PE',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:'Superfeet is a Westward portfolio co. Kolby connection at Superfeet.'},
+  {id:3,name:'Brad Creswell',company:'NCA Partners',title:'Partner',type:'PE',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:'Explicitly lists turnarounds. Direct match to Accendit profile.'},
+  {id:4,name:'Vic Petroff',company:'Riverlake Partners',title:'Partner',type:'PE',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:'Portland-based. Industrial mfg and business services. Operator-oriented.'},
+  {id:5,name:'Cathy McBeth',company:'Rainier Partners',title:'Partner',type:'PE',status:'noresponse',channel:'LinkedIn InMail',sentDate:'2026-04-18',followUpDate:'2026-05-04',notes:'Business services, industrials, healthcare. $400M AUM. No response yet.'},
+  {id:6,name:'JD Griffin',company:'Superfeet',title:'Sourcing Manager',type:'Prospect',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-24',followUpDate:'2026-05-01',notes:'Door opener, not decision-maker. Referred by Kolby via WWU event. Fulfillment angle.'},
+  {id:7,name:'Matt Treat',company:'Treat Consulting / Blackbird',title:'Owner',type:'Network',status:'followup',channel:'Email',sentDate:'2026-04-28',followUpDate:'2026-05-04',notes:'Referred by Chris Perez. Sound Cleaning collab proposal sent. No response 5+ days. Follow-up sent.'},
+  {id:8,name:'Ajay Nagar',company:'Amentum',title:'VP',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-17',followUpDate:'2026-04-24',notes:'Referred by Chris Perez. Background: Schneider, Chekhub, Arayna venture.'},
+  {id:9,name:'Ranga Vinjamuri',company:'Yasas Technologies',title:'Founder/CEO',type:'Prospect',status:'proposal',channel:'In Person',sentDate:'2026-04-30',followUpDate:'2026-05-07',notes:'Proposal sent. $4K Phase 1 + $1K/mo months 2-6 + 10% gross margin perf fee. Intro via Brock (Teladoc/MSFT).'},
+  {id:10,name:'Michelle Hyde',company:'Hyde Group / MaestroGP',title:'Principal',type:'Network',status:'meeting',channel:'Phone',sentDate:'2026-04-20',followUpDate:'2026-05-11',notes:'Call completed Apr 20. Adjacent space: business continuity & DR. Referral potential. LinkedIn post done.'},
+  {id:11,name:'Brett Sherrod',company:'RedCloud Consulting',title:'Managing Partner',type:'Network',status:'meeting',channel:'In Person',sentDate:'2026-04-23',followUpDate:'2026-05-14',notes:'Coffee meeting. Former MSFT colleague. 250 people, 25 states. LinkedIn post done. Referral potential.'},
+  {id:12,name:'Frank Marcus',company:'Montreux Group',title:'President/CEO',type:'Network',status:'nurture',channel:'LinkedIn Connection',sentDate:'2026-04-20',followUpDate:'2026-06-01',notes:'Beverage/CPG consultant. Former friend, 5yr gap. Long-term nurture only. Weak referral fit.'},
+  {id:13,name:'Andy Mayer',company:'Mount Vernon Chamber',title:'President/CEO',type:'Chamber',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-04',followUpDate:'2026-05-11',notes:'Skagit County mfg and food processing base. Priority 1 chamber.'},
+  {id:14,name:'Alyssa Pitcher',company:'Ferndale Chamber',title:'Board President',type:'Chamber',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-04',followUpDate:'2026-05-11',notes:'Interim leadership after exec director departure. Verify before outreach.'},
+  {id:15,name:'Justin Camire',company:'Microsoft',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-16',followUpDate:'2026-04-23',notes:''},
+  {id:16,name:'Aubrey',company:'Microsoft',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-16',followUpDate:'2026-04-23',notes:''},
+  {id:17,name:'Colleen',company:'Microsoft',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-16',followUpDate:'2026-04-23',notes:''},
+  {id:18,name:'Deepak',company:'Amazon',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-16',followUpDate:'2026-04-23',notes:''},
+  {id:19,name:'Greg Furman',company:'Vizient',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-16',followUpDate:'2026-04-23',notes:''},
+  {id:20,name:'Craig Bramscher',company:'Brammo',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-16',followUpDate:'2026-04-23',notes:''},
+  {id:21,name:'Shiv Menon',company:'Chewy',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-16',followUpDate:'2026-04-23',notes:''},
+  {id:22,name:'Cathy McBeth',company:'Pike Street Capital',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:''},
+  {id:23,name:'Erik Tolzmann',company:'Westward Partners',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:''},
+  {id:24,name:'Bradford Creswell',company:'NW Capital (nwcap.com)',title:'',type:'Network',status:'sent',channel:'Email',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:''},
+  {id:25,name:'Vic Petroff',company:'Riverlake Partners',title:'',type:'Network',status:'sent',channel:'Email',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:''},
+  {id:26,name:'Kyle Sprecher',company:'Microsoft',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
+  {id:27,name:'Paul Clark',company:'Microsoft',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
+  {id:28,name:'Don Jenkins',company:'',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
+  {id:29,name:'Dale Johns',company:'',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
+  {id:30,name:'Heinrich Montana',company:'',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
+  {id:31,name:'Geoff Watson',company:'',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
+  {id:32,name:'Wud Pocinwong',company:'',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
+  {id:33,name:'Matt Iseri',company:'',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
+  {id:34,name:'Kim Shoemake',company:'',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
+  {id:35,name:'Mike Hagan',company:'',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
+  {id:36,name:'Dean',company:'Bioskin',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
+  {id:37,name:'Matthew',company:'Worksharp Tools',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
+  {id:38,name:'Zac',company:'Paddlesandoars.com',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
+  {id:39,name:'Deb',company:'Happy Campersworld',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
+  {id:40,name:'Sheila',company:'Jones Bikes',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
+  {id:41,name:'John Croswell',company:'Strong Tower Consulting',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
+  {id:42,name:'Gordon Bluechel',company:'Access Laser',title:'CEO and Managing Director',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-08',followUpDate:'2026-04-15',notes:''},
+  {id:43,name:'Joe Cherian',company:'Epicor',title:'VP Enterprise Solutions and Digital Transformation',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-14',followUpDate:'2026-04-21',notes:''},
+  {id:44,name:'Brett Clifton',company:'RedCloud Consulting',title:'Managing Partner, Owner',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-22',followUpDate:'2026-04-29',notes:'Coffee meeting held Apr 23. LinkedIn post done.'},
+  {id:45,name:'Autumn Countryman',company:'Autumn Countryman Law',title:'Attorney and Owner',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-08',followUpDate:'2026-04-15',notes:''},
+  {id:46,name:'Kevin Croy',company:'9Mile Labs',title:'Co-Founder and Partner',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-08',followUpDate:'2026-04-15',notes:''},
+  {id:47,name:'Greg Davit',company:'Aligned Data Centers',title:'VP Business Development',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-08',followUpDate:'2026-04-15',notes:''},
+  {id:48,name:'Kyle Downey',company:'Upstart',title:'VP Engineering',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:''},
+  {id:50,name:'Michelle Hamman',company:'Eident Consulting Group',title:'Managing Partner, Head of Talent Strategy',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-30',followUpDate:'2026-06-06',notes:''},
+  {id:51,name:'Michelle Hyde',company:'Maestro Global Partners',title:'President, Co-Founder',type:'Network',status:'meeting',channel:'LinkedIn InMail',sentDate:'2026-04-22',followUpDate:'2026-05-11',notes:'Call completed Apr 20. Business continuity and DR focus. Referral potential. LinkedIn post done.'},
+  {id:52,name:'Keith Klesner',company:'RadiusDC',title:'VP of Development',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:''},
+  {id:53,name:'Rob Leach',company:'Capgemini',title:'Global EVP',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-01',followUpDate:'2026-04-08',notes:''},
+  {id:54,name:'Frank Marcus',company:'Montreux Group',title:'President and CEO',type:'Network',status:'nurture',channel:'LinkedIn InMail',sentDate:'2026-04-14',followUpDate:'2026-06-01',notes:'Former friend 5yr gap. Beverage/CPG consultant. Long-term nurture only.'},
+  {id:55,name:'Sean Marshall',company:'Ranger Projects LLC',title:'President and Senior PM',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-14',followUpDate:'2026-04-21',notes:''},
+  {id:58,name:'Mike Miles',company:'MilestoneLeadership',title:'Founder, Fractional Exec and Executive Coach',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-15',followUpDate:'2026-04-22',notes:''},
+  {id:59,name:'Joe Milner',company:'Cotiviti',title:'SVP Transformation',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'',followUpDate:'',notes:'No send date recorded.'},
+  {id:60,name:'Nigel K. Moore',company:'Sacramento Splash',title:'Board President',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'',followUpDate:'',notes:'No send date recorded.'},
+  {id:61,name:'Ben Ravani',company:'Build Insight',title:'Founder and CEO',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:''},
+  {id:62,name:'Aaron Bilyeu',company:'Cloverleaf Infrastructure',title:'Chief Development Officer',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:''},
+  {id:63,name:'Sean Hobday',company:'Zones Inc',title:'SVP Global Sales',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:''},
+  {id:64,name:'Julian Kudritzki',company:'Beale Infrastructure',title:'Chief Operating Officer',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:''},
+  {id:65,name:'Ryan Middleton',company:'World Wide Technology',title:'Client Director',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:''},
+];
+
+// ── TAB SWITCHING ──
+function switchTab(tab, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── LOAD / SAVE ──
+function load() {
+  try { const r = localStorage.getItem(CRM_KEY); contacts = r ? JSON.parse(r) : SEED.map(c=>({...c})); }
+  catch(e) { contacts = SEED.map(c=>({...c})); }
+  try { const r = localStorage.getItem(GROUPS_KEY); groups = r ? JSON.parse(r) : GROUPS_SEED.map(g=>({...g})); }
+  catch(e) { groups = GROUPS_SEED.map(g=>({...g})); }
+  renderAll();
+}
+
+function save() {
+  try { localStorage.setItem(CRM_KEY, JSON.stringify(contacts)); } catch(e) {}
+}
+function saveGroups() {
+  try { localStorage.setItem(GROUPS_KEY, JSON.stringify(groups)); } catch(e) {}
+}
+
+function loadKpiActuals() {
+  try { return JSON.parse(localStorage.getItem(KPI_KEY)) || {}; } catch(e) { return {}; }
+}
+function saveKpiActuals_store(data) {
+  try { localStorage.setItem(KPI_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+// ── DATE UTILS ──
+function today() { const d = new Date(); d.setHours(0,0,0,0); return d; }
+function parseDate(s) { if(!s) return null; return new Date(s + 'T12:00:00'); }
+function fmtDate(s) { if(!s) return ''; return parseDate(s).toLocaleDateString('en-US',{month:'short',day:'numeric'}); }
+function isOverdue(c) {
+  if(['responded','meeting','proposal','proposalcreated','nurture','landed','inprogress','complete'].includes(c.status)) return false;
+  if(c.status === 'followup' || c.status === 'noresponse') return true;
+  if(c.followUpDate) { const d = parseDate(c.followUpDate); return d && d <= today(); }
+  return false;
+}
+function daysSince(s) {
+  if(!s) return 0;
+  return Math.floor((today() - parseDate(s)) / 86400000);
+}
+
+// ── RENDER ALL ──
+function renderAll() {
+  document.getElementById('nav-date').textContent = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  renderV2R();
+  renderCRM();
+  renderGroups();
+}
+
+// ── V2R DASHBOARD ──
+function renderV2R() {
+  const actuals = loadKpiActuals();
+  const meetings = contacts.filter(c => c.status === 'meeting').length;
+  const proposals = contacts.filter(c => ['proposal','proposalcreated'].includes(c.status)).length;
+  const prospects = contacts.filter(c => c.type === 'Prospect' && ['sent','followup','meeting','responded','proposal','proposalcreated'].includes(c.status)).length;
+  const overdue = contacts.filter(c => isOverdue(c));
+
+  const kpis = [
+    {
+      n:'01', label:'Active Engagements', target:'4 to 5',
+      actual: actuals.engagements ?? '0',
+      targetNum: 5, actualNum: parseFloat(actuals.engagements) || 0,
+      suffix: '', format: v => v
+    },
+    {
+      n:'02', label:'Qualified Prospects in Pipeline', target:'5+',
+      actual: String(prospects),
+      targetNum: 5, actualNum: prospects,
+      suffix: '', format: v => v
+    },
+    {
+      n:'03', label:'Clients Delivered (YTD)', target:'12 per year',
+      actual: actuals.delivered ?? '0',
+      targetNum: 12, actualNum: parseFloat(actuals.delivered) || 0,
+      suffix: '', format: v => v
+    },
+    {
+      n:'04', label:'Proposal to Close Rate', target:'50%+',
+      actual: actuals.closerate ? actuals.closerate + '%' : '0%',
+      targetNum: 50, actualNum: parseFloat(actuals.closerate) || 0,
+      suffix: '%', format: v => v + '%'
+    },
+    {
+      n:'05', label:'Client Satisfaction Score', target:'9+ / 10',
+      actual: actuals.csat ?? '—',
+      targetNum: 10, actualNum: parseFloat(actuals.csat) || 0,
+      suffix: '/10', format: v => v
+    },
+  ];
+
+  const row = document.getElementById('kpi-row');
+  row.innerHTML = kpis.map(k => {
+    const pct = k.targetNum > 0 ? Math.min(100, (k.actualNum / k.targetNum) * 100) : 0;
+    const colorClass = pct >= 80 ? 'green' : pct >= 40 ? 'yellow' : 'red';
+    const statusText = pct >= 80 ? 'On Track' : pct >= 40 ? 'Building' : k.actualNum === 0 ? 'Pre-Revenue' : 'Behind';
+    const noData = k.actual === '0' || k.actual === '0%' || k.actual === '—';
+    const dispColor = noData ? 'gray' : colorClass;
+    return `
+    <div class="kpi-card ${dispColor}">
+      <div class="kpi-n">${k.n}</div>
+      <div class="kpi-lbl">${k.label}</div>
+      <div class="kpi-val c-${dispColor}">${k.actual}</div>
+      <div class="kpi-tgt">Target: ${k.target}</div>
+      <div class="kpi-track"><div class="kpi-prog bg-${dispColor}" style="width:${pct}%"></div></div>
+      <div class="kpi-status c-${dispColor}">${noData ? 'No data yet' : statusText}</div>
+    </div>`;
+  }).join('');
+
+  // Funnel
+  const sent = contacts.filter(c => c.sentDate).length;
+  const responded = contacts.filter(c => ['responded','meeting','proposal','proposalcreated'].includes(c.status)).length;
+  const mts = contacts.filter(c => ['meeting'].includes(c.status)).length;
+  const props = contacts.filter(c => ['proposal','proposalcreated'].includes(c.status)).length;
+  const noResp = contacts.filter(c => c.status === 'noresponse').length;
+
+  const funnelData = [
+    {label:'Outreached', count: sent, pct: 100, color:'#C9A84C'},
+    {label:'Responded', count: responded, pct: Math.round(responded/sent*100)||0, color:'#60a5fa'},
+    {label:'Meeting Booked', count: mts, pct: Math.round(mts/sent*100)||0, color:'#a78bfa'},
+    {label:'Proposal Out', count: props, pct: Math.round(props/sent*100)||0, color:'#22c55e'},
+    {label:'No Response', count: noResp, pct: Math.round(noResp/sent*100)||0, color:'#ef4444'},
+  ];
+
+  document.getElementById('funnel-panel').innerHTML = funnelData.map(f => `
+    <div class="funnel-row">
+      <div class="f-lbl">${f.label}</div>
+      <div class="f-track">
+        <div class="f-fill" style="width:${f.pct}%;background:${f.color}">
+          <span>${f.count}</span>
+        </div>
+      </div>
+      <div class="f-count">${f.count}</div>
+    </div>`).join('');
+
+  // Overdue
+  const od = overdue.sort((a,b) => (a.followUpDate||'') < (b.followUpDate||'') ? -1 : 1).slice(0, 6);
+  document.getElementById('overdue-count').textContent = overdue.length > 0 ? `${overdue.length} overdue` : '';
+  document.getElementById('overdue-panel').innerHTML = od.length === 0
+    ? '<div style="font-size:12px;color:var(--muted);padding:12px 0">No overdue follow-ups. Good.</div>'
+    : od.map(c => {
+        const days = c.followUpDate ? daysSince(c.followUpDate) : '?';
+        return `<div class="overdue-item">
+          <div>
+            <div class="od-name">${c.name}</div>
+            <div class="od-co">${c.company || c.type}</div>
+          </div>
+          <div class="od-days">${days}d overdue</div>
+        </div>`;
+      }).join('');
+}
+
+// ── KPI EDIT ──
+function openKpiEdit() {
+  const a = loadKpiActuals();
+  document.getElementById('ke-engagements').value = a.engagements || '';
+  document.getElementById('ke-prospects').value = a.prospects || '';
+  document.getElementById('ke-delivered').value = a.delivered || '';
+  document.getElementById('ke-closerate').value = a.closerate || '';
+  document.getElementById('ke-csat').value = a.csat || '';
+  document.getElementById('kpi-overlay').style.display = 'flex';
+}
+function closeKpiEdit() { document.getElementById('kpi-overlay').style.display = 'none'; }
+function saveKpiActuals() {
+  saveKpiActuals_store({
+    engagements: document.getElementById('ke-engagements').value.trim(),
+    prospects: document.getElementById('ke-prospects').value.trim(),
+    delivered: document.getElementById('ke-delivered').value.trim(),
+    closerate: document.getElementById('ke-closerate').value.trim(),
+    csat: document.getElementById('ke-csat').value.trim(),
+  });
+  closeKpiEdit();
+  renderV2R();
+}
+
+// ── CRM RENDER ──
+function renderCRM() {
+  const total = contacts.length;
+  const active = contacts.filter(c => ['sent','followup','meeting','proposal','proposalcreated'].includes(c.status)).length;
+  const fu = contacts.filter(c => isOverdue(c)).length;
+  const meet = contacts.filter(c => c.status === 'meeting').length;
+  const prop = contacts.filter(c => ['proposal','proposalcreated'].includes(c.status)).length;
+
+  document.getElementById('stats-bar').innerHTML = `
+    <div class="stat"><div class="stat-label">Total Contacts</div><div class="stat-value">${total}</div></div>
+    <div class="stat"><div class="stat-label">Active Pipeline</div><div class="stat-value">${active}</div></div>
+    <div class="stat"><div class="stat-label">Needs Follow-up</div><div class="stat-value" style="color:var(--yellow)">${fu}</div></div>
+    <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value" style="color:var(--purple)">${meet}</div></div>
+    <div class="stat"><div class="stat-label">Proposals</div><div class="stat-value" style="color:var(--gold)">${prop}</div></div>`;
+
+  const rows = getFiltered();
+  document.getElementById('tbody').innerHTML = rows.length === 0
+    ? `<tr class="empty-row"><td colspan="9">No contacts match this filter.</td></tr>`
+    : rows.map(c => `<tr onclick="openModal(${c.id})">
+        <td><div class="contact-name">${c.name}${c.linkedin ? ` <a href="${c.linkedin}" target="_blank" onclick="event.stopPropagation()" style="font-size:10px;color:var(--blue);text-decoration:none;margin-left:6px">LI</a>` : ''}</div><div class="contact-sub">${c.company}${c.title ? ' · ' + c.title : ''}${c.phone ? ' · ' + c.phone : ''}</div></td>
+        <td>${typeBadge(c.type)}</td>
+        <td>${statusBadge(c.status)}</td>
+        <td>${forBadge(c.forBusiness)}</td>
+        <td><span style="font-size:12px;color:var(--muted)">${c.channel}</span></td>
+        <td><span class="date-text">${fmtDate(c.sentDate)}</span></td>
+        <td><span class="date-text ${fuClass(c.followUpDate)}">${fmtDate(c.followUpDate) || '—'}</span></td>
+        <td><span class="notes-text" title="${(c.notes||'').replace(/"/g,'&quot;')}">${c.notes || '—'}</span></td>
+        <td style="text-align:right;color:var(--border);font-size:18px">›</td>
+      </tr>`).join('');
+}
+
+function getFiltered() {
+  const q = (document.getElementById('search')?.value || '').toLowerCase();
+  return contacts.filter(c => {
+    if (filterMode === 'followup') return isOverdue(c);
+    if (filterMode !== 'all' && c.type !== filterMode) return false;
+    if (q && !`${c.name} ${c.company} ${c.notes}`.toLowerCase().includes(q)) return false;
+    return true;
+  }).sort((a,b) => {
+    const av = a[sKey]||'', bv = b[sKey]||'';
+    return av < bv ? sDir : av > bv ? -sDir : 0;
+  });
+}
+
+function setFilter(f, btn) {
+  filterMode = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCRM();
+}
+
+function sortBy(k) {
+  if (sKey === k) sDir *= -1; else { sKey = k; sDir = 1; }
+  renderCRM();
+}
+
+function fuClass(d) {
+  if (!d) return '';
+  const diff = (parseDate(d) - today()) / 86400000;
+  if (diff < 0) return 'overdue-date';
+  if (diff <= 2) return 'due-soon-date';
+  return '';
+}
+
+function statusBadge(s) {
+  const m = {landed:['Landed','badge-landed'],inprogress:['In Progress','badge-inprogress'],complete:['Complete','badge-complete'],proposalcreated:['Proposal Created','badge-proposalcreated'],sent:['Sent','badge-sent'],responded:['Responded','badge-responded'],meeting:['Meeting Booked','badge-meeting'],followup:['Needs Follow-up','badge-followup'],proposal:['Proposal Sent','badge-proposal'],noresponse:['No Response','badge-noresponse'],nurture:['Long-term Nurture','badge-nurture']};
+  const [l,c] = m[s] || [s,'badge-sent'];
+  return `<span class="badge ${c}">${l}</span>`;
+}
+
+function typeBadge(t) {
+  const m = {PE:'type-pe',Prospect:'type-prospect',Network:'type-network',Chamber:'type-chamber',Platform:'type-platform'};
+  return `<span class="type-badge ${m[t]||''}">${t}</span>`;
+}
+
+function forBadge(f) {
+  if (!f || f === 'Accendit') return `<span class="type-badge" style="background:rgba(13,27,62,0.08);color:#0D1B3E">Accendit</span>`;
+  if (f === 'Cascade') return `<span class="type-badge" style="background:rgba(5,150,105,0.08);color:#059669">Cascade</span>`;
+  return `<span class="type-badge" style="background:rgba(124,58,237,0.08);color:#7c3aed">Both</span>`;
+}
+
+// ── MODAL ──
+function openModal(id) {
+  editId = id;
+  const td = new Date().toISOString().split('T')[0];
+  const fu = new Date(Date.now()+7*86400000).toISOString().split('T')[0];
+  if (id) {
+    const c = contacts.find(x => x.id === id); if (!c) return;
+    document.getElementById('modal-title').textContent = 'Edit Contact';
+    document.getElementById('f-name').value = c.name||'';
+    document.getElementById('f-company').value = c.company||'';
+    document.getElementById('f-title').value = c.title||'';
+    document.getElementById('f-type').value = c.type||'PE';
+    document.getElementById('f-status').value = c.status||'sent';
+    document.getElementById('f-channel').value = c.channel||'LinkedIn InMail';
+    document.getElementById('f-forbusiness').value = c.forBusiness||'Accendit';
+    document.getElementById('f-sent').value = c.sentDate||td;
+    document.getElementById('f-followup').value = c.followUpDate||fu;
+    document.getElementById('f-notes').value = c.notes||'';
+    document.getElementById('f-linkedin').value = c.linkedin||'';
+    document.getElementById('f-website').value = c.website||'';
+    document.getElementById('f-phone').value = c.phone||'';
+    document.getElementById('del-btn').style.display = 'block';
+  } else {
+    document.getElementById('modal-title').textContent = 'Add Contact';
+    ['f-name','f-company','f-title','f-notes','f-linkedin','f-website','f-phone'].forEach(i => document.getElementById(i).value = '');
+    document.getElementById('f-type').value = 'PE';
+    document.getElementById('f-status').value = 'sent';
+    document.getElementById('f-channel').value = 'LinkedIn InMail';
+    document.getElementById('f-forbusiness').value = 'Accendit';
+    document.getElementById('f-sent').value = td;
+    document.getElementById('f-followup').value = fu;
+    document.getElementById('del-btn').style.display = 'none';
+  }
+  document.getElementById('overlay').style.display = 'flex';
+}
+
+function closeModal() { document.getElementById('overlay').style.display = 'none'; editId = null; }
+
+function saveContact() {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { alert('Name required.'); return; }
+  const c = {name, company:document.getElementById('f-company').value.trim(), title:document.getElementById('f-title').value.trim(), type:document.getElementById('f-type').value, status:document.getElementById('f-status').value, channel:document.getElementById('f-channel').value, forBusiness:document.getElementById('f-forbusiness').value, sentDate:document.getElementById('f-sent').value, followUpDate:document.getElementById('f-followup').value, notes:document.getElementById('f-notes').value.trim(), linkedin:document.getElementById('f-linkedin').value.trim(), website:document.getElementById('f-website').value.trim(), phone:document.getElementById('f-phone').value.trim()};
+  if (editId) { const i = contacts.findIndex(x => x.id === editId); if (i !== -1) contacts[i] = {...contacts[i],...c}; }
+  else { const maxId = contacts.reduce((m,x) => Math.max(m,x.id||0),0); contacts.push({id:maxId+1,...c}); }
+  save(); closeModal(); renderAll();
+}
+
+function deleteContact() {
+  if (!editId || !confirm('Remove this contact?')) return;
+  contacts = contacts.filter(c => c.id !== editId);
+  save(); closeModal(); renderAll();
+}
+
+function exportCSV() {
+  const headers = ['Name','Company','Title','Type','Status','Channel','Date Sent','Follow-up Date','LinkedIn','Website','Phone','Notes'];
+  const rows = contacts.map(c => [c.name,c.company,c.title,c.type,c.status,c.channel,c.sentDate,c.followUpDate,c.linkedin,c.website,c.phone,(c.notes||'').replace(/"/g,'""')].map(v=>`"${v||''}"`).join(','));
+  const csv = [headers.join(','),...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download = 'accendit_crm_' + new Date().toISOString().split('T')[0] + '.csv';
+  a.click();
+}
+
+// ── GROUPS ──
+function renderGroups() {
+  const total = groups.length;
+  const attended = groups.filter(g => g.status === 'Attended').length;
+  const evaluating = groups.filter(g => g.status === 'Evaluating').length;
+  const contacted = groups.filter(g => g.status === 'Contacted').length;
+  const notStarted = groups.filter(g => g.status === 'Not Started').length;
+
+  document.getElementById('groups-stats-bar').innerHTML = `
+    <div class="stat"><div class="stat-label">Total Groups</div><div class="stat-value">${total}</div></div>
+    <div class="stat"><div class="stat-label">Attended</div><div class="stat-value" style="color:var(--green)">${attended}</div></div>
+    <div class="stat"><div class="stat-label">Evaluating</div><div class="stat-value" style="color:var(--yellow)">${evaluating}</div></div>
+    <div class="stat"><div class="stat-label">Contacted</div><div class="stat-value" style="color:var(--blue)">${contacted}</div></div>
+    <div class="stat"><div class="stat-label">Not Started</div><div class="stat-value" style="color:var(--muted)">${notStarted}</div></div>`;
+
+  const q = (document.getElementById('group-search')?.value || '').toLowerCase();
+  const rows = groups.filter(g => {
+    if (groupFilter !== 'all' && g.status !== groupFilter) return false;
+    if (q && !`${g.name} ${g.location} ${g.audienceFit}`.toLowerCase().includes(q)) return false;
+    return true;
+  }).sort((a,b) => {
+    const av = a[gSortKey]||'', bv = b[gSortKey]||'';
+    return av < bv ? -gSortDir : av > bv ? gSortDir : 0;
+  });
+
+  const statusColors = {'Attended':'var(--green)','Evaluating':'var(--yellow)','Contacted':'var(--blue)','Not Started':'var(--muted)'};
+  const statusBg = {'Attended':'rgba(22,163,74,0.08)','Evaluating':'rgba(217,119,6,0.08)','Contacted':'rgba(37,99,235,0.08)','Not Started':'rgba(107,114,128,0.08)'};
+
+  document.getElementById('groups-tbody').innerHTML = rows.length === 0
+    ? `<tr class="empty-row"><td colspan="10">No groups match this filter.</td></tr>`
+    : rows.map(g => `<tr onclick="openGroupModal(${g.id})">
+        <td><div class="contact-name">${g.name}</div></td>
+        <td><span class="badge" style="background:${statusBg[g.status]||'rgba(107,114,128,0.08)'};color:${statusColors[g.status]||'var(--muted)'};border:1px solid ${statusColors[g.status]||'var(--muted)'}33">${g.status}</span></td>
+        <td><span class="type-badge type-network">${g.audienceFit}</span></td>
+        <td><span style="font-size:12px;color:var(--navy)">${g.value}</span></td>
+        <td><span style="font-size:12px;color:var(--muted)">${g.frequency}</span></td>
+        <td><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--navy)">${g.cost||'—'}</span></td>
+        <td><span class="date-text ${g.nextMeeting && fuClass(g.nextMeeting)}">${fmtDate(g.nextMeeting)||'—'}</span></td>
+        <td><span style="font-size:12px;color:var(--muted)">${g.location||'—'}</span></td>
+        <td>${g.link ? `<a href="${g.link}" target="_blank" onclick="event.stopPropagation()" style="font-size:11px;color:var(--blue);text-decoration:none">Visit</a>` : '—'}</td>
+        <td style="text-align:right;color:var(--border);font-size:18px">›</td>
+      </tr>`).join('');
+}
+
+function setGroupFilter(f, btn) {
+  groupFilter = f;
+  document.querySelectorAll('#page-groups .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGroups();
+}
+
+function sortGroups(k) {
+  if (gSortKey === k) gSortDir *= -1; else { gSortKey = k; gSortDir = 1; }
+  renderGroups();
+}
+
+function openGroupModal(id) {
+  editGroupId = id;
+  if (id) {
+    const g = groups.find(x => x.id === id); if (!g) return;
+    document.getElementById('group-modal-title').textContent = 'Edit Group';
+    document.getElementById('g-name').value = g.name||'';
+    document.getElementById('g-status').value = g.status||'Not Started';
+    document.getElementById('g-audience').value = g.audienceFit||'Mix';
+    document.getElementById('g-value').value = g.value||'Visibility';
+    document.getElementById('g-frequency').value = g.frequency||'Monthly';
+    document.getElementById('g-cost').value = g.cost||'';
+    document.getElementById('g-next').value = g.nextMeeting||'';
+    document.getElementById('g-location').value = g.location||'';
+    document.getElementById('g-link').value = g.link||'';
+    document.getElementById('g-del-btn').style.display = 'block';
+  } else {
+    document.getElementById('group-modal-title').textContent = 'Add Networking Group';
+    ['g-name','g-cost','g-next','g-location','g-link'].forEach(i => document.getElementById(i).value = '');
+    document.getElementById('g-status').value = 'Not Started';
+    document.getElementById('g-audience').value = 'Mix';
+    document.getElementById('g-value').value = 'Visibility';
+    document.getElementById('g-frequency').value = 'Monthly';
+    document.getElementById('g-del-btn').style.display = 'none';
+  }
+  document.getElementById('group-overlay').style.display = 'flex';
+}
+
+function closeGroupModal() { document.getElementById('group-overlay').style.display = 'none'; editGroupId = null; }
+
+function saveGroup() {
+  const name = document.getElementById('g-name').value.trim();
+  if (!name) { alert('Group name required.'); return; }
+  const g = {
+    name,
+    status: document.getElementById('g-status').value,
+    audienceFit: document.getElementById('g-audience').value,
+    value: document.getElementById('g-value').value,
+    frequency: document.getElementById('g-frequency').value,
+    cost: document.getElementById('g-cost').value.trim(),
+    nextMeeting: document.getElementById('g-next').value,
+    location: document.getElementById('g-location').value.trim(),
+    link: document.getElementById('g-link').value.trim(),
+  };
+  if (editGroupId) {
+    const i = groups.findIndex(x => x.id === editGroupId);
+    if (i !== -1) groups[i] = {...groups[i], ...g};
+  } else {
+    const maxId = groups.reduce((m,x) => Math.max(m,x.id||0), 0);
+    groups.push({id: maxId + 1, ...g});
+  }
+  saveGroups(); closeGroupModal(); renderGroups();
+}
+
+function deleteGroup() {
+  if (!editGroupId || !confirm('Remove this group?')) return;
+  groups = groups.filter(g => g.id !== editGroupId);
+  saveGroups(); closeGroupModal(); renderGroups();
+}
+
+function exportGroupsCSV() {
+  const headers = ['Group','Status','Audience Fit','Value','Frequency','Cost','Next Meeting','Location','Link'];
+  const rows = groups.map(g => [g.name,g.status,g.audienceFit,g.value,g.frequency,g.cost,g.nextMeeting,g.location,g.link].map(v=>`"${v||''}"`).join(','));
+  const csv = [headers.join(','),...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download = 'accendit_groups_' + new Date().toISOString().split('T')[0] + '.csv';
+  a.click();
+}
+
+// ── QR SCAN ──
+let qrStream = null, qrInterval = null;
+
+async function openQRScan() {
+  document.getElementById('qr-overlay').style.display = 'flex';
+  document.getElementById('qr-fields').style.display = 'none';
+  document.getElementById('qr-save-btn').style.display = 'none';
+  document.getElementById('qr-status').textContent = 'Starting camera...';
+  try {
+    qrStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+    document.getElementById('qr-video').srcObject = qrStream;
+    document.getElementById('qr-status').textContent = 'Point camera at QR code...';
+    // Load jsQR dynamically
+    if (!window.jsQR) {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js';
+      s.onload = startQRDetection;
+      document.head.appendChild(s);
+    } else {
+      startQRDetection();
+    }
+  } catch(e) {
+    document.getElementById('qr-status').textContent = 'Camera access denied. Please allow camera in browser settings.';
+  }
+}
+
+function startQRDetection() {
+  const video = document.getElementById('qr-video');
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  qrInterval = setInterval(() => {
+    if (video.readyState !== video.HAVE_ENOUGH_DATA) return;
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    ctx.drawImage(video, 0, 0);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const code = jsQR(imageData.data, imageData.width, imageData.height);
+    if (code) {
+      clearInterval(qrInterval);
+      parseQRData(code.data);
+    }
+  }, 300);
+}
+
+function parseQRData(data) {
+  document.getElementById('qr-status').textContent = 'QR code detected. Parsing contact...';
+  // Parse vCard or plain text
+  const fields = { name:'', company:'', title:'', email:'', phone:'', linkedin:'' };
+  if (data.includes('BEGIN:VCARD')) {
+    const lines = data.split('\n');
+    lines.forEach(l => {
+      if (l.startsWith('FN:')) fields.name = l.replace('FN:','').trim();
+      else if (l.startsWith('ORG:')) fields.company = l.replace('ORG:','').trim();
+      else if (l.startsWith('TITLE:')) fields.title = l.replace('TITLE:','').trim();
+      else if (l.startsWith('EMAIL')) fields.email = l.split(':').slice(1).join(':').trim();
+      else if (l.startsWith('TEL')) fields.phone = l.split(':').slice(1).join(':').trim();
+      else if (l.includes('linkedin.com')) fields.linkedin = l.split(':').slice(1).join(':').trim();
+    });
+  } else {
+    // Try to extract email and phone from plain text
+    const emailMatch = data.match(/[\w.-]+@[\w.-]+\.\w+/);
+    const phoneMatch = data.match(/[\d\s\-\(\)\+]{7,}/);
+    if (emailMatch) fields.email = emailMatch[0];
+    if (phoneMatch) fields.phone = phoneMatch[0].trim();
+    fields.name = data.split('\n')[0] || '';
+  }
+  document.getElementById('qr-name').value = fields.name;
+  document.getElementById('qr-company').value = fields.company;
+  document.getElementById('qr-title').value = fields.title;
+  document.getElementById('qr-email').value = fields.email;
+  document.getElementById('qr-phone').value = fields.phone;
+  document.getElementById('qr-linkedin').value = fields.linkedin;
+  document.getElementById('qr-fields').style.display = 'grid';
+  document.getElementById('qr-save-btn').style.display = 'block';
+  document.getElementById('qr-status').textContent = 'Review and save to CRM.';
+  stopQRStream();
+}
+
+function stopQRStream() {
+  if (qrInterval) { clearInterval(qrInterval); qrInterval = null; }
+  if (qrStream) { qrStream.getTracks().forEach(t => t.stop()); qrStream = null; }
+}
+
+function closeQRScan() {
+  stopQRStream();
+  document.getElementById('qr-overlay').style.display = 'none';
+}
+
+function saveQRContact() {
+  const name = document.getElementById('qr-name').value.trim();
+  if (!name) { alert('Name required.'); return; }
+  const td = new Date().toISOString().split('T')[0];
+  const fu = new Date(Date.now()+7*86400000).toISOString().split('T')[0];
+  const maxId = contacts.reduce((m,x) => Math.max(m,x.id||0), 0);
+  contacts.push({
+    id: maxId+1, name,
+    company: document.getElementById('qr-company').value.trim(),
+    title: document.getElementById('qr-title').value.trim(),
+    type: 'Network', status: 'sent', channel: 'In Person', forBusiness: 'Accendit',
+    sentDate: td, followUpDate: fu,
+    linkedin: document.getElementById('qr-linkedin').value.trim(),
+    phone: document.getElementById('qr-phone').value.trim(),
+    website: '', notes: 'Added via QR scan.',
+  });
+  save(); closeQRScan(); renderAll();
+  alert(`${name} added to CRM.`);
+}
+
+// ── CARD SCAN ──
+let cardStream = null;
+
+async function openCardScan() {
+  document.getElementById('card-overlay').style.display = 'flex';
+  document.getElementById('card-camera-wrap').style.display = 'block';
+  document.getElementById('card-preview').style.display = 'none';
+  document.getElementById('card-fields').style.display = 'none';
+  document.getElementById('card-save-actions').style.display = 'none';
+  document.getElementById('card-status').textContent = 'Starting camera...';
+  try {
+    cardStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+    document.getElementById('card-video').srcObject = cardStream;
+    document.getElementById('card-status').textContent = 'Frame the business card and tap Capture.';
+  } catch(e) {
+    document.getElementById('card-status').textContent = 'Camera access denied. Please allow camera in browser settings.';
+  }
+}
+
+function captureCard() {
+  const video = document.getElementById('card-video');
+  const canvas = document.getElementById('card-canvas');
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0);
+  const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+  stopCardStream();
+  document.getElementById('card-camera-wrap').style.display = 'none';
+  document.getElementById('card-preview').src = dataUrl;
+  document.getElementById('card-preview').style.display = 'block';
+  document.getElementById('card-status').textContent = 'Reading card with AI...';
+  readCardWithAI(dataUrl);
+}
+
+async function readCardWithAI(dataUrl) {
+  if (!API_PROXY || API_PROXY.includes('YOURSUBDOMAIN')) {
+    document.getElementById('card-status').textContent = 'Worker URL not configured.';
+    return;
+  }
+  try {
+    const base64 = dataUrl.split(',')[1];
+    const response = await fetch(API_PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 500,
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: base64 } },
+            { type: 'text', text: 'Extract contact information from this business card. Respond ONLY with valid JSON, no markdown, no explanation. Format: {"name":"","company":"","title":"","email":"","phone":"","website":"","linkedin":""}. Use empty string for any field not found.' }
+          ]
+        }]
+      })
+    });
+    const data = await response.json();
+    const text = data.content?.[0]?.text || '{}';
+    const parsed = JSON.parse(text.replace(/```json|```/g,'').trim());
+    document.getElementById('card-name').value = parsed.name || '';
+    document.getElementById('card-company').value = parsed.company || '';
+    document.getElementById('card-title').value = parsed.title || '';
+    document.getElementById('card-email').value = parsed.email || '';
+    document.getElementById('card-phone').value = parsed.phone || '';
+    document.getElementById('card-website').value = parsed.website || '';
+    document.getElementById('card-linkedin').value = parsed.linkedin || '';
+    document.getElementById('card-fields').style.display = 'grid';
+    document.getElementById('card-save-actions').style.display = 'flex';
+    document.getElementById('card-status').textContent = 'Review fields and save to CRM.';
+  } catch(e) {
+    document.getElementById('card-status').textContent = 'Could not read card. Try again with better lighting.';
+    document.getElementById('card-camera-wrap').style.display = 'block';
+  }
+}
+
+function stopCardStream() {
+  if (cardStream) { cardStream.getTracks().forEach(t => t.stop()); cardStream = null; }
+}
+
+function closeCardScan() {
+  stopCardStream();
+  document.getElementById('card-overlay').style.display = 'none';
+}
+
+function saveCardContact() {
+  const name = document.getElementById('card-name').value.trim();
+  if (!name) { alert('Name required.'); return; }
+  const td = new Date().toISOString().split('T')[0];
+  const fu = new Date(Date.now()+7*86400000).toISOString().split('T')[0];
+  const maxId = contacts.reduce((m,x) => Math.max(m,x.id||0), 0);
+  contacts.push({
+    id: maxId+1, name,
+    company: document.getElementById('card-company').value.trim(),
+    title: document.getElementById('card-title').value.trim(),
+    type: 'Network', status: 'sent', channel: 'In Person', forBusiness: 'Accendit',
+    sentDate: td, followUpDate: fu,
+    linkedin: document.getElementById('card-linkedin').value.trim(),
+    phone: document.getElementById('card-phone').value.trim(),
+    website: document.getElementById('card-website').value.trim(),
+    notes: 'Added via business card scan.',
+  });
+  save(); closeCardScan(); renderAll();
+  alert(`${name} added to CRM.`);
+}
+
+load();
+</script>
+</body>
+</html>
