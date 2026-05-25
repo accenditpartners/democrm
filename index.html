@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Accendit Partners — Command Center</title>
+<title>Company X — Command Center</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
 
@@ -137,13 +137,13 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .kpi-card.red::after { background: var(--red); }
 .kpi-card.gray::after { background: #D1D5DB; }
 
-.kpi-n { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 2px; margin-bottom: 8px; flex-shrink: 0; }
-.kpi-lbl { font-size: 10px; color: var(--muted); line-height: 1.5; min-height: 44px; flex-shrink: 0; }
-.kpi-val { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 900; line-height: 1; margin-top: auto; padding-top: 10px; margin-bottom: 4px; flex-shrink: 0; }
-.kpi-tgt { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); margin-bottom: 8px; flex-shrink: 0; }
-.kpi-track { background: #E5E7EB; border-radius: 2px; height: 3px; overflow: hidden; margin-bottom: 8px; flex-shrink: 0; }
+.kpi-n { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 2px; margin-bottom: 10px; }
+.kpi-lbl { font-size: 10px; color: var(--muted); line-height: 1.5; margin-bottom: 12px; min-height: 44px; }
+.kpi-val { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 900; line-height: 1; margin-bottom: 4px; margin-top: auto; }
+.kpi-tgt { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); margin-bottom: 10px; margin-top: 4px; }
+.kpi-track { background: #E5E7EB; border-radius: 2px; height: 3px; overflow: hidden; margin-bottom: 8px; }
 .kpi-prog { height: 100%; border-radius: 2px; transition: width 0.8s ease; }
-.kpi-status { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; flex-shrink: 0; }
+.kpi-status { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; }
 
 .c-green { color: var(--green); } .bg-green { background: var(--green); }
 .c-yellow { color: var(--yellow); } .bg-yellow { background: var(--yellow); }
@@ -174,6 +174,52 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .panel { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; }
 .panel-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px; }
+
+/* ── MOBILE RESPONSIVE ── */
+@media (max-width: 768px) {
+  .nav { padding: 0 14px; flex-wrap: wrap; }
+  .nav-brand { font-size: 9px; letter-spacing: 2px; padding: 12px 0; margin-right: 0; width: 100%; border-bottom: 1px solid rgba(201,168,76,0.1); }
+  .nav-tabs { gap: 0; overflow-x: auto; width: 100%; }
+  .nav-tab { font-size: 11px; padding: 12px 14px 10px; white-space: nowrap; }
+  .nav-right { display: none !important; }
+
+  .v2r-wrap { padding: 20px 14px 40px; }
+  .v2r-title { font-size: 22px; }
+  .vision-text { font-size: 13px; }
+
+  .kpi-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kpi-card:last-child { grid-column: 1 / -1; max-width: 50%; margin: 0 auto; width: 100%; }
+  .kpi-val { font-size: 28px; }
+  .kpi-lbl { min-height: auto; }
+
+  .obj-grid { grid-template-columns: 1fr; }
+  .obj-card:last-child { grid-column: 1; }
+  .bottom-grid { grid-template-columns: 1fr; }
+
+  .crm-wrap { padding: 12px; }
+  .stats-bar { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .stats-bar .stat:nth-child(4),
+  .stats-bar .stat:nth-child(5) { grid-column: span 1; }
+
+  .controls { gap: 6px; }
+  .filter-btn { font-size: 11px; padding: 5px 10px; }
+  .search-input { width: auto; flex: 1; min-width: 0; }
+
+  .table-wrap { border-radius: 6px; }
+  table { font-size: 11px; }
+  thead th { padding: 8px 8px; font-size: 9px; }
+  tbody td { padding: 8px 8px; }
+
+  /* Hide lower priority columns on mobile */
+  thead th:nth-child(4),
+  thead th:nth-child(7),
+  tbody td:nth-child(4),
+  tbody td:nth-child(7) { display: none; }
+
+  .modal { padding: 20px 16px; margin: 10px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-group.full { grid-column: 1; }
+}
 
 .funnel-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
 .f-lbl { font-size: 11px; color: var(--muted); width: 100px; flex-shrink: 0; }
@@ -287,99 +333,41 @@ textarea { resize: vertical; min-height: 70px; }
   white-space: nowrap;
 }
 .scan-btn:hover { background: var(--navy-mid); }
-.scan-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-.scan-modal {
+.coming-soon-modal {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 28px;
+  padding: 36px 32px;
   width: 100%;
-  max-width: 480px;
+  max-width: 420px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  text-align: center;
 }
-.scan-modal h2 { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--navy); margin-bottom: 16px; }
-.scan-modal p { font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.6; }
-.scan-video-wrap { position: relative; width: 100%; border-radius: 8px; overflow: hidden; background: #000; margin-bottom: 16px; }
-#qr-video { width: 100%; display: block; max-height: 260px; object-fit: cover; }
-.scan-overlay-line { position: absolute; top: 50%; left: 10%; right: 10%; height: 2px; background: var(--gold); box-shadow: 0 0 8px rgba(201,168,76,0.8); transform: translateY(-50%); }
-#card-preview { width: 100%; border-radius: 8px; margin-bottom: 12px; display: none; }
-.scan-status { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); letter-spacing: 1px; margin-bottom: 12px; min-height: 18px; }
-.scan-result-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-.scan-result-fields input { background: #F9FAFB; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; color: var(--navy); font-size: 12px; font-family: 'DM Sans', sans-serif; outline: none; }
-.scan-result-fields input:focus { border-color: var(--navy); }
-.scan-result-fields input.full { grid-column: 1 / -1; }
-.scan-actions { display: flex; gap: 10px; justify-content: flex-end; }
-
-@media (max-width: 768px) {
-  .scan-result-fields { grid-template-columns: 1fr; }
-  .scan-result-fields input.full { grid-column: 1; }
-
-  /* Nav */
-  .nav { padding: 0 12px; flex-wrap: wrap; }
-  .nav-brand { font-size: 9px; letter-spacing: 2px; padding: 10px 0; width: 100%; border-bottom: 1px solid rgba(201,168,76,0.15); }
-  .nav-tabs { width: 100%; overflow-x: auto; gap: 0; -webkit-overflow-scrolling: touch; }
-  .nav-tab { font-size: 11px; padding: 10px 12px 9px; white-space: nowrap; }
-  .nav-right { display: none !important; }
-
-  /* V2R */
-  .v2r-wrap { padding: 16px 12px 40px; }
-  .v2r-title { font-size: 22px; }
-  .vision-text { font-size: 13px; }
-
-  /* KPI cards — 2 col on mobile, labels fixed height so numbers align */
-  .kpi-row { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .kpi-card { padding: 12px 10px 12px; }
-  .kpi-card:last-child { grid-column: 1 / -1; max-width: calc(50% - 4px); }
-  .kpi-n { font-size: 8px; margin-bottom: 6px; }
-  .kpi-lbl { font-size: 9px; min-height: 36px; margin-bottom: 8px; line-height: 1.4; }
-  .kpi-val { font-size: 26px; margin-bottom: 2px; }
-  .kpi-tgt { font-size: 8px; margin-bottom: 6px; }
-  .kpi-status { font-size: 8px; letter-spacing: 1px; }
-
-  /* Objectives */
-  .obj-grid { grid-template-columns: 1fr; }
-  .obj-card:last-child { grid-column: 1; }
-  .bottom-grid { grid-template-columns: 1fr; }
-
-  /* Stats bar — smaller text so labels don't wrap */
-  .stats-bar { grid-template-columns: repeat(3, 1fr); gap: 6px; }
-  .stat { padding: 10px 8px; }
-  .stat-label { font-size: 8px; letter-spacing: 0.5px; line-height: 1.3; }
-  .stat-value { font-size: 20px; }
-
-  /* CRM controls */
-  .controls { gap: 6px; flex-wrap: wrap; }
-  .filter-btn { font-size: 10px; padding: 5px 9px; }
-
-  /* Table */
-  .table-wrap { border-radius: 6px; }
-  table { font-size: 11px; }
-  thead th { padding: 7px 6px; font-size: 8px; }
-  tbody td { padding: 8px 6px; }
-  thead th:nth-child(5),
-  thead th:nth-child(7),
-  tbody td:nth-child(5),
-  tbody td:nth-child(7) { display: none; }
-
-  /* Modal */
-  .modal { padding: 18px 14px; margin: 10px; }
-  .form-grid { grid-template-columns: 1fr; }
-  .form-group.full { grid-column: 1; }
-}
+.coming-soon-icon { font-size: 40px; margin-bottom: 16px; }
+.coming-soon-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+.coming-soon-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+.coming-soon-link { display: inline-block; padding: 10px 24px; background: var(--navy); color: #fff; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; font-family: 'DM Sans', sans-serif; margin-bottom: 10px; }
+.coming-soon-link:hover { background: var(--navy-mid); }
+.coming-soon-close { display: block; margin-top: 12px; font-size: 12px; color: var(--muted); cursor: pointer; background: none; border: none; font-family: 'DM Sans', sans-serif; }
+.coming-soon-close:hover { color: var(--navy); }
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav class="nav">
-  <div class="nav-brand">Accendit Partners</div>
+  <div class="nav-brand">Company X</div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchTab('v2r',this)">V2R Dashboard</button>
     <button class="nav-tab" onclick="switchTab('crm',this)">Outreach Tracker</button>
     <button class="nav-tab" onclick="switchTab('groups',this)">Networking Groups</button>
   </div>
-  <div class="nav-right" id="nav-date"></div>
+  <div class="nav-right" style="display:flex;align-items:center;gap:14px">
+    <a href="https://www.accenditpartners.com" target="_blank" style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:2px;text-decoration:none;line-height:1.5;text-align:right;opacity:0.85;transition:opacity 0.15s" onmouseover="this.style.opacity='1';this.style.textDecoration='underline'" onmouseout="this.style.opacity='0.85';this.style.textDecoration='none'"><span style="font-size:11px;font-weight:700;letter-spacing:3px">A</span>CCENDIT<br><span style="font-size:11px;font-weight:700;letter-spacing:3px">P</span>ARTNERS</a>
+    <span style="background:rgba(201,168,76,0.2);color:#C9A84C;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;padding:4px 10px;border-radius:4px;text-transform:uppercase;border:1px solid rgba(201,168,76,0.3)">Demo</span>
+    <span id="nav-date"></span>
+  </div>
 </nav>
 
 <!-- ══ V2R PAGE ══ -->
@@ -388,7 +376,7 @@ textarea { resize: vertical; min-height: 70px; }
 
   <div class="v2r-header">
     <div class="v2r-title">Vision to <span>Results</span></div>
-    <div class="v2r-sub">Internal scorecard — auto-calculated from CRM data</div>
+    <div class="v2r-sub">How Company X runs its business — from vision to measurable outcomes</div>
   </div>
 
   <!-- Vision -->
@@ -398,7 +386,7 @@ textarea { resize: vertical; min-height: 70px; }
   </div>
 
   <!-- 5 KPIs -->
-  <div class="section-lbl">The 5 Metrics That Run the Business <button class="edit-btn" onclick="openKpiEdit()">Edit Actuals</button></div>
+  <div class="section-lbl">The 5 Metrics That Run the Business</div>
   <div class="kpi-row" id="kpi-row"></div>
 
   <!-- Objectives -->
@@ -435,7 +423,7 @@ textarea { resize: vertical; min-height: 70px; }
     <div class="obj-card" style="grid-column:1/-1">
       <div class="obj-n">5</div>
       <div class="obj-body">
-        <div class="obj-title">Accendit operates as a true partner in every engagement, with repeatable systems that deliver results independent of role or title</div>
+        <div class="obj-title">Company X operates as a true partner in every engagement, with repeatable systems that deliver results independent of role or title</div>
         <span class="obj-badge badge-target">Target</span>
       </div>
     </div>
@@ -471,16 +459,14 @@ textarea { resize: vertical; min-height: 70px; }
   </div>
   <div class="controls" style="margin-bottom:12px;flex-wrap:nowrap">
     <input class="search-input" style="flex:1;width:auto;min-width:0" type="text" placeholder="Search contacts..." oninput="renderCRM()" id="search">
-    <button class="scan-btn" onclick="openQRScan()">
+    <button class="scan-btn" onclick="openScanModal('qr')">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM17 17h3v3h-3zM14 20h3"/></svg>
       Scan QR
     </button>
-    <button class="scan-btn" onclick="openCardScan()">
+    <button class="scan-btn" onclick="openScanModal('card')">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h4M6 14h8"/><circle cx="17" cy="12" r="2"/></svg>
       Scan Card
     </button>
-    <button class="add-btn" style="background:transparent;color:var(--muted);border:1px solid var(--border)" onclick="exportCSV()">Export</button>
-    <button class="add-btn" onclick="openModal(null)">+ Add</button>
   </div>
   <div class="table-wrap">
     <table>
@@ -538,7 +524,7 @@ textarea { resize: vertical; min-height: 70px; }
       </div>
       <div class="form-group"><label>For</label>
         <select id="f-forbusiness">
-          <option value="Accendit">Accendit</option>
+          <option value="Company X">Company X</option>
           <option value="Cascade">Cascade</option>
           <option value="Both">Both</option>
         </select>
@@ -585,8 +571,6 @@ textarea { resize: vertical; min-height: 70px; }
     <button class="filter-btn" onclick="setGroupFilter('Evaluating',this)">Evaluating</button>
     <button class="filter-btn" onclick="setGroupFilter('Not Started',this)">Not Started</button>
     <input class="search-input" type="text" placeholder="Search groups..." oninput="renderGroups()" id="group-search">
-    <button class="add-btn" style="background:transparent;color:var(--muted);border:1px solid var(--border);margin-left:0" onclick="exportGroupsCSV()">Export CSV</button>
-    <button class="add-btn" onclick="openGroupModal(null)">+ Add Group</button>
   </div>
   <div class="table-wrap">
     <table>
@@ -666,154 +650,243 @@ textarea { resize: vertical; min-height: 70px; }
   </div>
 </div>
 
-<!-- QR Scan Modal -->
-<div id="qr-overlay" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeQRScan()">
-  <div class="scan-modal" onclick="event.stopPropagation()">
-    <h2>Scan QR Code</h2>
-    <p>Point the camera at a contact's QR code. Fields will auto-fill when detected.</p>
-    <div class="scan-video-wrap">
-      <video id="qr-video" autoplay playsinline muted></video>
-      <div class="scan-overlay-line"></div>
-    </div>
-    <div class="scan-status" id="qr-status">Starting camera...</div>
-    <div class="scan-result-fields" id="qr-fields" style="display:none">
-      <input id="qr-name" placeholder="Name" class="full">
-      <input id="qr-company" placeholder="Company">
-      <input id="qr-title" placeholder="Title">
-      <input id="qr-email" placeholder="Email">
-      <input id="qr-phone" placeholder="Phone">
-      <input id="qr-linkedin" placeholder="LinkedIn URL" class="full">
-    </div>
-    <div class="scan-actions">
-      <button class="btn-cancel" onclick="closeQRScan()">Cancel</button>
-      <button class="btn-save" id="qr-save-btn" style="display:none" onclick="saveQRContact()">Add to CRM</button>
-    </div>
-  </div>
-</div>
-
-<!-- Card Scan Modal -->
-<div id="card-overlay" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeCardScan()">
-  <div class="scan-modal" onclick="event.stopPropagation()">
-    <h2>Scan Business Card</h2>
-    <p>Take a photo of a business card. AI will read and auto-fill the contact fields.</p>
-    <div id="card-camera-wrap">
-      <div class="scan-video-wrap">
-        <video id="card-video" autoplay playsinline muted></video>
-      </div>
-      <div class="scan-actions" style="margin-bottom:12px">
-        <button class="btn-cancel" onclick="closeCardScan()">Cancel</button>
-        <button class="btn-save" onclick="captureCard()">Capture</button>
-      </div>
-    </div>
-    <canvas id="card-canvas" style="display:none"></canvas>
-    <img id="card-preview" alt="Card preview">
-    <div class="scan-status" id="card-status"></div>
-    <div class="scan-result-fields" id="card-fields" style="display:none">
-      <input id="card-name" placeholder="Name" class="full">
-      <input id="card-company" placeholder="Company">
-      <input id="card-title" placeholder="Title">
-      <input id="card-email" placeholder="Email">
-      <input id="card-phone" placeholder="Phone">
-      <input id="card-website" placeholder="Website" class="full">
-      <input id="card-linkedin" placeholder="LinkedIn URL" class="full">
-    </div>
-    <div class="scan-actions" id="card-save-actions" style="display:none">
-      <button class="btn-cancel" onclick="closeCardScan()">Cancel</button>
-      <button class="btn-save" onclick="saveCardContact()">Add to CRM</button>
-    </div>
+<!-- Coming Soon Modal -->
+<div id="scan-overlay" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeScanModal()">
+  <div class="coming-soon-modal" onclick="event.stopPropagation()">
+    <div class="coming-soon-icon" id="scan-icon"></div>
+    <div class="coming-soon-title" id="scan-title"></div>
+    <div class="coming-soon-desc" id="scan-desc"></div>
+    <a href="https://www.accenditpartners.com" target="_blank" class="coming-soon-link">Learn More at Accendit Partners</a>
+    <button class="coming-soon-close" onclick="closeScanModal()">Close</button>
   </div>
 </div>
 
 <script>
-// ─── API KEY — PASTE YOUR ANTHROPIC KEY ON THE NEXT LINE ───
-const API_PROXY = 'https://accendit-api-proxy.jbens.workers.dev';
-// ───────────────────────────────────────────────────────────
 // ── SHARED DATA ──
-const CRM_KEY = 'accendit_crm_v6';
-const KPI_KEY = 'accendit_kpi_actuals';
-const GROUPS_KEY = 'accendit_groups_v1';
+const CRM_KEY = 'companyx_crm_demo_v2';
+const KPI_KEY = 'companyx_kpi_demo_v2';
+const GROUPS_KEY = 'companyx_groups_demo_v2';
 
 let contacts = [], editId = null, filterMode = 'all', sKey = 'sentDate', sDir = -1;
 let groups = [], editGroupId = null, groupFilter = 'all', gSortKey = 'name', gSortDir = 1;
 
 const GROUPS_SEED = [
-  {id:1,name:'One Million Cups Grants Pass',status:'Attended',audienceFit:'Entrepreneurs',value:'Visibility',frequency:'Weekly',cost:'Free',nextMeeting:'',location:'Grants Pass, OR',link:'https://southernoregoninnovationhub.org/event/1-million-cups-every-wednesday-930-1030am-23/'},
-  {id:2,name:'Chamber of Medford & Jackson County',status:'Attended',audienceFit:'Mix',value:'Referrals',frequency:'Monthly',cost:'',nextMeeting:'',location:'Medford, OR',link:'https://www.medfordchamber.com'},
-  {id:3,name:'Ashland Chamber of Commerce',status:'Attended',audienceFit:'Mix',value:'Referrals',frequency:'Monthly',cost:'',nextMeeting:'',location:'Ashland, OR',link:'https://www.ashlandchamber.com'},
-  {id:4,name:'Network In Action (NIA)',status:'Contacted',audienceFit:'Biz Owners',value:'Referrals',frequency:'Monthly',cost:'',nextMeeting:'',location:'Oregon',link:'https://www.networkinaction.com'},
-  {id:5,name:'ACG Seattle',status:'Evaluating',audienceFit:'PE',value:'Referrals',frequency:'Monthly',cost:'',nextMeeting:'',location:'Seattle, WA',link:'https://www.acg.org/seattle'},
-  {id:6,name:'Washington Manufacturing Services',status:'Not Started',audienceFit:'MFG',value:'Clients',frequency:'Quarterly',cost:'',nextMeeting:'',location:'Statewide WA',link:'https://www.wamfg.org'},
-  {id:7,name:'ASCM Seattle Chapter',status:'Not Started',audienceFit:'SC',value:'Clients',frequency:'Monthly',cost:'',nextMeeting:'',location:'Seattle, WA',link:'https://www.ascm.org'},
-  {id:8,name:'Vistage Seattle',status:'Not Started',audienceFit:'Biz Owners',value:'Clients',frequency:'Monthly',cost:'',nextMeeting:'',location:'Seattle, WA',link:'https://www.vistage.com'},
-  {id:9,name:'PNAA',status:'Not Started',audienceFit:'MFG',value:'Clients',frequency:'Monthly',cost:'',nextMeeting:'',location:'Seattle/Everett, WA',link:'https://www.pnaa.net'},
-  {id:10,name:'EO Seattle',status:'Not Started',audienceFit:'Biz Owners',value:'Clients',frequency:'Monthly',cost:'',nextMeeting:'',location:'Seattle, WA',link:'https://www.eoseattle.org'},
+  {id:1,name:'Downtown Business Roundtable',status:'Attended',audienceFit:'Biz Owners',value:'Referrals',frequency:'Monthly',cost:'Free',nextMeeting:'2026-06-10',location:'Portland, OR',link:'https://example.com'},
+  {id:2,name:'Pacific Manufacturing Alliance',status:'Attended',audienceFit:'MFG',value:'Clients',frequency:'Monthly',cost:'$300/yr',nextMeeting:'2026-06-15',location:'Seattle, WA',link:'https://example.com'},
+  {id:3,name:'Regional Supply Chain Network',status:'Attended',audienceFit:'SC',value:'Referrals',frequency:'Bi-weekly',cost:'Free',nextMeeting:'2026-05-28',location:'Tacoma, WA',link:'https://example.com'},
+  {id:4,name:'Entrepreneurs Organization NW',status:'Contacted',audienceFit:'Entrepreneurs',value:'Clients',frequency:'Monthly',cost:'$1,200/yr',nextMeeting:'',location:'Seattle, WA',link:'https://example.com'},
+  {id:5,name:'ACG Pacific Northwest',status:'Evaluating',audienceFit:'PE',value:'Referrals',frequency:'Monthly',cost:'$500/yr',nextMeeting:'',location:'Seattle, WA',link:'https://example.com'},
+  {id:6,name:'Local Chamber of Commerce',status:'Attended',audienceFit:'Mix',value:'Visibility',frequency:'Monthly',cost:'$250/yr',nextMeeting:'2026-06-03',location:'Bellevue, WA',link:'https://example.com'},
+  {id:7,name:'Industrial Operations Forum',status:'Not Started',audienceFit:'MFG',value:'Clients',frequency:'Quarterly',cost:'Free',nextMeeting:'',location:'Statewide WA',link:'https://example.com'},
+  {id:8,name:'Supply Chain Leaders Council',status:'Not Started',audienceFit:'SC',value:'Clients',frequency:'Monthly',cost:'$400/yr',nextMeeting:'',location:'Seattle, WA',link:'https://example.com'},
+  {id:9,name:'CEO Peer Group',status:'Evaluating',audienceFit:'Biz Owners',value:'Clients',frequency:'Monthly',cost:'$2,400/yr',nextMeeting:'',location:'Portland, OR',link:'https://example.com'},
+  {id:10,name:'Aerospace & Defense Network',status:'Not Started',audienceFit:'MFG',value:'Referrals',frequency:'Quarterly',cost:'Free',nextMeeting:'',location:'Everett, WA',link:'https://example.com'},
+  {id:11,name:'Tech Operators Roundtable',status:'Not Started',audienceFit:'Tech',value:'Referrals',frequency:'Monthly',cost:'Free',nextMeeting:'',location:'Seattle, WA',link:'https://example.com'},
+  {id:12,name:'Private Equity Connect',status:'Contacted',audienceFit:'PE',value:'Clients',frequency:'Quarterly',cost:'$750/yr',nextMeeting:'',location:'San Francisco, CA',link:'https://example.com'},
 ];
 
 const SEED = [
-  {id:1,name:'Paul Caragher',company:'Pike Street Capital',title:'Partner',type:'PE',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:'Industrial/mfg focus. InMail sent Apr 18. No response confirmed yet.'},
-  {id:2,name:'Erik Tolzmann',company:'Westward Partners',title:'Partner',type:'PE',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:'Superfeet is a Westward portfolio co. Kolby connection at Superfeet.'},
-  {id:3,name:'Brad Creswell',company:'NCA Partners',title:'Partner',type:'PE',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:'Explicitly lists turnarounds. Direct match to Accendit profile.'},
-  {id:4,name:'Vic Petroff',company:'Riverlake Partners',title:'Partner',type:'PE',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:'Portland-based. Industrial mfg and business services. Operator-oriented.'},
-  {id:5,name:'Cathy McBeth',company:'Rainier Partners',title:'Partner',type:'PE',status:'noresponse',channel:'LinkedIn InMail',sentDate:'2026-04-18',followUpDate:'2026-05-04',notes:'Business services, industrials, healthcare. $400M AUM. No response yet.'},
-  {id:6,name:'JD Griffin',company:'Superfeet',title:'Sourcing Manager',type:'Prospect',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-24',followUpDate:'2026-05-01',notes:'Door opener, not decision-maker. Referred by Kolby via WWU event. Fulfillment angle.'},
-  {id:7,name:'Matt Treat',company:'Treat Consulting / Blackbird',title:'Owner',type:'Network',status:'followup',channel:'Email',sentDate:'2026-04-28',followUpDate:'2026-05-04',notes:'Referred by Chris Perez. Sound Cleaning collab proposal sent. No response 5+ days. Follow-up sent.'},
-  {id:8,name:'Ajay Nagar',company:'Amentum',title:'VP',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-17',followUpDate:'2026-04-24',notes:'Referred by Chris Perez. Background: Schneider, Chekhub, Arayna venture.'},
-  {id:9,name:'Ranga Vinjamuri',company:'Yasas Technologies',title:'Founder/CEO',type:'Prospect',status:'proposal',channel:'In Person',sentDate:'2026-04-30',followUpDate:'2026-05-07',notes:'Proposal sent. $4K Phase 1 + $1K/mo months 2-6 + 10% gross margin perf fee. Intro via Brock (Teladoc/MSFT).'},
-  {id:10,name:'Michelle Hyde',company:'Hyde Group / MaestroGP',title:'Principal',type:'Network',status:'meeting',channel:'Phone',sentDate:'2026-04-20',followUpDate:'2026-05-11',notes:'Call completed Apr 20. Adjacent space: business continuity & DR. Referral potential. LinkedIn post done.'},
-  {id:11,name:'Brett Sherrod',company:'RedCloud Consulting',title:'Managing Partner',type:'Network',status:'meeting',channel:'In Person',sentDate:'2026-04-23',followUpDate:'2026-05-14',notes:'Coffee meeting. Former MSFT colleague. 250 people, 25 states. LinkedIn post done. Referral potential.'},
-  {id:12,name:'Frank Marcus',company:'Montreux Group',title:'President/CEO',type:'Network',status:'nurture',channel:'LinkedIn Connection',sentDate:'2026-04-20',followUpDate:'2026-06-01',notes:'Beverage/CPG consultant. Former friend, 5yr gap. Long-term nurture only. Weak referral fit.'},
-  {id:13,name:'Andy Mayer',company:'Mount Vernon Chamber',title:'President/CEO',type:'Chamber',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-04',followUpDate:'2026-05-11',notes:'Skagit County mfg and food processing base. Priority 1 chamber.'},
-  {id:14,name:'Alyssa Pitcher',company:'Ferndale Chamber',title:'Board President',type:'Chamber',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-04',followUpDate:'2026-05-11',notes:'Interim leadership after exec director departure. Verify before outreach.'},
-  {id:15,name:'Justin Camire',company:'Microsoft',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-16',followUpDate:'2026-04-23',notes:''},
-  {id:16,name:'Aubrey',company:'Microsoft',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-16',followUpDate:'2026-04-23',notes:''},
-  {id:17,name:'Colleen',company:'Microsoft',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-16',followUpDate:'2026-04-23',notes:''},
-  {id:18,name:'Deepak',company:'Amazon',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-16',followUpDate:'2026-04-23',notes:''},
-  {id:19,name:'Greg Furman',company:'Vizient',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-16',followUpDate:'2026-04-23',notes:''},
-  {id:20,name:'Craig Bramscher',company:'Brammo',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-16',followUpDate:'2026-04-23',notes:''},
-  {id:21,name:'Shiv Menon',company:'Chewy',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-16',followUpDate:'2026-04-23',notes:''},
-  {id:22,name:'Cathy McBeth',company:'Pike Street Capital',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:''},
-  {id:23,name:'Erik Tolzmann',company:'Westward Partners',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:''},
-  {id:24,name:'Bradford Creswell',company:'NW Capital (nwcap.com)',title:'',type:'Network',status:'sent',channel:'Email',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:''},
-  {id:25,name:'Vic Petroff',company:'Riverlake Partners',title:'',type:'Network',status:'sent',channel:'Email',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:''},
-  {id:26,name:'Kyle Sprecher',company:'Microsoft',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
-  {id:27,name:'Paul Clark',company:'Microsoft',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
-  {id:28,name:'Don Jenkins',company:'',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
-  {id:29,name:'Dale Johns',company:'',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
-  {id:30,name:'Heinrich Montana',company:'',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
-  {id:31,name:'Geoff Watson',company:'',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
-  {id:32,name:'Wud Pocinwong',company:'',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
-  {id:33,name:'Matt Iseri',company:'',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
-  {id:34,name:'Kim Shoemake',company:'',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
-  {id:35,name:'Mike Hagan',company:'',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
-  {id:36,name:'Dean',company:'Bioskin',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
-  {id:37,name:'Matthew',company:'Worksharp Tools',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
-  {id:38,name:'Zac',company:'Paddlesandoars.com',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
-  {id:39,name:'Deb',company:'Happy Campersworld',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
-  {id:40,name:'Sheila',company:'Jones Bikes',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
-  {id:41,name:'John Croswell',company:'Strong Tower Consulting',title:'',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:''},
-  {id:42,name:'Gordon Bluechel',company:'Access Laser',title:'CEO and Managing Director',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-08',followUpDate:'2026-04-15',notes:''},
-  {id:43,name:'Joe Cherian',company:'Epicor',title:'VP Enterprise Solutions and Digital Transformation',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-14',followUpDate:'2026-04-21',notes:''},
-  {id:44,name:'Brett Clifton',company:'RedCloud Consulting',title:'Managing Partner, Owner',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-22',followUpDate:'2026-04-29',notes:'Coffee meeting held Apr 23. LinkedIn post done.'},
-  {id:45,name:'Autumn Countryman',company:'Autumn Countryman Law',title:'Attorney and Owner',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-08',followUpDate:'2026-04-15',notes:''},
-  {id:46,name:'Kevin Croy',company:'9Mile Labs',title:'Co-Founder and Partner',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-08',followUpDate:'2026-04-15',notes:''},
-  {id:47,name:'Greg Davit',company:'Aligned Data Centers',title:'VP Business Development',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-08',followUpDate:'2026-04-15',notes:''},
-  {id:48,name:'Kyle Downey',company:'Upstart',title:'VP Engineering',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:''},
-  {id:50,name:'Michelle Hamman',company:'Eident Consulting Group',title:'Managing Partner, Head of Talent Strategy',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-30',followUpDate:'2026-06-06',notes:''},
-  {id:51,name:'Michelle Hyde',company:'Maestro Global Partners',title:'President, Co-Founder',type:'Network',status:'meeting',channel:'LinkedIn InMail',sentDate:'2026-04-22',followUpDate:'2026-05-11',notes:'Call completed Apr 20. Business continuity and DR focus. Referral potential. LinkedIn post done.'},
-  {id:52,name:'Keith Klesner',company:'RadiusDC',title:'VP of Development',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:''},
-  {id:53,name:'Rob Leach',company:'Capgemini',title:'Global EVP',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-01',followUpDate:'2026-04-08',notes:''},
-  {id:54,name:'Frank Marcus',company:'Montreux Group',title:'President and CEO',type:'Network',status:'nurture',channel:'LinkedIn InMail',sentDate:'2026-04-14',followUpDate:'2026-06-01',notes:'Former friend 5yr gap. Beverage/CPG consultant. Long-term nurture only.'},
-  {id:55,name:'Sean Marshall',company:'Ranger Projects LLC',title:'President and Senior PM',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-14',followUpDate:'2026-04-21',notes:''},
-  {id:58,name:'Mike Miles',company:'MilestoneLeadership',title:'Founder, Fractional Exec and Executive Coach',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-04-15',followUpDate:'2026-04-22',notes:''},
-  {id:59,name:'Joe Milner',company:'Cotiviti',title:'SVP Transformation',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'',followUpDate:'',notes:'No send date recorded.'},
-  {id:60,name:'Nigel K. Moore',company:'Sacramento Splash',title:'Board President',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'',followUpDate:'',notes:'No send date recorded.'},
-  {id:61,name:'Ben Ravani',company:'Build Insight',title:'Founder and CEO',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:''},
-  {id:62,name:'Aaron Bilyeu',company:'Cloverleaf Infrastructure',title:'Chief Development Officer',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:''},
-  {id:63,name:'Sean Hobday',company:'Zones Inc',title:'SVP Global Sales',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:''},
-  {id:64,name:'Julian Kudritzki',company:'Beale Infrastructure',title:'Chief Operating Officer',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:''},
-  {id:65,name:'Ryan Middleton',company:'World Wide Technology',title:'Client Director',type:'Network',status:'sent',channel:'LinkedIn InMail',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:''},
+  {id:1,name:'Helen Anderson',company:'Pacific Northwest Plastics',title:'VP Supply Chain',type:'Prospect',status:'meeting',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-22',followUpDate:'2026-02-28',notes:'Interested in diagnostic as entry point.',linkedin:'',website:'',phone:''},
+  {id:2,name:'Lynn Murphy',company:'Northpoint PE',title:'Managing Partner',type:'PE',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-17',followUpDate:'2026-03-24',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:3,name:'Derek Reed',company:'Cascade Distribution Co.',title:'Owner',type:'Prospect',status:'meeting',channel:'Referral',forBusiness:'Both',sentDate:'2026-04-26',followUpDate:'2026-04-28',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:4,name:'Michael Wood',company:'Northpoint PE',title:'Operating Partner',type:'PE',status:'proposal',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-04-04',followUpDate:'2026-04-11',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:5,name:'Donna Gonzalez',company:'Apex Industrial Group',title:'Director of Operations',type:'Prospect',status:'proposal',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-02-13',followUpDate:'2026-02-20',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:6,name:'Raymond Nguyen',company:'Greater Spokane Chamber',title:'CEO',type:'Chamber',status:'meeting',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-25',followUpDate:'2026-03-28',notes:'Chamber connection. Potential referral source for member companies.',linkedin:'',website:'',phone:''},
+  {id:7,name:'David Robinson',company:'Harborview Packaging',title:'Owner',type:'Prospect',status:'proposal',channel:'Referral',forBusiness:'Company X',sentDate:'2026-03-12',followUpDate:'2026-03-19',notes:'Long-term nurture. Revisit in Q3 when budget cycle resets.',linkedin:'',website:'',phone:''},
+  {id:8,name:'Richard Kelly',company:'Harborview Freight',title:'COO',type:'Prospect',status:'responded',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-13',followUpDate:'2026-05-20',notes:'Background in operations and turnaround. Strong fit.',linkedin:'',website:'',phone:''},
+  {id:9,name:'Helen Bennett',company:'Northwest Capital',title:'Partner',type:'PE',status:'followup',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-02-26',followUpDate:'2026-02-28',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:10,name:'George Wright',company:'Cascade Metal Works',title:'VP Operations',type:'Prospect',status:'followup',channel:'Email',forBusiness:'Cascade',sentDate:'2026-05-21',followUpDate:'2026-05-28',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:11,name:'Paul King',company:'Evergreen Composites',title:'VP Operations',type:'Prospect',status:'proposal',channel:'Phone',forBusiness:'Both',sentDate:'2026-05-12',followUpDate:'2026-05-19',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:12,name:'Susan Deleon',company:'Pacific Crest Capital',title:'Managing Partner',type:'PE',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-26',followUpDate:'2026-03-28',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:13,name:'Anna Rodriguez',company:'Meridian Manufacturing',title:'Owner',type:'Prospect',status:'inprogress',channel:'Email',forBusiness:'Both',sentDate:'2026-02-22',followUpDate:'2026-02-28',notes:'Follow-up call scheduled. Alignment on supply chain challenges.',linkedin:'',website:'',phone:''},
+  {id:14,name:'Rachel Walsh',company:'Harborview Freight',title:'Director of Operations',type:'Prospect',status:'sent',channel:'Email',forBusiness:'Cascade',sentDate:'2026-03-15',followUpDate:'2026-03-22',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:15,name:'Christopher Olsen',company:'Columbia Basin Manufacturing',title:'COO',type:'Prospect',status:'proposalcreated',channel:'Email',forBusiness:'Company X',sentDate:'2026-04-25',followUpDate:'2026-04-28',notes:'Active discussion on fractional COO engagement scope.',linkedin:'',website:'',phone:''},
+  {id:16,name:'Samuel Ingram',company:'Ironridge Manufacturing',title:'Director of Operations',type:'Prospect',status:'complete',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-04-27',followUpDate:'2026-04-28',notes:'Chamber connection. Potential referral source for member companies.',linkedin:'',website:'',phone:''},
+  {id:17,name:'Sarah Davis',company:'Clearwater Distribution',title:'COO',type:'Prospect',status:'sent',channel:'Referral',forBusiness:'Company X',sentDate:'2026-03-05',followUpDate:'2026-03-12',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:18,name:'Raymond Perez',company:'Northwest Logistics Group',title:'Owner',type:'Prospect',status:'meeting',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-22',followUpDate:'2026-05-28',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:19,name:'Joshua Kim',company:'Olympic Capital Group',title:'Principal',type:'PE',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-11',followUpDate:'2026-02-18',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:20,name:'Shirley Brooks',company:'Pacific Rim Exports',title:'VP Operations',type:'Prospect',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-03',followUpDate:'2026-03-10',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:21,name:'Donald Martinez',company:'Ridgeline Private Equity',title:'Partner',type:'PE',status:'proposal',channel:'Referral',forBusiness:'Company X',sentDate:'2026-03-24',followUpDate:'2026-03-28',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:22,name:'Amy Moretti',company:'Clearwater Distribution',title:'Managing Director',type:'Prospect',status:'landed',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-22',followUpDate:'2026-02-28',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:23,name:'Andrew Nambiar',company:'Summit Growth Capital',title:'Principal',type:'PE',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-24',followUpDate:'2026-05-28',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:24,name:'Stephanie Young',company:'Cascade Distribution Co.',title:'VP Operations',type:'Prospect',status:'inprogress',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-03-09',followUpDate:'2026-03-16',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:25,name:'Charles Martinez',company:'Lakeview Capital Partners',title:'Vice President',type:'PE',status:'sent',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-02-03',followUpDate:'2026-02-10',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:26,name:'Patricia Chen',company:'Pacific Crest Capital',title:'Principal',type:'PE',status:'meeting',channel:'Phone',forBusiness:'Company X',sentDate:'2026-03-13',followUpDate:'2026-03-20',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:27,name:'Kenneth King',company:'Highline Venture Partners',title:'Operating Partner',type:'PE',status:'landed',channel:'Referral',forBusiness:'Company X',sentDate:'2026-03-10',followUpDate:'2026-03-17',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:28,name:'Angela Bell',company:'Rainier Partners',title:'Managing Partner',type:'PE',status:'followup',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-17',followUpDate:'2026-05-24',notes:'Warm referral from existing network contact.',linkedin:'',website:'',phone:''},
+  {id:29,name:'Michael Davis',company:'Ridgeline Private Equity',title:'Managing Partner',type:'PE',status:'responded',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-02-22',followUpDate:'2026-02-28',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:30,name:'George Thomas',company:'Bellingham Chamber',title:'President',type:'Chamber',status:'sent',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-04-09',followUpDate:'2026-04-16',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:31,name:'Tanya Ross',company:'Pinnacle Tech Solutions',title:'VP Operations',type:'Prospect',status:'proposal',channel:'Phone',forBusiness:'Company X',sentDate:'2026-04-15',followUpDate:'2026-04-22',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:32,name:'Carla Johnson',company:'Highline Venture Partners',title:'Vice President',type:'PE',status:'sent',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-03-17',followUpDate:'2026-03-24',notes:'Background in operations and turnaround. Strong fit.',linkedin:'',website:'',phone:''},
+  {id:33,name:'Chris Hall',company:'Cascade Metal Works',title:'VP Operations',type:'Prospect',status:'noresponse',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-27',followUpDate:'2026-05-28',notes:'Interested in diagnostic as entry point.',linkedin:'',website:'',phone:''},
+  {id:34,name:'Betty Richardson',company:'Aligned Operations Group',title:'Director',type:'Network',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-09',followUpDate:'2026-03-16',notes:'Follow-up call scheduled. Alignment on supply chain challenges.',linkedin:'',website:'',phone:''},
+  {id:35,name:'Stephanie Perry',company:'Northwest Capital',title:'Partner',type:'PE',status:'proposal',channel:'Email',forBusiness:'Both',sentDate:'2026-03-23',followUpDate:'2026-03-28',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:36,name:'Richard Price',company:'Greater Spokane Chamber',title:'CEO',type:'Chamber',status:'complete',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-21',followUpDate:'2026-02-28',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:37,name:'Daniel Garcia',company:'Ironridge Manufacturing',title:'Director of Operations',type:'Prospect',status:'responded',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-18',followUpDate:'2026-05-25',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:38,name:'Cynthia Johnson',company:'Ridgeline Precision Parts',title:'COO',type:'Prospect',status:'responded',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-14',followUpDate:'2026-03-21',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:39,name:'Tom Flores',company:'Summit Growth Technologies',title:'CEO',type:'Prospect',status:'noresponse',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-12',followUpDate:'2026-02-19',notes:'Interested in diagnostic as entry point.',linkedin:'',website:'',phone:''},
+  {id:40,name:'Edward Cox',company:'Puget Sound Tooling',title:'VP Operations',type:'Prospect',status:'responded',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-02-06',followUpDate:'2026-02-13',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:41,name:'Edward Kelly',company:'Clearwater Distribution',title:'VP Supply Chain',type:'Prospect',status:'responded',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-02-28',followUpDate:'2026-02-28',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:42,name:'Jessica Sanchez',company:'Highline Venture Partners',title:'Operating Partner',type:'PE',status:'proposalcreated',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-22',followUpDate:'2026-02-28',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:43,name:'George Nelson',company:'Harborview Freight',title:'COO',type:'Prospect',status:'proposal',channel:'In Person',forBusiness:'Both',sentDate:'2026-05-22',followUpDate:'2026-05-28',notes:'Interested in diagnostic as entry point.',linkedin:'',website:'',phone:''},
+  {id:44,name:'Donald Brown',company:'Ridgeline Precision Parts',title:'VP Supply Chain',type:'Prospect',status:'responded',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-20',followUpDate:'2026-02-27',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:45,name:'Dorothy Coleman',company:'Pinnacle Tech Solutions',title:'Owner',type:'Prospect',status:'sent',channel:'Phone',forBusiness:'Both',sentDate:'2026-03-09',followUpDate:'2026-03-16',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:46,name:'Jason Smith',company:'Olympic Capital Group',title:'Vice President',type:'PE',status:'meeting',channel:'In Person',forBusiness:'Cascade',sentDate:'2026-02-22',followUpDate:'2026-02-28',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:47,name:'Emma Green',company:'Blue Ridge Consulting',title:'Consultant',type:'Network',status:'sent',channel:'Email',forBusiness:'Both',sentDate:'2026-04-22',followUpDate:'2026-04-28',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:48,name:'Mark Rutherford',company:'Summit Executive Advisors',title:'Managing Partner',type:'Network',status:'responded',channel:'Email',forBusiness:'Cascade',sentDate:'2026-05-22',followUpDate:'2026-05-28',notes:'Active discussion on fractional COO engagement scope.',linkedin:'',website:'',phone:''},
+  {id:49,name:'Pamela Cook',company:'Olympic Distribution',title:'Owner',type:'Prospect',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-14',followUpDate:'2026-03-21',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:50,name:'Brenda Gray',company:'Pinnacle Tech Solutions',title:'Managing Director',type:'Prospect',status:'inprogress',channel:'Referral',forBusiness:'Company X',sentDate:'2026-05-26',followUpDate:'2026-05-28',notes:'Active discussion on fractional COO engagement scope.',linkedin:'',website:'',phone:''},
+  {id:51,name:'Christine Hernandez',company:'Summit Supply Chain',title:'Director of Operations',type:'Prospect',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-26',followUpDate:'2026-03-28',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:52,name:'Paul Brown',company:'Mount Baker Fabrication',title:'VP Operations',type:'Prospect',status:'complete',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-05-21',followUpDate:'2026-05-28',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:53,name:'William Ross',company:'Summit Executive Advisors',title:'President',type:'Network',status:'complete',channel:'Phone',forBusiness:'Company X',sentDate:'2026-03-21',followUpDate:'2026-03-28',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:54,name:'Stephanie Nambiar',company:'Pacific Rim Exports',title:'President',type:'Prospect',status:'inprogress',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-03-28',followUpDate:'2026-03-28',notes:'Follow-up call scheduled. Alignment on supply chain challenges.',linkedin:'',website:'',phone:''},
+  {id:55,name:'Jacob Moore',company:'Highline Venture Partners',title:'Vice President',type:'PE',status:'followup',channel:'Referral',forBusiness:'Both',sentDate:'2026-05-27',followUpDate:'2026-05-28',notes:'Interested in diagnostic as entry point.',linkedin:'',website:'',phone:''},
+  {id:56,name:'Ryan Lee',company:'Cascadia PE Group',title:'Principal',type:'PE',status:'proposal',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-21',followUpDate:'2026-05-28',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:57,name:'Daniel Kim',company:'Cascade Metal Works',title:'VP Supply Chain',type:'Prospect',status:'meeting',channel:'Email',forBusiness:'Company X',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:58,name:'Susan Martin',company:'Pacific Rim Exports',title:'Owner',type:'Prospect',status:'responded',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-14',followUpDate:'2026-05-21',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:59,name:'Samuel Park',company:'Summit Growth Capital',title:'Managing Partner',type:'PE',status:'meeting',channel:'Phone',forBusiness:'Cascade',sentDate:'2026-02-28',followUpDate:'2026-02-28',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:60,name:'Donna Bauer',company:'Ironridge Manufacturing',title:'Director of Operations',type:'Prospect',status:'proposalcreated',channel:'Phone',forBusiness:'Cascade',sentDate:'2026-03-16',followUpDate:'2026-03-23',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:61,name:'Lisa Ellsworth',company:'Pacific Crest Capital',title:'Managing Partner',type:'PE',status:'nurture',channel:'In Person',forBusiness:'Cascade',sentDate:'2026-03-27',followUpDate:'2026-03-28',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:62,name:'Chris Cox',company:'Rainier Partners',title:'Managing Partner',type:'PE',status:'nurture',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-05',followUpDate:'2026-05-12',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:63,name:'Jennifer Miller',company:'Northwest Logistics Group',title:'Owner',type:'Prospect',status:'followup',channel:'Email',forBusiness:'Cascade',sentDate:'2026-04-11',followUpDate:'2026-04-18',notes:'Strong fit. Delivery reliability and scheduling challenges.',linkedin:'',website:'',phone:''},
+  {id:64,name:'Daniel Powell',company:'Summit Growth Capital',title:'Operating Partner',type:'PE',status:'sent',channel:'Referral',forBusiness:'Company X',sentDate:'2026-02-12',followUpDate:'2026-02-19',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:65,name:'Katherine Rodriguez',company:'Aligned Operations Group',title:'CEO',type:'Network',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-20',followUpDate:'2026-02-27',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:66,name:'Sarah Taylor',company:'Cascadia PE Group',title:'Managing Partner',type:'PE',status:'meeting',channel:'Referral',forBusiness:'Company X',sentDate:'2026-04-06',followUpDate:'2026-04-13',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:67,name:'Brenda Perry',company:'Pacific Operations Partners',title:'CEO',type:'Network',status:'responded',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-10',followUpDate:'2026-02-17',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:68,name:'Carla Carter',company:'Pacific Tech Ventures',title:'VP Operations',type:'Prospect',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-04-28',followUpDate:'2026-04-28',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:69,name:'Tanya Cook',company:'Mount Baker Fabrication',title:'Director of Operations',type:'Prospect',status:'landed',channel:'In Person',forBusiness:'Company X',sentDate:'2026-04-01',followUpDate:'2026-04-08',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:70,name:'Jonathan Wilson',company:'Northpoint PE',title:'Operating Partner',type:'PE',status:'inprogress',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-03-24',followUpDate:'2026-03-28',notes:'Warm referral from existing network contact.',linkedin:'',website:'',phone:''},
+  {id:71,name:'Katherine Wright',company:'Snohomish County Chamber',title:'Board Chair',type:'Chamber',status:'inprogress',channel:'Phone',forBusiness:'Both',sentDate:'2026-04-11',followUpDate:'2026-04-18',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:72,name:'Lynn Scott',company:'Lakeview Capital Partners',title:'Partner',type:'PE',status:'inprogress',channel:'Phone',forBusiness:'Company X',sentDate:'2026-02-16',followUpDate:'2026-02-23',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:73,name:'Jennifer Marsh',company:'West Coast Fulfillment',title:'Director of Operations',type:'Prospect',status:'proposal',channel:'In Person',forBusiness:'Company X',sentDate:'2026-04-18',followUpDate:'2026-04-25',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:74,name:'Scott Harris',company:'Summit Industrial Components',title:'VP Operations',type:'Prospect',status:'landed',channel:'Referral',forBusiness:'Both',sentDate:'2026-03-23',followUpDate:'2026-03-28',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:75,name:'Samantha Ross',company:'Pacific Crest Capital',title:'Principal',type:'PE',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-13',followUpDate:'2026-03-20',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:76,name:'Anthony Watson',company:'Skagit Valley Chamber',title:'CEO',type:'Chamber',status:'complete',channel:'In Person',forBusiness:'Cascade',sentDate:'2026-04-12',followUpDate:'2026-04-19',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:77,name:'Lisa Flores',company:'Northwest Logistics Group',title:'VP Operations',type:'Prospect',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-24',followUpDate:'2026-02-28',notes:'Interested in diagnostic as entry point.',linkedin:'',website:'',phone:''},
+  {id:78,name:'Lynn White',company:'Cascade Distribution Co.',title:'VP Operations',type:'Prospect',status:'complete',channel:'Email',forBusiness:'Both',sentDate:'2026-04-04',followUpDate:'2026-04-11',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:79,name:'Matthew Robinson',company:'Summit Growth Technologies',title:'President',type:'Prospect',status:'proposalcreated',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-03-09',followUpDate:'2026-03-16',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:80,name:'Rachel Brooks',company:'Summit Supply Chain',title:'President',type:'Prospect',status:'complete',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-04-16',followUpDate:'2026-04-23',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:81,name:'Jeffrey Baker',company:'Columbia Basin Manufacturing',title:'CEO',type:'Prospect',status:'proposal',channel:'Referral',forBusiness:'Company X',sentDate:'2026-02-13',followUpDate:'2026-02-20',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:82,name:'Carla Morgan',company:'Greater Spokane Chamber',title:'Executive Director',type:'Chamber',status:'responded',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-04-03',followUpDate:'2026-04-10',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:83,name:'Tanya Reed',company:'Summit Growth Capital',title:'Vice President',type:'PE',status:'meeting',channel:'Phone',forBusiness:'Cascade',sentDate:'2026-05-10',followUpDate:'2026-05-17',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:84,name:'Timothy Flores',company:'Bellingham Chamber',title:'Executive Director',type:'Chamber',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-04-22',followUpDate:'2026-04-28',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:85,name:'Michael Walker',company:'Columbia Basin Manufacturing',title:'COO',type:'Prospect',status:'responded',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-05-23',followUpDate:'2026-05-28',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:86,name:'Nicholas Nguyen',company:'Mount Baker Fabrication',title:'VP Operations',type:'Prospect',status:'proposalcreated',channel:'Email',forBusiness:'Cascade',sentDate:'2026-02-22',followUpDate:'2026-02-28',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:87,name:'Christopher Howard',company:'Skagit Valley Chamber',title:'President',type:'Chamber',status:'landed',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-03-21',followUpDate:'2026-03-28',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:88,name:'Lisa Jackson',company:'Cascade Metal Works',title:'CEO',type:'Prospect',status:'responded',channel:'Email',forBusiness:'Both',sentDate:'2026-04-15',followUpDate:'2026-04-22',notes:'Follow-up call scheduled. Alignment on supply chain challenges.',linkedin:'',website:'',phone:''},
+  {id:89,name:'Gary Bennett',company:'Olympic Distribution',title:'Owner',type:'Prospect',status:'proposal',channel:'Referral',forBusiness:'Cascade',sentDate:'2026-02-20',followUpDate:'2026-02-27',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:90,name:'Jason Jenkins',company:'Pinnacle Tech Solutions',title:'VP Supply Chain',type:'Prospect',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-02-25',followUpDate:'2026-02-28',notes:'Background in operations and turnaround. Strong fit.',linkedin:'',website:'',phone:''},
+  {id:91,name:'Amy Garcia',company:'Columbia Basin Manufacturing',title:'Managing Director',type:'Prospect',status:'inprogress',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-21',followUpDate:'2026-05-28',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:92,name:'Lynn Moretti',company:'Apex Industrial Group',title:'Owner',type:'Prospect',status:'followup',channel:'In Person',forBusiness:'Company X',sentDate:'2026-03-11',followUpDate:'2026-03-18',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:93,name:'Lynn Fitzgerald',company:'Summit Supply Chain',title:'Owner',type:'Prospect',status:'sent',channel:'Referral',forBusiness:'Company X',sentDate:'2026-04-09',followUpDate:'2026-04-16',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:94,name:'Noah Patterson',company:'Pacific Tech Ventures',title:'CEO',type:'Prospect',status:'inprogress',channel:'Phone',forBusiness:'Company X',sentDate:'2026-03-17',followUpDate:'2026-03-24',notes:'Long-term nurture. Revisit in Q3 when budget cycle resets.',linkedin:'',website:'',phone:''},
+  {id:95,name:'Emma Powell',company:'Pacific Crest Capital',title:'Principal',type:'PE',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-10',followUpDate:'2026-03-17',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:96,name:'Jonathan Thomas',company:'Pacific Northwest Plastics',title:'VP Operations',type:'Prospect',status:'responded',channel:'Email',forBusiness:'Both',sentDate:'2026-02-18',followUpDate:'2026-02-25',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:97,name:'Lynn Lewis',company:'Ridgeline Precision Parts',title:'Managing Director',type:'Prospect',status:'sent',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-04-17',followUpDate:'2026-04-24',notes:'Background in operations and turnaround. Strong fit.',linkedin:'',website:'',phone:''},
+  {id:98,name:'Ronald Bauer',company:'Cascadia PE Group',title:'Partner',type:'PE',status:'inprogress',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-03-20',followUpDate:'2026-03-27',notes:'Warm referral from existing network contact.',linkedin:'',website:'',phone:''},
+  {id:99,name:'Susan Rodriguez',company:'Harborview Freight',title:'Owner',type:'Prospect',status:'followup',channel:'Email',forBusiness:'Company X',sentDate:'2026-04-24',followUpDate:'2026-04-28',notes:'Chamber connection. Potential referral source for member companies.',linkedin:'',website:'',phone:''},
+  {id:100,name:'Shirley Bell',company:'Blue Ridge Consulting',title:'President',type:'Network',status:'responded',channel:'Referral',forBusiness:'Both',sentDate:'2026-05-12',followUpDate:'2026-05-19',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:101,name:'Raymond Long',company:'Rainier Partners',title:'Principal',type:'PE',status:'inprogress',channel:'In Person',forBusiness:'Company X',sentDate:'2026-03-19',followUpDate:'2026-03-26',notes:'Strong fit. Delivery reliability and scheduling challenges.',linkedin:'',website:'',phone:''},
+  {id:102,name:'Thomas Chen',company:'Mount Baker Fabrication',title:'Director of Operations',type:'Prospect',status:'complete',channel:'Phone',forBusiness:'Cascade',sentDate:'2026-03-16',followUpDate:'2026-03-23',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:103,name:'Chris Olsen',company:'Skagit Valley Chamber',title:'CEO',type:'Chamber',status:'sent',channel:'Referral',forBusiness:'Company X',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:104,name:'Edward Gray',company:'Puget Sound Tooling',title:'COO',type:'Prospect',status:'complete',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-21',followUpDate:'2026-05-28',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:105,name:'Donald Sanders',company:'Rainier Partners',title:'Principal',type:'PE',status:'followup',channel:'Referral',forBusiness:'Both',sentDate:'2026-02-20',followUpDate:'2026-02-27',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:106,name:'Sarah Howard',company:'Cascade Advisory',title:'Managing Partner',type:'Network',status:'meeting',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-02-25',followUpDate:'2026-02-28',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:107,name:'Kevin Kim',company:'Northwest Forge',title:'VP Supply Chain',type:'Prospect',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-02-10',followUpDate:'2026-02-17',notes:'Long-term nurture. Revisit in Q3 when budget cycle resets.',linkedin:'',website:'',phone:''},
+  {id:108,name:'Joshua Ellsworth',company:'Puget Sound Tooling',title:'VP Operations',type:'Prospect',status:'landed',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-03',followUpDate:'2026-03-10',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:109,name:'Donna Cox',company:'Cascade Advisory',title:'Founder',type:'Network',status:'complete',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-21',followUpDate:'2026-05-28',notes:'Background in operations and turnaround. Strong fit.',linkedin:'',website:'',phone:''},
+  {id:110,name:'Jacob Allen',company:'Blue Ridge Consulting',title:'CEO',type:'Network',status:'inprogress',channel:'Email',forBusiness:'Both',sentDate:'2026-03-03',followUpDate:'2026-03-10',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:111,name:'Dorothy Murphy',company:'Olympic Distribution',title:'Owner',type:'Prospect',status:'proposal',channel:'Referral',forBusiness:'Company X',sentDate:'2026-03-13',followUpDate:'2026-03-20',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:112,name:'Stephanie Walker',company:'Meridian Manufacturing',title:'Director of Operations',type:'Prospect',status:'proposalcreated',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-09',followUpDate:'2026-05-16',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:113,name:'Kathleen Price',company:'Olympic Fasteners',title:'Managing Director',type:'Prospect',status:'proposalcreated',channel:'Email',forBusiness:'Both',sentDate:'2026-04-08',followUpDate:'2026-04-15',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:114,name:'William Cox',company:'Northwest Logistics Group',title:'President',type:'Prospect',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-02',followUpDate:'2026-05-09',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:115,name:'Emily Coleman',company:'Evergreen Composites',title:'COO',type:'Prospect',status:'proposalcreated',channel:'In Person',forBusiness:'Cascade',sentDate:'2026-03-07',followUpDate:'2026-03-14',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:116,name:'Samuel Campbell',company:'Olympic Capital Group',title:'Vice President',type:'PE',status:'proposal',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-26',followUpDate:'2026-05-28',notes:'Chamber connection. Potential referral source for member companies.',linkedin:'',website:'',phone:''},
+  {id:117,name:'Steven Anderson',company:'Highline Venture Partners',title:'Managing Partner',type:'PE',status:'responded',channel:'Email',forBusiness:'Cascade',sentDate:'2026-04-03',followUpDate:'2026-04-10',notes:'Strong fit. Delivery reliability and scheduling challenges.',linkedin:'',website:'',phone:''},
+  {id:118,name:'Sandra King',company:'Rainier Partners',title:'Managing Partner',type:'PE',status:'inprogress',channel:'In Person',forBusiness:'Company X',sentDate:'2026-05-27',followUpDate:'2026-05-28',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:119,name:'Joshua Wilson',company:'Cascade Advisory',title:'Founder',type:'Network',status:'complete',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:120,name:'Samantha Rodriguez',company:'Greater Spokane Chamber',title:'Board Chair',type:'Chamber',status:'proposalcreated',channel:'Phone',forBusiness:'Company X',sentDate:'2026-03-02',followUpDate:'2026-03-09',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:121,name:'Betty Fitzgerald',company:'Ridgeline Precision Parts',title:'COO',type:'Prospect',status:'meeting',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-05-12',followUpDate:'2026-05-19',notes:'Interested in diagnostic as entry point.',linkedin:'',website:'',phone:''},
+  {id:122,name:'Ronald Murphy',company:'Puget Sound Tooling',title:'Owner',type:'Prospect',status:'sent',channel:'Referral',forBusiness:'Both',sentDate:'2026-05-09',followUpDate:'2026-05-16',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:123,name:'Lynn Mitchell',company:'West Coast Fulfillment',title:'Managing Director',type:'Prospect',status:'inprogress',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-22',followUpDate:'2026-02-28',notes:'Long-term nurture. Revisit in Q3 when budget cycle resets.',linkedin:'',website:'',phone:''},
+  {id:124,name:'Samuel Peterson',company:'Apex Industrial Group',title:'CEO',type:'Prospect',status:'nurture',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-28',followUpDate:'2026-02-28',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:125,name:'Lynn Watson',company:'West Coast Fulfillment',title:'CEO',type:'Prospect',status:'sent',channel:'In Person',forBusiness:'Company X',sentDate:'2026-03-26',followUpDate:'2026-03-28',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:126,name:'Richard Rodriguez',company:'Northwest Capital',title:'Partner',type:'PE',status:'meeting',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-26',followUpDate:'2026-03-28',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:127,name:'James Scott',company:'Puget Sound Tooling',title:'President',type:'Prospect',status:'proposal',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-02-05',followUpDate:'2026-02-12',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:128,name:'Andrew Walker',company:'Skagit Valley Chamber',title:'CEO',type:'Chamber',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-02-05',followUpDate:'2026-02-12',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:129,name:'Brandon Anderson',company:'Cascade Metal Works',title:'Managing Director',type:'Prospect',status:'inprogress',channel:'In Person',forBusiness:'Both',sentDate:'2026-02-15',followUpDate:'2026-02-22',notes:'Warm referral from existing network contact.',linkedin:'',website:'',phone:''},
+  {id:130,name:'Jessica Richardson',company:'Mount Baker Fabrication',title:'VP Supply Chain',type:'Prospect',status:'inprogress',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-28',followUpDate:'2026-05-28',notes:'Strong fit. Delivery reliability and scheduling challenges.',linkedin:'',website:'',phone:''},
+  {id:131,name:'Timothy Price',company:'Harborview Packaging',title:'Managing Director',type:'Prospect',status:'inprogress',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-04-20',followUpDate:'2026-04-27',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:132,name:'Brian Taylor',company:'Harborview Freight',title:'Director of Operations',type:'Prospect',status:'nurture',channel:'Email',forBusiness:'Cascade',sentDate:'2026-05-04',followUpDate:'2026-05-11',notes:'Follow-up call scheduled. Alignment on supply chain challenges.',linkedin:'',website:'',phone:''},
+  {id:133,name:'Katherine Gray',company:'Northwest Capital',title:'Partner',type:'PE',status:'landed',channel:'Referral',forBusiness:'Company X',sentDate:'2026-05-11',followUpDate:'2026-05-18',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:134,name:'George Holloway',company:'Harborview Packaging',title:'Director of Operations',type:'Prospect',status:'landed',channel:'In Person',forBusiness:'Company X',sentDate:'2026-04-05',followUpDate:'2026-04-12',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:135,name:'Brian Lopez',company:'Summit Industrial Components',title:'COO',type:'Prospect',status:'landed',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-18',followUpDate:'2026-03-25',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:136,name:'Shirley Reed',company:'Northwest Capital',title:'Operating Partner',type:'PE',status:'sent',channel:'Phone',forBusiness:'Company X',sentDate:'2026-05-28',followUpDate:'2026-05-28',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:137,name:'Nancy Bailey',company:'Olympic Distribution',title:'Director of Operations',type:'Prospect',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-08',followUpDate:'2026-05-15',notes:'Follow-up call scheduled. Alignment on supply chain challenges.',linkedin:'',website:'',phone:''},
+  {id:138,name:'Dorothy Reed',company:'Summit Growth Technologies',title:'COO',type:'Prospect',status:'proposal',channel:'Email',forBusiness:'Cascade',sentDate:'2026-02-20',followUpDate:'2026-02-27',notes:'Background in operations and turnaround. Strong fit.',linkedin:'',website:'',phone:''},
+  {id:139,name:'Derek White',company:'Harborview Freight',title:'VP Supply Chain',type:'Prospect',status:'followup',channel:'In Person',forBusiness:'Company X',sentDate:'2026-03-28',followUpDate:'2026-03-28',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:140,name:'Kathleen Watson',company:'Pacific Tech Ventures',title:'COO',type:'Prospect',status:'responded',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-13',followUpDate:'2026-03-20',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:141,name:'Jacob Baker',company:'Northwest Forge',title:'Director of Operations',type:'Prospect',status:'proposalcreated',channel:'In Person',forBusiness:'Both',sentDate:'2026-02-02',followUpDate:'2026-02-09',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:142,name:'Michael Powell',company:'Snohomish County Chamber',title:'Executive Director',type:'Chamber',status:'sent',channel:'Email',forBusiness:'Cascade',sentDate:'2026-05-16',followUpDate:'2026-05-23',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:143,name:'Jeffrey Holloway',company:'Harborview Freight',title:'VP Operations',type:'Prospect',status:'sent',channel:'In Person',forBusiness:'Cascade',sentDate:'2026-02-10',followUpDate:'2026-02-17',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:144,name:'Jonathan Ingram',company:'Blue Ridge Consulting',title:'Managing Partner',type:'Network',status:'sent',channel:'Email',forBusiness:'Cascade',sentDate:'2026-02-01',followUpDate:'2026-02-08',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:145,name:'Betty Ramirez',company:'Evergreen Composites',title:'VP Supply Chain',type:'Prospect',status:'proposalcreated',channel:'In Person',forBusiness:'Company X',sentDate:'2026-02-16',followUpDate:'2026-02-23',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:146,name:'Robert Taylor',company:'Meridian Manufacturing',title:'VP Operations',type:'Prospect',status:'noresponse',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-02-14',followUpDate:'2026-02-21',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:147,name:'Jacob Martinez',company:'Pinnacle Tech Solutions',title:'Owner',type:'Prospect',status:'nurture',channel:'Phone',forBusiness:'Company X',sentDate:'2026-02-13',followUpDate:'2026-02-20',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:148,name:'Mark Perez',company:'Snohomish County Chamber',title:'Board Chair',type:'Chamber',status:'noresponse',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-02-08',followUpDate:'2026-02-15',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:149,name:'Shirley Rutherford',company:'Olympic Capital Group',title:'Managing Partner',type:'PE',status:'nurture',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-11',followUpDate:'2026-03-18',notes:'Active discussion on fractional COO engagement scope.',linkedin:'',website:'',phone:''},
+  {id:150,name:'Carla Deleon',company:'Greater Spokane Chamber',title:'Executive Director',type:'Chamber',status:'meeting',channel:'In Person',forBusiness:'Company X',sentDate:'2026-03-08',followUpDate:'2026-03-15',notes:'Follow-up call scheduled. Alignment on supply chain challenges.',linkedin:'',website:'',phone:''},
+  {id:151,name:'Paul Allen',company:'Cascade Distribution Co.',title:'President',type:'Prospect',status:'responded',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-15',followUpDate:'2026-05-22',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:152,name:'Angela Stafford',company:'Cascade Advisory',title:'Director',type:'Network',status:'followup',channel:'In Person',forBusiness:'Company X',sentDate:'2026-05-03',followUpDate:'2026-05-10',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:153,name:'Jeffrey Howard',company:'Olympic Distribution',title:'VP Supply Chain',type:'Prospect',status:'sent',channel:'In Person',forBusiness:'Both',sentDate:'2026-02-10',followUpDate:'2026-02-17',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:154,name:'Ryan Jones',company:'Olympic Fasteners',title:'Director of Operations',type:'Prospect',status:'proposalcreated',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-15',followUpDate:'2026-05-22',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:155,name:'Raymond Jenkins',company:'Mount Baker Fabrication',title:'Managing Director',type:'Prospect',status:'meeting',channel:'In Person',forBusiness:'Both',sentDate:'2026-05-17',followUpDate:'2026-05-24',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:156,name:'Angela Stafford',company:'Harborview Packaging',title:'Director of Operations',type:'Prospect',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-23',followUpDate:'2026-03-28',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:157,name:'Jeffrey Ingram',company:'Olympic Capital Group',title:'Vice President',type:'PE',status:'responded',channel:'In Person',forBusiness:'Company X',sentDate:'2026-04-13',followUpDate:'2026-04-20',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:158,name:'Steven Sanders',company:'Whatcom Business Alliance',title:'Executive Director',type:'Chamber',status:'followup',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-02-18',followUpDate:'2026-02-25',notes:'Strong fit. Delivery reliability and scheduling challenges.',linkedin:'',website:'',phone:''},
+  {id:159,name:'Nancy Allen',company:'Blue Ridge Consulting',title:'Director',type:'Network',status:'responded',channel:'In Person',forBusiness:'Company X',sentDate:'2026-03-12',followUpDate:'2026-03-19',notes:'Chamber connection. Potential referral source for member companies.',linkedin:'',website:'',phone:''},
+  {id:160,name:'Katherine Wood',company:'Blue Ridge Consulting',title:'President',type:'Network',status:'responded',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-21',followUpDate:'2026-05-28',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:161,name:'Chris Kelly',company:'Summit Executive Advisors',title:'Consultant',type:'Network',status:'sent',channel:'Phone',forBusiness:'Both',sentDate:'2026-04-01',followUpDate:'2026-04-08',notes:'Long-term nurture. Revisit in Q3 when budget cycle resets.',linkedin:'',website:'',phone:''},
+  {id:162,name:'Anthony White',company:'West Coast Fulfillment',title:'Director of Operations',type:'Prospect',status:'complete',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-05',followUpDate:'2026-03-12',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:163,name:'Matthew Gonzalez',company:'Ridgeline Private Equity',title:'Vice President',type:'PE',status:'sent',channel:'In Person',forBusiness:'Both',sentDate:'2026-03-20',followUpDate:'2026-03-27',notes:'Strong fit. Delivery reliability and scheduling challenges.',linkedin:'',website:'',phone:''},
+  {id:164,name:'Linda Lee',company:'Columbia Basin Manufacturing',title:'President',type:'Prospect',status:'inprogress',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-04-22',followUpDate:'2026-04-28',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:165,name:'Jeffrey Richardson',company:'Summit Supply Chain',title:'Managing Director',type:'Prospect',status:'meeting',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-27',followUpDate:'2026-05-28',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:166,name:'Joshua Sanders',company:'Bellingham Chamber',title:'Board Chair',type:'Chamber',status:'inprogress',channel:'Email',forBusiness:'Cascade',sentDate:'2026-05-06',followUpDate:'2026-05-13',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:167,name:'Brenda Moore',company:'Northwest Logistics Group',title:'CEO',type:'Prospect',status:'complete',channel:'In Person',forBusiness:'Both',sentDate:'2026-02-23',followUpDate:'2026-02-28',notes:'Warm referral from existing network contact.',linkedin:'',website:'',phone:''},
+  {id:168,name:'Tanya Torres',company:'Summit Industrial Components',title:'President',type:'Prospect',status:'proposal',channel:'Referral',forBusiness:'Both',sentDate:'2026-03-27',followUpDate:'2026-03-28',notes:'Rapid growth stage. Needs execution infrastructure.',linkedin:'',website:'',phone:''},
+  {id:169,name:'Lynn Lewis',company:'Lakeview Capital Partners',title:'Operating Partner',type:'PE',status:'sent',channel:'Phone',forBusiness:'Company X',sentDate:'2026-05-17',followUpDate:'2026-05-24',notes:'Long-term nurture. Revisit in Q3 when budget cycle resets.',linkedin:'',website:'',phone:''},
+  {id:170,name:'Sarah Roberts',company:'Summit Industrial Components',title:'Director of Operations',type:'Prospect',status:'meeting',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-02-27',followUpDate:'2026-02-28',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:171,name:'Donald Jackson',company:'Evergreen Composites',title:'CEO',type:'Prospect',status:'proposalcreated',channel:'Referral',forBusiness:'Company X',sentDate:'2026-05-15',followUpDate:'2026-05-22',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:172,name:'James Hernandez',company:'Pacific Northwest Plastics',title:'VP Supply Chain',type:'Prospect',status:'meeting',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-05-04',followUpDate:'2026-05-11',notes:'Chamber connection. Potential referral source for member companies.',linkedin:'',website:'',phone:''},
+  {id:173,name:'Sarah Hill',company:'Ridgeline Precision Parts',title:'CEO',type:'Prospect',status:'meeting',channel:'Phone',forBusiness:'Both',sentDate:'2026-05-03',followUpDate:'2026-05-10',notes:'Follow-up call scheduled. Alignment on supply chain challenges.',linkedin:'',website:'',phone:''},
+  {id:174,name:'Stephen Bailey',company:'Rainier Partners',title:'Managing Partner',type:'PE',status:'meeting',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-01',followUpDate:'2026-05-08',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:175,name:'Andrew Walker',company:'Bellingham Chamber',title:'Board Chair',type:'Chamber',status:'responded',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-04-03',followUpDate:'2026-04-10',notes:'Warm referral from existing network contact.',linkedin:'',website:'',phone:''},
+  {id:176,name:'Samuel Olsen',company:'Ridgeline Private Equity',title:'Vice President',type:'PE',status:'sent',channel:'Phone',forBusiness:'Cascade',sentDate:'2026-02-21',followUpDate:'2026-02-28',notes:'Strong fit. Delivery reliability and scheduling challenges.',linkedin:'',website:'',phone:''},
+  {id:177,name:'Joshua Allen',company:'Pacific Northwest Plastics',title:'Director of Operations',type:'Prospect',status:'sent',channel:'In Person',forBusiness:'Company X',sentDate:'2026-02-25',followUpDate:'2026-02-28',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:178,name:'Donald Moore',company:'Mount Baker Fabrication',title:'Director of Operations',type:'Prospect',status:'followup',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-05-21',followUpDate:'2026-05-28',notes:'Active discussion on fractional COO engagement scope.',linkedin:'',website:'',phone:''},
+  {id:179,name:'Susan Rodriguez',company:'Pacific Operations Partners',title:'Consultant',type:'Network',status:'inprogress',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-02',followUpDate:'2026-03-09',notes:'Proposal under review. $18K to $25K engagement range.',linkedin:'',website:'',phone:''},
+  {id:180,name:'Tom Green',company:'Olympic Distribution',title:'Owner',type:'Prospect',status:'complete',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-10',followUpDate:'2026-03-17',notes:'Long-term nurture. Revisit in Q3 when budget cycle resets.',linkedin:'',website:'',phone:''},
+  {id:181,name:'Rachel Gray',company:'Redwood Systems',title:'VP Supply Chain',type:'Prospect',status:'sent',channel:'In Person',forBusiness:'Cascade',sentDate:'2026-05-24',followUpDate:'2026-05-28',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:182,name:'Kenneth Baker',company:'Columbia Basin Manufacturing',title:'Managing Director',type:'Prospect',status:'complete',channel:'In Person',forBusiness:'Both',sentDate:'2026-04-26',followUpDate:'2026-04-28',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:183,name:'Timothy Hernandez',company:'Northpoint PE',title:'Vice President',type:'PE',status:'responded',channel:'Email',forBusiness:'Company X',sentDate:'2026-02-03',followUpDate:'2026-02-10',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:184,name:'Christine Nguyen',company:'Olympic Distribution',title:'Managing Director',type:'Prospect',status:'landed',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-04-15',followUpDate:'2026-04-22',notes:'Referred by mutual connection. Warm intro pending.',linkedin:'',website:'',phone:''},
+  {id:185,name:'Andrew Richardson',company:'Northpoint PE',title:'Operating Partner',type:'PE',status:'sent',channel:'LinkedIn InMail',forBusiness:'Cascade',sentDate:'2026-04-17',followUpDate:'2026-04-24',notes:'Active discussion on fractional COO engagement scope.',linkedin:'',website:'',phone:''},
+  {id:186,name:'Derek Jackson',company:'Whatcom Business Alliance',title:'Board Chair',type:'Chamber',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-03-25',followUpDate:'2026-03-28',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:187,name:'Emily Campbell',company:'Meridian Manufacturing',title:'CEO',type:'Prospect',status:'responded',channel:'Referral',forBusiness:'Company X',sentDate:'2026-04-15',followUpDate:'2026-04-22',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:188,name:'Amy Moore',company:'Olympic Capital Group',title:'Operating Partner',type:'PE',status:'nurture',channel:'In Person',forBusiness:'Company X',sentDate:'2026-03-04',followUpDate:'2026-03-11',notes:'Initial outreach sent. Strong operational fit.',linkedin:'',website:'',phone:''},
+  {id:189,name:'Jennifer Fitzgerald',company:'Olympic Capital Group',title:'Principal',type:'PE',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-05-07',followUpDate:'2026-05-14',notes:'Active engagement underway. 30-day check-in complete.',linkedin:'',website:'',phone:''},
+  {id:190,name:'Nancy Bennett',company:'Pacific Crest Capital',title:'Partner',type:'PE',status:'sent',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-05-06',followUpDate:'2026-05-13',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
+  {id:191,name:'Lynn Price',company:'Pinnacle Tech Solutions',title:'Director of Operations',type:'Prospect',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-23',followUpDate:'2026-03-28',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:192,name:'Robert Campbell',company:'Ridgeline Private Equity',title:'Partner',type:'PE',status:'sent',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-26',followUpDate:'2026-03-28',notes:'Discovery call completed. Proposal expected within two weeks.',linkedin:'',website:'',phone:''},
+  {id:193,name:'Derek Campbell',company:'Northwest Capital',title:'Vice President',type:'PE',status:'noresponse',channel:'Referral',forBusiness:'Both',sentDate:'2026-03-20',followUpDate:'2026-03-27',notes:'Met at industry event. Expressed interest in execution support.',linkedin:'',website:'',phone:''},
+  {id:194,name:'Brian Flores',company:'Pacific Tech Ventures',title:'Managing Director',type:'Prospect',status:'landed',channel:'Phone',forBusiness:'Both',sentDate:'2026-02-05',followUpDate:'2026-02-12',notes:'No response after initial outreach. Try different channel.',linkedin:'',website:'',phone:''},
+  {id:195,name:'Samantha Martinez',company:'Lakeview Capital Partners',title:'Principal',type:'PE',status:'noresponse',channel:'LinkedIn InMail',forBusiness:'Both',sentDate:'2026-03-25',followUpDate:'2026-03-28',notes:'Responded positively. Scheduling discovery call.',linkedin:'',website:'',phone:''},
+  {id:196,name:'Jason Olsen',company:'Olympic Fasteners',title:'COO',type:'Prospect',status:'responded',channel:'Email',forBusiness:'Company X',sentDate:'2026-03-11',followUpDate:'2026-03-18',notes:'PE firm with portfolio companies in manufacturing and distribution.',linkedin:'',website:'',phone:''},
+  {id:197,name:'Dorothy Hartley',company:'Summit Supply Chain',title:'COO',type:'Prospect',status:'proposal',channel:'Email',forBusiness:'Both',sentDate:'2026-04-05',followUpDate:'2026-04-12',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:198,name:'Betty Richardson',company:'Rainier Partners',title:'Managing Partner',type:'PE',status:'responded',channel:'LinkedIn InMail',forBusiness:'Company X',sentDate:'2026-04-27',followUpDate:'2026-04-28',notes:'Engagement signed. Kick-off scheduled next week.',linkedin:'',website:'',phone:''},
+  {id:199,name:'Tom Brown',company:'Summit Industrial Components',title:'CEO',type:'Prospect',status:'proposal',channel:'Email',forBusiness:'Both',sentDate:'2026-05-20',followUpDate:'2026-05-27',notes:'Engagement complete. Results documented. Case study in progress.',linkedin:'',website:'',phone:''},
+  {id:200,name:'Derek Fitzgerald',company:'Greater Spokane Chamber',title:'CEO',type:'Chamber',status:'proposalcreated',channel:'Referral',forBusiness:'Company X',sentDate:'2026-05-10',followUpDate:'2026-05-17',notes:'Turnaround situation. Cash constraints and delivery issues.',linkedin:'',website:'',phone:''},
 ];
-
 // ── TAB SWITCHING ──
 function switchTab(tab, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -870,7 +943,7 @@ function renderAll() {
 
 // ── V2R DASHBOARD ──
 function renderV2R() {
-  const actuals = loadKpiActuals();
+  const actuals = { engagements: '4', delivered: '9', closerate: '58', csat: '9.2' };
   const meetings = contacts.filter(c => c.status === 'meeting').length;
   const proposals = contacts.filter(c => ['proposal','proposalcreated'].includes(c.status)).length;
   const prospects = contacts.filter(c => c.type === 'Prospect' && ['sent','followup','meeting','responded','proposal','proposalcreated'].includes(c.status)).length;
@@ -1069,7 +1142,7 @@ function typeBadge(t) {
 }
 
 function forBadge(f) {
-  if (!f || f === 'Accendit') return `<span class="type-badge" style="background:rgba(13,27,62,0.08);color:#0D1B3E">Accendit</span>`;
+  if (!f || f === 'Company X') return `<span class="type-badge" style="background:rgba(13,27,62,0.08);color:#0D1B3E">Company X</span>`;
   if (f === 'Cascade') return `<span class="type-badge" style="background:rgba(5,150,105,0.08);color:#059669">Cascade</span>`;
   return `<span class="type-badge" style="background:rgba(124,58,237,0.08);color:#7c3aed">Both</span>`;
 }
@@ -1088,7 +1161,7 @@ function openModal(id) {
     document.getElementById('f-type').value = c.type||'PE';
     document.getElementById('f-status').value = c.status||'sent';
     document.getElementById('f-channel').value = c.channel||'LinkedIn InMail';
-    document.getElementById('f-forbusiness').value = c.forBusiness||'Accendit';
+    document.getElementById('f-forbusiness').value = c.forBusiness||'Company X';
     document.getElementById('f-sent').value = c.sentDate||td;
     document.getElementById('f-followup').value = c.followUpDate||fu;
     document.getElementById('f-notes').value = c.notes||'';
@@ -1102,7 +1175,7 @@ function openModal(id) {
     document.getElementById('f-type').value = 'PE';
     document.getElementById('f-status').value = 'sent';
     document.getElementById('f-channel').value = 'LinkedIn InMail';
-    document.getElementById('f-forbusiness').value = 'Accendit';
+    document.getElementById('f-forbusiness').value = 'Company X';
     document.getElementById('f-sent').value = td;
     document.getElementById('f-followup').value = fu;
     document.getElementById('del-btn').style.display = 'none';
@@ -1133,7 +1206,7 @@ function exportCSV() {
   const csv = [headers.join(','),...rows].join('\n');
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
-  a.download = 'accendit_crm_' + new Date().toISOString().split('T')[0] + '.csv';
+  a.download = 'companyx_crm_' + new Date().toISOString().split('T')[0] + '.csv';
   a.click();
 }
 
@@ -1258,224 +1331,29 @@ function exportGroupsCSV() {
   const csv = [headers.join(','),...rows].join('\n');
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
-  a.download = 'accendit_groups_' + new Date().toISOString().split('T')[0] + '.csv';
+  a.download = 'companyx_groups_' + new Date().toISOString().split('T')[0] + '.csv';
   a.click();
 }
 
-// ── QR SCAN ──
-let qrStream = null, qrInterval = null;
-
-async function openQRScan() {
-  document.getElementById('qr-overlay').style.display = 'flex';
-  document.getElementById('qr-fields').style.display = 'none';
-  document.getElementById('qr-save-btn').style.display = 'none';
-  document.getElementById('qr-status').textContent = 'Starting camera...';
-  try {
-    qrStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-    document.getElementById('qr-video').srcObject = qrStream;
-    document.getElementById('qr-status').textContent = 'Point camera at QR code...';
-    // Load jsQR dynamically
-    if (!window.jsQR) {
-      const s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js';
-      s.onload = startQRDetection;
-      document.head.appendChild(s);
-    } else {
-      startQRDetection();
-    }
-  } catch(e) {
-    document.getElementById('qr-status').textContent = 'Camera access denied. Please allow camera in browser settings.';
-  }
-}
-
-function startQRDetection() {
-  const video = document.getElementById('qr-video');
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-  qrInterval = setInterval(() => {
-    if (video.readyState !== video.HAVE_ENOUGH_DATA) return;
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    ctx.drawImage(video, 0, 0);
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const code = jsQR(imageData.data, imageData.width, imageData.height);
-    if (code) {
-      clearInterval(qrInterval);
-      parseQRData(code.data);
-    }
-  }, 300);
-}
-
-function parseQRData(data) {
-  document.getElementById('qr-status').textContent = 'QR code detected. Parsing contact...';
-  // Parse vCard or plain text
-  const fields = { name:'', company:'', title:'', email:'', phone:'', linkedin:'' };
-  if (data.includes('BEGIN:VCARD')) {
-    const lines = data.split('\n');
-    lines.forEach(l => {
-      if (l.startsWith('FN:')) fields.name = l.replace('FN:','').trim();
-      else if (l.startsWith('ORG:')) fields.company = l.replace('ORG:','').trim();
-      else if (l.startsWith('TITLE:')) fields.title = l.replace('TITLE:','').trim();
-      else if (l.startsWith('EMAIL')) fields.email = l.split(':').slice(1).join(':').trim();
-      else if (l.startsWith('TEL')) fields.phone = l.split(':').slice(1).join(':').trim();
-      else if (l.includes('linkedin.com')) fields.linkedin = l.split(':').slice(1).join(':').trim();
-    });
+// ── SCAN MODALS (demo stubs) ──
+function openScanModal(type) {
+  if (type === 'qr') {
+    document.getElementById('scan-icon').textContent = '📷';
+    document.getElementById('scan-title').textContent = 'Scan QR Code';
+    document.getElementById('scan-desc').textContent = 'Point your camera at any contact\'s QR code and their details — name, company, title, phone, and email — auto-fill directly into the CRM. Available in the full version.';
   } else {
-    // Try to extract email and phone from plain text
-    const emailMatch = data.match(/[\w.-]+@[\w.-]+\.\w+/);
-    const phoneMatch = data.match(/[\d\s\-\(\)\+]{7,}/);
-    if (emailMatch) fields.email = emailMatch[0];
-    if (phoneMatch) fields.phone = phoneMatch[0].trim();
-    fields.name = data.split('\n')[0] || '';
+    document.getElementById('scan-icon').textContent = '🪪';
+    document.getElementById('scan-title').textContent = 'Scan Business Card';
+    document.getElementById('scan-desc').textContent = 'Take a photo of any business card. AI reads the card and auto-fills name, company, title, phone, and email into the contact form. Review and save in seconds. Available in the full version.';
   }
-  document.getElementById('qr-name').value = fields.name;
-  document.getElementById('qr-company').value = fields.company;
-  document.getElementById('qr-title').value = fields.title;
-  document.getElementById('qr-email').value = fields.email;
-  document.getElementById('qr-phone').value = fields.phone;
-  document.getElementById('qr-linkedin').value = fields.linkedin;
-  document.getElementById('qr-fields').style.display = 'grid';
-  document.getElementById('qr-save-btn').style.display = 'block';
-  document.getElementById('qr-status').textContent = 'Review and save to CRM.';
-  stopQRStream();
+  document.getElementById('scan-overlay').style.display = 'flex';
 }
-
-function stopQRStream() {
-  if (qrInterval) { clearInterval(qrInterval); qrInterval = null; }
-  if (qrStream) { qrStream.getTracks().forEach(t => t.stop()); qrStream = null; }
-}
-
-function closeQRScan() {
-  stopQRStream();
-  document.getElementById('qr-overlay').style.display = 'none';
-}
-
-function saveQRContact() {
-  const name = document.getElementById('qr-name').value.trim();
-  if (!name) { alert('Name required.'); return; }
-  const td = new Date().toISOString().split('T')[0];
-  const fu = new Date(Date.now()+7*86400000).toISOString().split('T')[0];
-  const maxId = contacts.reduce((m,x) => Math.max(m,x.id||0), 0);
-  contacts.push({
-    id: maxId+1, name,
-    company: document.getElementById('qr-company').value.trim(),
-    title: document.getElementById('qr-title').value.trim(),
-    type: 'Network', status: 'sent', channel: 'In Person', forBusiness: 'Accendit',
-    sentDate: td, followUpDate: fu,
-    linkedin: document.getElementById('qr-linkedin').value.trim(),
-    phone: document.getElementById('qr-phone').value.trim(),
-    website: '', notes: 'Added via QR scan.',
-  });
-  save(); closeQRScan(); renderAll();
-  alert(`${name} added to CRM.`);
-}
-
-// ── CARD SCAN ──
-let cardStream = null;
-
-async function openCardScan() {
-  document.getElementById('card-overlay').style.display = 'flex';
-  document.getElementById('card-camera-wrap').style.display = 'block';
-  document.getElementById('card-preview').style.display = 'none';
-  document.getElementById('card-fields').style.display = 'none';
-  document.getElementById('card-save-actions').style.display = 'none';
-  document.getElementById('card-status').textContent = 'Starting camera...';
-  try {
-    cardStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-    document.getElementById('card-video').srcObject = cardStream;
-    document.getElementById('card-status').textContent = 'Frame the business card and tap Capture.';
-  } catch(e) {
-    document.getElementById('card-status').textContent = 'Camera access denied. Please allow camera in browser settings.';
-  }
-}
-
-function captureCard() {
-  const video = document.getElementById('card-video');
-  const canvas = document.getElementById('card-canvas');
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-  canvas.getContext('2d').drawImage(video, 0, 0);
-  const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
-  stopCardStream();
-  document.getElementById('card-camera-wrap').style.display = 'none';
-  document.getElementById('card-preview').src = dataUrl;
-  document.getElementById('card-preview').style.display = 'block';
-  document.getElementById('card-status').textContent = 'Reading card with AI...';
-  readCardWithAI(dataUrl);
-}
-
-async function readCardWithAI(dataUrl) {
-  if (!API_PROXY || API_PROXY.includes('YOURSUBDOMAIN')) {
-    document.getElementById('card-status').textContent = 'Worker URL not configured.';
-    return;
-  }
-  try {
-    const base64 = dataUrl.split(',')[1];
-    const response = await fetch(API_PROXY, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 500,
-        messages: [{
-          role: 'user',
-          content: [
-            { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: base64 } },
-            { type: 'text', text: 'Extract contact information from this business card. Respond ONLY with valid JSON, no markdown, no explanation. Format: {"name":"","company":"","title":"","email":"","phone":"","website":"","linkedin":""}. Use empty string for any field not found.' }
-          ]
-        }]
-      })
-    });
-    const data = await response.json();
-    const text = data.content?.[0]?.text || '{}';
-    const parsed = JSON.parse(text.replace(/```json|```/g,'').trim());
-    document.getElementById('card-name').value = parsed.name || '';
-    document.getElementById('card-company').value = parsed.company || '';
-    document.getElementById('card-title').value = parsed.title || '';
-    document.getElementById('card-email').value = parsed.email || '';
-    document.getElementById('card-phone').value = parsed.phone || '';
-    document.getElementById('card-website').value = parsed.website || '';
-    document.getElementById('card-linkedin').value = parsed.linkedin || '';
-    document.getElementById('card-fields').style.display = 'grid';
-    document.getElementById('card-save-actions').style.display = 'flex';
-    document.getElementById('card-status').textContent = 'Review fields and save to CRM.';
-  } catch(e) {
-    document.getElementById('card-status').textContent = 'Could not read card. Try again with better lighting.';
-    document.getElementById('card-camera-wrap').style.display = 'block';
-  }
-}
-
-function stopCardStream() {
-  if (cardStream) { cardStream.getTracks().forEach(t => t.stop()); cardStream = null; }
-}
-
-function closeCardScan() {
-  stopCardStream();
-  document.getElementById('card-overlay').style.display = 'none';
-}
-
-function saveCardContact() {
-  const name = document.getElementById('card-name').value.trim();
-  if (!name) { alert('Name required.'); return; }
-  const td = new Date().toISOString().split('T')[0];
-  const fu = new Date(Date.now()+7*86400000).toISOString().split('T')[0];
-  const maxId = contacts.reduce((m,x) => Math.max(m,x.id||0), 0);
-  contacts.push({
-    id: maxId+1, name,
-    company: document.getElementById('card-company').value.trim(),
-    title: document.getElementById('card-title').value.trim(),
-    type: 'Network', status: 'sent', channel: 'In Person', forBusiness: 'Accendit',
-    sentDate: td, followUpDate: fu,
-    linkedin: document.getElementById('card-linkedin').value.trim(),
-    phone: document.getElementById('card-phone').value.trim(),
-    website: document.getElementById('card-website').value.trim(),
-    notes: 'Added via business card scan.',
-  });
-  save(); closeCardScan(); renderAll();
-  alert(`${name} added to CRM.`);
-}
+function closeScanModal() { document.getElementById('scan-overlay').style.display = 'none'; }
 
 load();
 </script>
+<div style="text-align:center;padding:24px;font-family:'DM Mono',monospace;font-size:10px;color:rgba(13,27,62,0.35);letter-spacing:2px;border-top:1px solid #E2E6EA;margin-top:20px">
+  Built by <a href="https://www.accenditpartners.com" target="_blank" style="color:#B8922E;text-decoration:none;letter-spacing:2px">ACCENDIT PARTNERS</a> &nbsp;|&nbsp; accenditpartners.com
+</div>
 </body>
 </html>
